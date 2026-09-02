@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Panel Admin - Kainara Studio</title>
+  <!-- Bootstrap 5 CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Google Fonts & Icons -->
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="bg-light d-flex flex-column min-vh-100" style="background-color: #FBF9F5 !important;">
+
+  <!-- NAVBAR BERSIH & RESPONSIF -->
+  <nav class="navbar navbar-expand-lg navbar-light bg-white border-bottom sticky-top py-3">
+    <div class="container">
+      <a class="navbar-brand d-flex align-items-center gap-2 fw-bold fs-4" href="index.html" style="color: #8B4513;">
+        <i class="bi bi-gem text-amber"></i> KainaraStudio
+      </a>
+      <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#adminNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="adminNav">
+        <div class="navbar-nav ms-auto align-items-lg-center gap-2 mt-3 mt-lg-0">
+          <a class="nav-link fw-medium me-2" href="index.html"><i class="bi bi-store me-1"></i> Lihat Katalog Utama</a>
+          <a class="btn btn-outline-dark rounded-pill px-3 py-2 fs-6" href="../web-portofolio/index.html">
+            <i class="bi bi-arrow-left me-1"></i> Ke Portofolio
+          </a>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- MAIN CONTENT CONTAINER -->
+  <main class="container py-5 my-2 flex-grow-1" id="adminMain">
+    <!-- Header Section -->
+    <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center mb-4 gap-3">
+      <div>
+        <h1 class="fw-bold mb-1" style="font-family: 'Playfair Display', serif;">Manajemen Produk</h1>
+        <p class="text-muted mb-0">Kelola katalog batik Kainara Studio — Create, Read, Update, Delete produk secara real-time.</p>
+      </div>
+      <button class="btn btn-warning text-white rounded-pill px-4 py-2 fw-semibold d-inline-flex align-items-center gap-2 align-self-start align-self-md-center btn-add-product-mobile" data-bs-toggle="modal" data-bs-target="#productModal" onclick="resetForm()" style="background-color: #D97706; border: none;">
+        <i class="bi bi-plus-lg"></i> Tambah Produk Baru
+      </button>
+    </div>
+
+    <!-- Card Wrapper Tabel Produk -->
+    <div class="card border-0 shadow-sm rounded-4 overflow-hidden bg-white">
+      <div class="card-body p-4">
+        <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center mb-4 gap-3">
+          <h5 class="fw-bold mb-0">Daftar Produk (<span id="totalProducts">0</span>)</h5>
+          <div class="input-group style-search" style="max-width: 320px;">
+            <span class="input-group-text bg-light border-end-0"><i class="bi bi-search text-muted"></i></span>
+            <input type="text" id="searchInput" class="form-control bg-light border-start-0" placeholder="Cari produk..." onkeyup="filterProducts()">
+          </div>
+        </div>
+
+        <!-- Tabel Responsif -->
+        <div class="table-responsive">
+          <table class="table table-hover align-middle mb-0 responsive-card-table">
+            <thead class="table-light text-uppercase fs-7 text-muted">
+              <tr>
+                <th scope="col" style="width: 80px;">Gambar</th>
+                <th scope="col">Nama Produk</th>
+                <th scope="col">Kategori</th>
+                <th scope="col">Harga</th>
+                <th scope="col">Stok</th>
+                <th scope="col" class="text-end" style="width: 120px;">Aksi</th>
+              </tr>
+            </thead>
+            <tbody id="productTableBody">
+              <!-- Data dari Supabase JS -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- FOOTER TERLETAK DI BAWAH (MT-AUTO) -->
+  <footer class="bg-white border-top py-4 mt-auto">
+    <div class="container d-flex flex-column flex-md-row justify-content-between align-items-center gap-2 text-muted fs-7">
+      <div>© 2026 Kainara Studio Admin Panel — Uji Sertifikasi Kompetensi Junior Web Developer</div>
+      <a href="index.html" class="text-decoration-none text-muted"><i class="bi bi-arrow-left me-1"></i> Kembali ke Katalog</a>
+    </div>
+  </footer>
+
+  <!-- Modal Form Tambah/Edit Produk -->
+  <div class="modal fade" id="productModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg modal-fullscreen-sm-down">
+      <div class="modal-content rounded-4 border-0">
+        <div class="modal-header border-bottom-0 p-4">
+          <h5 class="modal-title fw-bold" id="modalTitle">Tambah Produk Baru</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body p-4 pt-0">
+          <form id="productForm" onsubmit="handleFormSubmit(event)">
+            <input type="hidden" id="productId">
+            <div class="row g-3">
+              <div class="col-12">
+                <label class="form-label fw-semibold">Nama Produk <span class="text-danger">*</span></label>
+                <input type="text" id="productName" class="form-control" required placeholder="Contoh: Kemeja Batik Parang">
+              </div>
+              <div class="col-md-6">
+                <label class="form-label fw-semibold">Kategori <span class="text-danger">*</span></label>
+                <select id="productCategory" class="form-select" required>
+                  <option value="" selected disabled>Pilih Kategori...</option>
+                  <option value="Kemeja">Kemeja</option>
+                  <option value="Kain">Kain</option>
+                  <option value="Gaun">Gaun</option>
+                  <option value="Batik Tulis">Batik Tulis</option>
+                </select>
+              </div>
+              <div class="col-md-3">
+                <label class="form-label fw-semibold">Harga (Rp) <span class="text-danger">*</span></label>
+                <input type="number" id="productPrice" class="form-control" min="0" required placeholder="250000">
+              </div>
+              <div class="col-md-3">
+                <label class="form-label fw-semibold">Stok <span class="text-danger">*</span></label>
+                <input type="number" id="productStock" class="form-control" min="0" required placeholder="10">
+              </div>
+              <div class="col-12">
+                <label class="form-label fw-semibold">URL Gambar <span class="text-danger">*</span></label>
+                <input type="url" id="productImage" class="form-control" required placeholder="https://images.unsplash.com/...">
+              </div>
+              <div class="col-12">
+                <label class="form-label fw-semibold">Deskripsi <span class="text-danger">*</span></label>
+                <textarea id="productDescription" class="form-control" rows="3" required placeholder="Deskripsi singkat produk..."></textarea>
+              </div>
+            </div>
+            <div class="mt-4 text-end gap-2">
+              <button type="button" class="btn btn-light rounded-pill px-4" data-bs-dismiss="modal">Batal</button>
+              <button type="submit" class="btn btn-warning text-white rounded-pill px-4" style="background-color: #D97706; border: none;">Simpan Produk</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bootstrap 5 Bundle JS (Termasuk Popper) -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <!-- Supabase JS Client & Script Admin -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script type="module" src="js/admin.js"></script>
+</body>
+</html>
