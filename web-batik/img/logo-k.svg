@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200">
+  <defs>
+    <linearGradient id="warmGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#b85c14"/>
+      <stop offset="50%" stop-color="#d97706"/>
+      <stop offset="100%" stop-color="#78350f"/>
+    </linearGradient>
+  </defs>
+  <rect width="180" height="180" x="10" y="10" rx="40" fill="url(#warmGrad)" stroke="#fef3c7" stroke-width="3"/>
+  <!-- Letter K -->
+  <g fill="#fef3c7">
+    <path d="M 50 35 C 50 35 62 37 62 50 L 62 130 C 62 143 50 145 50 145 L 50 152 L 82 152 L 82 145 C 82 145 70 143 70 130 L 70 50 C 70 37 82 35 82 35 Z"/>
+    <path d="M 75 85 C 88 70 108 48 120 42 C 126 39 134 40 134 40 L 134 46 C 134 46 126 49 114 60 L 90 85 Z"/>
+    <path d="M 84 78 L 118 130 C 130 145 142 143 148 143 L 148 152 C 142 152 130 150 116 136 L 94 92 Z"/>
+  </g>
+</svg>
