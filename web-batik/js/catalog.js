@@ -151,7 +151,7 @@ const catalog = {
                         <!-- Footer: Harga & Tombol — vertikal di HP -->
                         <div class="product-footer mt-auto d-flex flex-column gap-2">
                             <span class="product-price">${window.formatRupiah(p.harga)}</span>
-                            <button class="btn-detail w-100 btn-sm justify-content-center">
+                            <button class="btn-detail w-100 btn-sm justify-content-center" onclick="openProductDetail('${escHtml(p.id)}')">
                                 <i class="bi bi-eye"></i> Detail
                             </button>
                         </div>
@@ -171,3 +171,40 @@ const catalog = {
 // ── Bootstrap ─────────────────────────────────────────────────
 document.addEventListener('DOMContentLoaded', () => catalog.init());
 window.catalog = catalog;
+
+// ── Modal Detail Produk ───────────────────────────────────────
+function openProductDetail(id) {
+    const product = state.all.find(p => String(p.id) === String(id));
+    if (!product) return;
+
+    const WA_NUMBER = '6281234567890';
+    const name  = product.nama_produk || '';
+    const price = product.harga || 0;
+
+    const modalImg   = document.getElementById('modalProductImage');
+    const modalCat   = document.getElementById('modalProductCategory');
+    const modalTitle = document.getElementById('modalProductTitle');
+    const modalPrice = document.getElementById('modalProductPrice');
+    const modalDesc  = document.getElementById('modalProductDesc');
+    const modalStock = document.getElementById('modalProductStock');
+    const modalBtn   = document.getElementById('modalBuyButton');
+
+    if (modalImg) {
+        modalImg.src = product.image_url || PLACEHOLDER;
+        modalImg.alt = name;
+    }
+    if (modalCat)   modalCat.textContent = product.kategori || 'Batik';
+    if (modalTitle) modalTitle.textContent = name;
+    if (modalPrice) modalPrice.textContent = window.formatRupiah(price);
+    if (modalDesc)  modalDesc.textContent = product.deskripsi || 'Tidak ada deskripsi.';
+    if (modalStock) modalStock.textContent = product.stok ?? 0;
+
+    if (modalBtn) {
+        const msg = encodeURIComponent(`Halo Kainara Studio, saya mau beli ${name} seharga ${window.formatRupiah(price)}`);
+        modalBtn.href = `https://wa.me/${WA_NUMBER}?text=${msg}`;
+    }
+
+    const bsModal = new bootstrap.Modal(document.getElementById('productDetailModal'));
+    bsModal.show();
+}
+window.openProductDetail = openProductDetail;
