@@ -457,26 +457,14 @@ h5,h6 { font-family: var(--font-sans); font-weight: 600; }
 .feature-item i { color: var(--terracotta); font-size: 1rem; flex-shrink: 0; }
 
 /* ─── Contact Cards (Catalog) ────────────────── */
-.contact-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--sp-4); }
-.contact-card {
-    background: var(--white); border: 1px solid var(--sand-border);
-    border-radius: var(--r-xl); padding: var(--sp-6);
-    text-align: center; text-decoration: none;
-    transition: all var(--t-base); display: flex;
-    flex-direction: column; align-items: center; gap: var(--sp-3);
+.card-hover {
+    transition: all 0.3s ease;
+    cursor: pointer;
 }
-.contact-card:hover { transform: translateY(-4px); box-shadow: var(--sh-lg); border-color: rgba(194,94,0,0.3); }
-.contact-icon {
-    width: 54px; height: 54px;
-    background: var(--terracotta-light);
-    border-radius: var(--r-lg);
-    display: flex; align-items: center; justify-content: center;
-    color: var(--terracotta); font-size: 1.375rem;
-    transition: all var(--t-base);
+.card-hover:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.1) !important;
 }
-.contact-card:hover .contact-icon { background: var(--terracotta); color: var(--white); }
-.contact-card h5 { font-family: var(--font-sans); font-size: 0.95rem; font-weight: 600; color: var(--charcoal); }
-.contact-card p { font-size: 0.825rem; color: var(--muted); margin: 0; }
 
 /* ─── Footer (site-footer — katalog utama, tetap dark) ─── */
 footer.site-footer {
@@ -784,7 +772,6 @@ footer.site-footer {
     .hero-content p { max-width: none; }
     .about-cols { grid-template-columns: 1fr; }
     .about-img-col { display: none; }
-    .contact-cards { grid-template-columns: 1fr; }
     .form-row { grid-template-columns: 1fr; }
 }
 @media (max-width: 767px) {
