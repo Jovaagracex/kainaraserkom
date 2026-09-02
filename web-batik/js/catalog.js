@@ -1,52 +1,42 @@
 /**
- * Catalog Module — Kainara Studio
- * Fetches products from Supabase and renders using new Warm Editorial UI
+ * ============================================================
+ * Catalog — Kainara Studio
+ * Menampilkan produk batik dari Supabase secara real-time
+ * Menggunakan window.supabaseClient (dimuat dari supabaseClient.js)
+ * ============================================================
  */
 
-import { supabase } from './supabaseClient.js';
-
-// ── Helpers ──────────────────────────────────────────────────────────────
 const PLACEHOLDER = 'https://images.unsplash.com/photo-1583391733956-6c78276477e2?w=500&h=500&fit=crop';
 
-function formatRupiah(num) {
-    if (!num && num !== 0) return 'Rp —';
-    return new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', maximumFractionDigits: 0 }).format(num);
-}
-function escHtml(str) {
-    if (!str) return '';
-    const d = document.createElement('div');
-    d.textContent = str;
-    return d.innerHTML;
-}
 function debounce(fn, ms) {
     let t;
     return (...args) => { clearTimeout(t); t = setTimeout(() => fn(...args), ms); };
 }
 
-// ── State ──────────────────────────────────────────────────────────────
+// ── State ────────────────────────────────────────────────────
 const state = {
-    all: [],
+    all:      [],
     filtered: [],
-    search: '',
+    search:   '',
     category: '',
-    loading: false,
+    loading:  false,
 };
 
-// ── DOM Refs ─────────────────────────────────────────────────────────
+// ── DOM Refs ─────────────────────────────────────────────────
 const $ = id => document.getElementById(id);
 const el = {
-    grid:       $('productGrid'),
-    loading:    $('loadingState'),
-    error:      $('errorState'),
-    errorMsg:   $('errorMessage'),
-    empty:      $('emptyState'),
-    search:     $('searchInput'),
-    catFilter:  $('categoryFilter'),
-    filterCount:$('filterCount'),
+    grid:        $('productGrid'),
+    loading:     $('loadingState'),
+    error:       $('errorState'),
+    errorMsg:    $('errorMessage'),
+    empty:       $('emptyState'),
+    search:      $('searchInput'),
+    catFilter:   $('categoryFilter'),
+    filterCount: $('filterCount'),
 };
 
-// ── Catalog Object ────────────────────────────────────────────────────
-export const catalog = {
+// ── Catalog Object ────────────────────────────────────────────
+const catalog = {
     async init() {
         this.bindEvents();
         await this.loadProducts();
@@ -72,7 +62,7 @@ export const catalog = {
         this.showState('loading');
 
         try {
-            const { data, error } = await supabase
+            const { data, error } = await window.supabaseClient
                 .from('products')
                 .select('*')
                 .order('created_at', { ascending: false });
@@ -108,7 +98,7 @@ export const catalog = {
 
     resetFilters() {
         state.search = ''; state.category = '';
-        if (el.search) el.search.value = '';
+        if (el.search)    el.search.value = '';
         if (el.catFilter) el.catFilter.value = '';
         this.applyFilters();
         this.render();
@@ -117,15 +107,13 @@ export const catalog = {
     render() {
         const products = state.filtered;
 
-        // Update count
+        // Update jumlah produk
         if (el.filterCount) {
-            const total = state.all.length;
+            const total   = state.all.length;
             const showing = products.length;
-            if (!state.search && !state.category) {
-                el.filterCount.textContent = `${total} produk`;
-            } else {
-                el.filterCount.textContent = `${showing} dari ${total} produk`;
-            }
+            el.filterCount.textContent = (!state.search && !state.category)
+                ? `${total} produk`
+                : `${showing} dari ${total} produk`;
         }
 
         if (state.all.length === 0) { this.showState('empty'); return; }
@@ -136,53 +124,50 @@ export const catalog = {
     },
 
     cardHtml(p) {
-        const img = p.image_url || PLACEHOLDER;
-        const stockClass = p.stok > 10 ? 'in-stock' : p.stok > 0 ? 'low-stock' : 'out-stock';
-        const stockText  = p.stok > 10 ? 'Tersedia' : p.stok > 0 ? `Sisa ${p.stok}` : 'Habis';
+        const img        = p.image_url || PLACEHOLDER;
+        const stockClass = p.stok > 10 ? 'in-stock'  : p.stok > 0 ? 'low-stock' : 'out-stock';
+        const stockText  = p.stok > 10 ? 'Tersedia'  : p.stok > 0 ? `Sisa ${p.stok}` : 'Habis';
         const stockIcon  = p.stok > 10 ? 'bi-check-circle' : p.stok > 0 ? 'bi-exclamation-circle' : 'bi-x-circle';
 
         return `
             <div class="col">
                 <article class="product-card h-100">
-                    <!-- Gambar — tinggi tetap 240px agar semua card seragam -->
+                    <!-- Gambar produk -->
                     <div class="product-img-wrap">
-                        <img
-                            src="${escHtml(img)}"
-                            alt="${escHtml(p.nama_produk)}"
-                            class="product-card-img"
-                            loading="lazy"
-                            onerror="this.src='${PLACEHOLDER}'"
-                        >
+                        <img src="${escHtml(img)}"
+                             alt="${escHtml(p.nama_produk)}"
+                             class="product-card-img"
+                             loading="lazy"
+                             onerror="this.src='${PLACEHOLDER}'">
                         <span class="badge-cat">${escHtml(p.kategori || 'Batik')}</span>
                         <span class="badge-stock ${stockClass}">
                             <i class="bi ${stockIcon}"></i> ${stockText}
                         </span>
                     </div>
-                    <!-- Body — flex column agar footer selalu di bawah -->
+                    <!-- Body Card -->
                     <div class="product-body d-flex flex-column">
                         <h3 class="product-name">${escHtml(p.nama_produk)}</h3>
                         <p class="product-desc">${escHtml(p.deskripsi || 'Tidak ada deskripsi.')}</p>
-                        <!-- Harga & Tombol — mt-auto memaksa ke bawah card -->
-                        <div class="product-footer mt-auto">
-                            <span class="product-price">${formatRupiah(p.harga)}</span>
-                            <button class="btn-detail">
+                        <!-- Footer: Harga & Tombol — vertikal di HP, horizontal di Desktop -->
+                        <div class="product-footer mt-auto d-flex flex-column flex-sm-row align-items-start align-items-sm-center gap-2">
+                            <span class="product-price">${window.formatRupiah(p.harga)}</span>
+                            <button class="btn-detail w-100 w-sm-auto btn-sm justify-content-center">
                                 <i class="bi bi-eye"></i> Detail
                             </button>
                         </div>
                     </div>
                 </article>
-            </div>
-        `;
+            </div>`;
     },
 
     showState(which) {
-        el.loading.style.display = which === 'loading' ? 'flex'  : 'none';
-        el.error.style.display   = which === 'error'   ? 'flex'  : 'none';
-        el.empty.style.display   = which === 'empty'   ? 'flex'  : 'none';
-        // 'row' adalah display value yang benar untuk Bootstrap .row
-        el.grid.style.display    = which === 'grid'    ? ''      : 'none';
+        el.loading.style.display = which === 'loading' ? 'flex' : 'none';
+        el.error.style.display   = which === 'error'   ? 'flex' : 'none';
+        el.empty.style.display   = which === 'empty'   ? 'flex' : 'none';
+        el.grid.style.display    = which === 'grid'    ? ''     : 'none';
     },
 };
 
+// ── Bootstrap ─────────────────────────────────────────────────
 document.addEventListener('DOMContentLoaded', () => catalog.init());
 window.catalog = catalog;
