@@ -587,6 +587,20 @@ footer a:hover { color: var(--terracotta); }
 .footer-logo { font-family: var(--font-serif); font-size: 1.1rem; color: var(--white); }
 .footer-logo span { color: var(--terracotta); }
 
+/* ── Back to Top Button ─────────────────────────── */
+.btn-back-to-top {
+    transition: all 0.3s ease;
+}
+.btn-back-to-top:hover {
+    background-color: var(--terracotta) !important;
+    border-color: var(--terracotta) !important;
+    transform: translateY(-4px);
+    box-shadow: 0 4px 12px rgba(217, 119, 6, 0.4);
+}
+.btn-back-to-top:active {
+    transform: translateY(-1px);
+}
+
 /* ─────────────────────────────────────────────────
    RESPONSIVE OVERRIDES
    (Bootstrap handles most breakpoints via row-cols,
