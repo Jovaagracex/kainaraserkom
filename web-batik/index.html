@@ -195,6 +195,11 @@
                         <h5>Instagram</h5>
                         <p>@kainarastudio</p>
                     </a>
+                    <a href="https://tiktok.com/@kainarastudio" target="_blank" rel="noopener" class="contact-card">
+                        <div class="contact-icon"><i class="bi bi-tiktok"></i></div>
+                        <h5>TikTok</h5>
+                        <p>@kainarastudio</p>
+                    </a>
                 </div>
             </div>
         </section>
@@ -211,9 +216,8 @@
                     </div>
                     <p>Mewarisi warisan batik Indonesia dengan sentuhan modern. Setiap motif memiliki cerita, setiap kain memiliki jiwa.</p>
                     <div class="social-row" style="margin-top:var(--sp-4);">
-                        <a href="#" class="social-btn" aria-label="Instagram"><i class="bi bi-instagram"></i></a>
-                        <a href="#" class="social-btn" aria-label="Facebook"><i class="bi bi-facebook"></i></a>
-                        <a href="#" class="social-btn" aria-label="TikTok"><i class="bi bi-tiktok"></i></a>
+                        <a href="https://instagram.com/kainarastudio" target="_blank" rel="noopener" class="social-btn" aria-label="Instagram"><i class="bi bi-instagram"></i></a>
+                        <a href="https://tiktok.com/@kainarastudio" target="_blank" rel="noopener" class="social-btn" aria-label="TikTok"><i class="bi bi-tiktok"></i></a>
                     </div>
                 </div>
                 <div class="footer-col">
@@ -256,12 +260,14 @@
     <!-- ── MODAL DETAIL PRODUK ── -->
     <div class="modal fade" id="productDetailModal" tabindex="-1" aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered modal-lg">
-        <div class="modal-content rounded-4 border-0 overflow-hidden shadow">
+        <div class="modal-content rounded-4 border-0 overflow-hidden shadow-lg">
           <div class="modal-body p-0">
             <div class="row g-0">
+              <!-- Foto Produk -->
               <div class="col-md-6 bg-light d-flex align-items-center justify-content-center p-3">
-                <img id="modalProductImage" src="" alt="" class="img-fluid rounded-3 object-fit-cover" style="max-height: 350px; width: 100%;">
+                <img id="modalProductImage" src="" alt="" class="img-fluid rounded-3 object-fit-cover" style="max-height: 380px; width: 100%;">
               </div>
+              <!-- Detail & Opsi Beli -->
               <div class="col-md-6 p-4 d-flex flex-column justify-content-between">
                 <div>
                   <div class="d-flex justify-content-between align-items-center mb-2">
@@ -269,15 +275,21 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                   </div>
                   <h4 id="modalProductTitle" class="fw-bold mb-1">Nama Produk</h4>
-                  <p id="modalProductPrice" class="fs-4 fw-bold mb-3" style="color: #d97706;">Rp 0</p>
-                  <p id="modalProductDesc" class="text-muted small mb-3">Deskripsi produk...</p>
-                  <div class="small text-secondary mb-3">Stok Tersedia: <strong id="modalProductStock">0</strong> pcs</div>
+                  <p id="modalProductPrice" class="fs-4 fw-bold mb-2" style="color: #d97706;">Rp 0</p>
+                  <p id="modalProductDesc" class="text-muted small mb-3">Deskripsi produk lengkap...</p>
+                  <div class="small text-secondary mb-3">Stok Tersedia: <strong id="modalProductStock" class="text-dark">0</strong> pcs</div>
                 </div>
-                <div class="d-grid gap-2">
-                  <a id="modalBuyButton" href="#" target="_blank" rel="noopener" class="btn btn-dark rounded-pill py-2 fw-semibold d-flex align-items-center justify-content-center gap-2" style="background-color: #2D251E;">
-                    <i class="bi bi-whatsapp"></i> Beli via WhatsApp
-                  </a>
-                  <button type="button" class="btn btn-outline-secondary rounded-pill py-2 btn-sm" data-bs-dismiss="modal">Tutup</button>
+                <!-- TOMBOL OPSI PEMBELIAN -->
+                <div>
+                  <label class="form-label small fw-bold text-muted mb-2">Pilih Cara Pembelian:</label>
+                  <div class="d-grid gap-2">
+                    <button onclick="processCheckout()" class="btn btn-dark rounded-pill py-2 fw-semibold d-flex align-items-center justify-content-center gap-2" style="background-color: #2D251E;">
+                      <i class="bi bi-bag-check"></i> Beli Langsung (Checkout)
+                    </button>
+                    <a id="modalBuyWA" href="#" target="_blank" rel="noopener" class="btn btn-outline-success rounded-pill py-2 btn-sm fw-medium d-flex align-items-center justify-content-center gap-2">
+                      <i class="bi bi-whatsapp"></i> Order via WhatsApp
+                    </a>
+                  </div>
                 </div>
               </div>
             </div>

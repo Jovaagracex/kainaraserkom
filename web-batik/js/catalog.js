@@ -173,10 +173,13 @@ document.addEventListener('DOMContentLoaded', () => catalog.init());
 window.catalog = catalog;
 
 // ── Modal Detail Produk ───────────────────────────────────────
+let currentProduct = null;
+
 function openProductDetail(id) {
     const product = state.all.find(p => String(p.id) === String(id));
     if (!product) return;
 
+    currentProduct = product;
     const WA_NUMBER = '6281234567890';
     const name  = product.nama_produk || '';
     const price = product.harga || 0;
@@ -187,7 +190,7 @@ function openProductDetail(id) {
     const modalPrice = document.getElementById('modalProductPrice');
     const modalDesc  = document.getElementById('modalProductDesc');
     const modalStock = document.getElementById('modalProductStock');
-    const modalBtn   = document.getElementById('modalBuyButton');
+    const modalWA    = document.getElementById('modalBuyWA');
 
     if (modalImg) {
         modalImg.src = product.image_url || PLACEHOLDER;
@@ -199,12 +202,29 @@ function openProductDetail(id) {
     if (modalDesc)  modalDesc.textContent = product.deskripsi || 'Tidak ada deskripsi.';
     if (modalStock) modalStock.textContent = product.stok ?? 0;
 
-    if (modalBtn) {
+    if (modalWA) {
         const msg = encodeURIComponent(`Halo Kainara Studio, saya mau beli ${name} seharga ${window.formatRupiah(price)}`);
-        modalBtn.href = `https://wa.me/${WA_NUMBER}?text=${msg}`;
+        modalWA.href = `https://wa.me/${WA_NUMBER}?text=${msg}`;
     }
 
     const bsModal = new bootstrap.Modal(document.getElementById('productDetailModal'));
     bsModal.show();
 }
 window.openProductDetail = openProductDetail;
+
+// ── Checkout Cepat ────────────────────────────────────────────
+function processCheckout() {
+    if (!currentProduct) return;
+    const name  = currentProduct.nama_produk || 'Produk';
+    const price = window.formatRupiah(currentProduct.harga || 0);
+
+    // Tutup modal dulu
+    const bsModal = bootstrap.Modal.getInstance(document.getElementById('productDetailModal'));
+    if (bsModal) bsModal.hide();
+
+    // Tampilkan alert
+    setTimeout(() => {
+        alert(`Pesanan "${name}" (${price}) sedang diproses ke Sistem Checkout.`);
+    }, 300);
+}
+window.processCheckout = processCheckout;
