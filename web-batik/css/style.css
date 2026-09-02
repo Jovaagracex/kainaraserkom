@@ -898,5 +898,31 @@ footer.site-footer {
     .style-search {
         max-width: 100% !important;
         width: 100% !important;
+}
+
+/* ── Mobile Layout Fixes (Added from UI/UX Audit) ── */
+@media (max-width: 767.98px) {
+    /* Stack badges vertically on mobile to prevent overlap */
+    .badge-stock {
+        top: 2.25rem;
+        left: 0.75rem;
+        right: auto;
+    }
+
+    /* Prevent overflow on admin cards */
+    .responsive-card-table {
+        word-break: break-word;
+        max-width: 100%;
+        overflow-wrap: break-word;
+    }
+
+    /* Override td styles for new mobile layout */
+    .responsive-card-table tbody tr.mobile-card-row td {
+        display: block !important;
+        border: none !important;
+        padding: 0 !important;
+    }
+    .responsive-card-table tbody tr.mobile-card-row td::before {
+        display: none !important;
     }
 }

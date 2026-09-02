@@ -51,40 +51,47 @@ function renderTable() {
         const stockText  = p.stok > 0 ? `${p.stok} Tersedia` : 'Habis';
 
         return `
-            <tr>
-                <td data-label="Gambar" class="td-gambar">
-                    <img src="${escHtml(p.image_url || PLACEHOLDER)}"
-                         class="rounded object-fit-cover"
-                         width="60" height="60"
-                         alt="${escHtml(p.nama_produk)}"
-                         onerror="this.src='${PLACEHOLDER}'">
+            <!-- Desktop View -->
+            <tr class="d-none d-md-table-row">
+                <td class="td-gambar">
+                    <img src="${escHtml(p.image_url || PLACEHOLDER)}" class="rounded object-fit-cover" width="50" height="50" alt="${escHtml(p.nama_produk)}" onerror="this.src='${PLACEHOLDER}'">
                 </td>
-                <td data-label="Nama Produk" class="td-info">
-                    <div class="d-flex justify-content-between align-items-start w-100 mb-1">
-                        <div class="fw-semibold text-dark text-truncate pe-2">${escHtml(p.nama_produk)}</div>
-                        <span class="badge bg-light border text-dark d-md-none flex-shrink-0">${escHtml(p.kategori || '—')}</span>
-                    </div>
-                    <div class="text-muted fs-7 mobile-desc">${escHtml(p.deskripsi || '—')}</div>
+                <td class="td-info">
+                    <div class="fw-bold text-dark text-truncate mb-1" style="max-width:200px;">${escHtml(p.nama_produk)}</div>
+                    <div class="text-muted fs-7 text-truncate" style="max-width:200px;">${escHtml(p.deskripsi || '—')}</div>
                 </td>
-                <td data-label="Kategori" class="td-kategori d-none d-md-table-cell">
-                    <span class="badge bg-light border text-dark">${escHtml(p.kategori || '—')}</span>
+                <td class="td-kategori"><span class="badge bg-light border text-dark">${escHtml(p.kategori || '—')}</span></td>
+                <td class="td-harga"><span class="fw-bold" style="color:#D97706;">${window.formatRupiah(p.harga)}</span></td>
+                <td class="td-stok"><span class="badge ${stockBadge}">${stockText}</span></td>
+                <td class="td-aksi text-end">
+                    <button class="btn btn-sm btn-outline-secondary rounded-pill" onclick="editProduct('${p.id}')" title="Edit"><i class="bi bi-pencil"></i></button>
+                    <button class="btn btn-sm btn-outline-danger rounded-pill" onclick="deleteProduct('${p.id}', '${escHtml(p.nama_produk)}')" title="Hapus"><i class="bi bi-trash"></i></button>
                 </td>
-                <td data-label="Harga" class="td-harga">
-                    <span class="fw-bold" style="color:#D97706;">${window.formatRupiah(p.harga)}</span>
-                </td>
-                <td data-label="Stok" class="td-stok">
-                    <span class="badge ${stockBadge}">${stockText}</span>
-                </td>
-                <td data-label="Aksi" class="td-aksi text-md-end">
-                    <div class="d-flex gap-2 justify-content-md-end w-100">
-                        <button class="btn btn-sm btn-outline-secondary rounded-pill flex-fill flex-md-grow-0"
-                                onclick="editProduct('${p.id}')" title="Edit">
-                            <i class="bi bi-pencil"></i> <span class="d-md-none">Edit</span>
-                        </button>
-                        <button class="btn btn-sm btn-outline-danger rounded-pill flex-fill flex-md-grow-0"
-                                onclick="deleteProduct('${p.id}', '${escHtml(p.nama_produk)}')" title="Hapus">
-                            <i class="bi bi-trash"></i> <span class="d-md-none">Hapus</span>
-                        </button>
+            </tr>
+            <!-- Mobile View -->
+            <tr class="d-md-none mobile-card-row">
+                <td colspan="6" class="p-0 border-0 d-block w-100">
+                    <div class="d-flex flex-column h-100 w-100">
+                        <!-- Baris 1: Gambar Thumbnail + Nama Produk (fw-bold) + Badge Kategori -->
+                        <div class="d-flex align-items-center gap-3 mb-2 w-100">
+                            <img src="${escHtml(p.image_url || PLACEHOLDER)}" class="rounded object-fit-cover flex-shrink-0" width="60" height="60" alt="${escHtml(p.nama_produk)}" onerror="this.src='${PLACEHOLDER}'">
+                            <div class="flex-grow-1 overflow-hidden">
+                                <div class="fw-bold text-dark text-truncate w-100">${escHtml(p.nama_produk)}</div>
+                                <span class="badge bg-light border text-dark mt-1">${escHtml(p.kategori || '—')}</span>
+                            </div>
+                        </div>
+                        <!-- Baris 2: Deskripsi Produk (text-truncate) -->
+                        <div class="text-muted fs-7 mb-3 text-truncate w-100">${escHtml(p.deskripsi || '—')}</div>
+                        <!-- Baris 3: Info Harga & Stok (justify-content-between) -->
+                        <div class="d-flex justify-content-between align-items-center mb-3 w-100">
+                            <span class="fw-bold" style="color:#D97706; font-size:1.1rem;">${window.formatRupiah(p.harga)}</span>
+                            <span class="badge ${stockBadge}">${stockText}</span>
+                        </div>
+                        <!-- Baris 4: Tombol Action (Edit & Hapus) berjajar rapi -->
+                        <div class="d-flex gap-2 mt-auto w-100">
+                            <button class="btn btn-sm btn-outline-secondary rounded-pill flex-fill" onclick="editProduct('${p.id}')"><i class="bi bi-pencil"></i> Edit</button>
+                            <button class="btn btn-sm btn-outline-danger rounded-pill flex-fill" onclick="deleteProduct('${p.id}', '${escHtml(p.nama_produk)}')"><i class="bi bi-trash"></i> Hapus</button>
+                        </div>
                     </div>
                 </td>
             </tr>`;

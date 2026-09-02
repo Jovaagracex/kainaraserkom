@@ -148,10 +148,10 @@ const catalog = {
                     <div class="product-body d-flex flex-column">
                         <h3 class="product-name">${escHtml(p.nama_produk)}</h3>
                         <p class="product-desc">${escHtml(p.deskripsi || 'Tidak ada deskripsi.')}</p>
-                        <!-- Footer: Harga & Tombol — vertikal di HP, horizontal di Desktop -->
-                        <div class="product-footer mt-auto d-flex flex-column flex-sm-row align-items-start align-items-sm-center gap-2">
+                        <!-- Footer: Harga & Tombol — vertikal di HP -->
+                        <div class="product-footer mt-auto d-flex flex-column gap-2">
                             <span class="product-price">${window.formatRupiah(p.harga)}</span>
-                            <button class="btn-detail w-100 w-sm-auto btn-sm justify-content-center">
+                            <button class="btn-detail w-100 btn-sm justify-content-center">
                                 <i class="bi bi-eye"></i> Detail
                             </button>
                         </div>
