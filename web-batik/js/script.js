@@ -1,3 +1,21 @@
+// ── Toast Helper (SweetAlert2 Mixin) ──────────────────────────
+const showToast = (icon, title) => {
+    if (typeof Swal === 'undefined') return;
+    const Toast = Swal.mixin({
+        toast: true,
+        position: 'top-end',
+        showConfirmButton: false,
+        timer: 3000,
+        timerProgressBar: true,
+        didOpen: (toast) => {
+            toast.addEventListener('mouseenter', Swal.stopTimer);
+            toast.addEventListener('mouseleave', Swal.resumeTimer);
+        }
+    });
+    Toast.fire({ icon, title });
+};
+window.showToast = showToast;
+
 document.addEventListener('DOMContentLoaded', () => {
     const navPill = document.querySelector('.nav-active-pill');
     const navLinks = document.querySelectorAll('.navbar-nav .nav-link');

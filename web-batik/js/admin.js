@@ -199,6 +199,7 @@ window.deleteProduct = async function(id, name) {
             customClass: { popup: 'rounded-4' }
         });
 
+        if (window.showToast) showToast('success', 'Produk berhasil dihapus!');
         await loadProducts();
     } catch (err) {
         console.error('Error deleting product:', err);
@@ -247,11 +248,13 @@ window.handleFormSubmit = async function(e) {
                 .from('products').update(productData).eq('id', state.editingId);
             if (error) throw error;
             showAlert('Produk berhasil diperbarui!', 'success');
+            if (window.showToast) showToast('success', 'Produk berhasil diperbarui!');
         } else {
             const { error } = await window.supabaseClient
                 .from('products').insert([productData]);
             if (error) throw error;
             showAlert('Produk baru berhasil ditambahkan!', 'success');
+            if (window.showToast) showToast('success', 'Produk baru berhasil ditambahkan!');
         }
 
         // Tutup modal

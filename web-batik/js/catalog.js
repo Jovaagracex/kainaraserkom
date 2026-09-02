@@ -205,6 +205,9 @@ function openProductDetail(id) {
     if (modalWA) {
         const msg = encodeURIComponent(`Halo Kainara Studio, saya mau beli ${name} seharga ${window.formatRupiah(price)}`);
         modalWA.href = `https://wa.me/${WA_NUMBER}?text=${msg}`;
+        modalWA.onclick = function() {
+            if (window.showToast) showToast('info', 'Membuka percakapan WhatsApp...');
+        };
     }
 
     const bsModal = new bootstrap.Modal(document.getElementById('productDetailModal'));
@@ -222,9 +225,13 @@ function processCheckout() {
     const bsModal = bootstrap.Modal.getInstance(document.getElementById('productDetailModal'));
     if (bsModal) bsModal.hide();
 
-    // Tampilkan alert
+    // Tampilkan toast sukses
     setTimeout(() => {
-        alert(`Pesanan "${name}" (${price}) sedang diproses ke Sistem Checkout.`);
+        if (window.showToast) {
+            showToast('success', `Pesanan "${name}" berhasil dibuat! Mengalihkan ke checkout...`);
+        } else {
+            alert(`Pesanan "${name}" (${price}) sedang diproses ke Sistem Checkout.`);
+        }
     }, 300);
 }
 window.processCheckout = processCheckout;
