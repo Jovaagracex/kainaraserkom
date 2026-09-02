@@ -4,6 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Panel Admin - Kainara Studio</title>
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>💎</text></svg>">
   <!-- Bootstrap 5 CSS -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
   <!-- Google Fonts & Icons -->
@@ -122,8 +124,30 @@
                 <input type="number" id="productStock" class="form-control" min="0" required placeholder="10">
               </div>
               <div class="col-12">
-                <label class="form-label fw-semibold">URL Gambar <span class="text-danger">*</span></label>
-                <input type="url" id="productImage" class="form-control" required placeholder="https://images.unsplash.com/...">
+                <label class="form-label fw-semibold">Gambar Produk <span class="text-danger">*</span></label>
+
+                <!-- Opsi 1: Upload dari Komputer -->
+                <div class="mb-2">
+                  <label class="form-label fw-normal text-muted small mb-1"><i class="bi bi-upload me-1"></i>Upload dari Komputer</label>
+                  <input type="file" id="productFileInput" class="form-control form-control-sm" accept="image/*" onchange="convertFileToBase64()">
+                </div>
+
+                <!-- Preview Gambar -->
+                <div id="imgPreviewWrap" class="mb-2" style="display:none;">
+                  <img id="imgPreview" src="" alt="Preview" class="rounded border" style="max-height:140px;max-width:100%;object-fit:cover;">
+                  <button type="button" class="btn btn-sm btn-outline-danger ms-2 mt-1" onclick="clearImageInput()">
+                    <i class="bi bi-x-circle"></i> Hapus
+                  </button>
+                </div>
+
+                <!-- Opsi 2: URL Manual sebagai alternatif -->
+                <div>
+                  <label class="form-label fw-normal text-muted small mb-1"><i class="bi bi-link-45deg me-1"></i>Atau masukkan URL Gambar</label>
+                  <input type="url" id="productImage" class="form-control form-control-sm" placeholder="https://images.unsplash.com/..." oninput="previewFromUrl()">
+                </div>
+
+                <!-- Hidden: menyimpan nilai akhir (Base64 atau URL) -->
+                <input type="hidden" id="productImageFinal">
               </div>
               <div class="col-12">
                 <label class="form-label fw-semibold">Deskripsi <span class="text-danger">*</span></label>

@@ -122,6 +122,12 @@ window.resetForm = function() {
     document.getElementById('productForm').reset();
     document.getElementById('productId').value = '';
     document.getElementById('modalTitle').textContent = 'Tambah Produk Baru';
+    document.getElementById('productImageFinal').value = '';
+    // Reset preview gambar
+    const wrap = document.getElementById('imgPreviewWrap');
+    const prev = document.getElementById('imgPreview');
+    if (wrap) wrap.style.display = 'none';
+    if (prev) prev.src = '';
     state.editingId = null;
 };
 
@@ -137,8 +143,20 @@ window.editProduct = function(id) {
     document.getElementById('productCategory').value    = p.kategori    || '';
     document.getElementById('productPrice').value       = p.harga       || '';
     document.getElementById('productStock').value       = p.stok        ?? 0;
-    document.getElementById('productImage').value       = p.image_url   || '';
     document.getElementById('productDescription').value = p.deskripsi   || '';
+
+    // Isi URL gambar dan set productImageFinal
+    const imgUrl = p.image_url || '';
+    document.getElementById('productImage').value      = imgUrl.startsWith('data:') ? '' : imgUrl;
+    document.getElementById('productImageFinal').value = imgUrl;
+
+    // Tampilkan preview jika ada gambar
+    if (imgUrl) {
+        const prev = document.getElementById('imgPreview');
+        const wrap = document.getElementById('imgPreviewWrap');
+        if (prev) prev.src = imgUrl;
+        if (wrap) wrap.style.display = 'flex';
+    }
 
     const modal = new bootstrap.Modal(document.getElementById('productModal'));
     modal.show();
@@ -170,12 +188,24 @@ window.handleFormSubmit = async function(e) {
     submitBtn.disabled = true;
     submitBtn.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span>Menyimpan...';
 
+    // Ambil nilai gambar: utamakan productImageFinal (Base64/URL dari upload/URL)
+    const imageFinal = document.getElementById('productImageFinal')?.value.trim()
+                    || document.getElementById('productImage')?.value.trim()
+                    || '';
+
+    if (!imageFinal) {
+        showAlert('Harap pilih gambar atau masukkan URL gambar!', 'warning');
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = originalHtml;
+        return;
+    }
+
     const productData = {
         nama_produk: document.getElementById('productName').value.trim(),
         kategori:    document.getElementById('productCategory').value,
         harga:       parseFloat(document.getElementById('productPrice').value),
         stok:        parseInt(document.getElementById('productStock').value, 10),
-        image_url:   document.getElementById('productImage').value.trim(),
+        image_url:   imageFinal,
         deskripsi:   document.getElementById('productDescription').value.trim() || null,
     };
 
@@ -209,3 +239,83 @@ window.handleFormSubmit = async function(e) {
 
 // ── Init ──────────────────────────────────────────────────────
 document.addEventListener('DOMContentLoaded', loadProducts);
+
+// ════════════════════════════════════════════════════════════
+// FITUR UPLOAD GAMBAR LOKAL — Baca File → Base64 → Simpan ke DB
+// ════════════════════════════════════════════════════════════
+
+/**
+ * Membaca file gambar dari input[type=file] dan mengkonversi ke Base64.
+ * Hasil Base64 disimpan di #productImageFinal dan ditampilkan sebagai preview.
+ */
+window.convertFileToBase64 = function() {
+    const fileInput = document.getElementById('productFileInput');
+    const file = fileInput?.files?.[0];
+    if (!file) return;
+
+    // Batasi ukuran file (maks 2MB agar tidak terlalu besar di database)
+    const MAX_SIZE = 2 * 1024 * 1024; // 2MB
+    if (file.size > MAX_SIZE) {
+        showAlert('Ukuran file terlalu besar (maks 2MB). Gunakan URL Unsplash sebagai alternatif.', 'warning');
+        fileInput.value = '';
+        return;
+    }
+
+    const reader = new FileReader();
+    reader.onload = function(e) {
+        const base64 = e.target.result; // format: "data:image/jpeg;base64,..."
+
+        // Simpan ke hidden field sebagai sumber gambar final
+        document.getElementById('productImageFinal').value = base64;
+
+        // Tampilkan preview
+        const prev = document.getElementById('imgPreview');
+        const wrap = document.getElementById('imgPreviewWrap');
+        if (prev) { prev.src = base64; }
+        if (wrap) { wrap.style.display = 'flex'; wrap.style.alignItems = 'center'; }
+
+        // Kosongkan field URL agar tidak konflik
+        document.getElementById('productImage').value = '';
+    };
+    reader.readAsDataURL(file);
+};
+
+/**
+ * Preview gambar dari URL yang diketik di input URL.
+ */
+window.previewFromUrl = function() {
+    const url = document.getElementById('productImage').value.trim();
+    const prev = document.getElementById('imgPreview');
+    const wrap = document.getElementById('imgPreviewWrap');
+
+    if (!url) {
+        if (wrap) wrap.style.display = 'none';
+        document.getElementById('productImageFinal').value = '';
+        return;
+    }
+
+    // Simpan URL ke hidden field
+    document.getElementById('productImageFinal').value = url;
+
+    // Tampilkan preview
+    if (prev) { prev.src = url; }
+    if (wrap) { wrap.style.display = 'flex'; wrap.style.alignItems = 'center'; }
+
+    // Hapus pilihan file agar tidak konflik
+    const fileInput = document.getElementById('productFileInput');
+    if (fileInput) fileInput.value = '';
+};
+
+/**
+ * Hapus input gambar (file dan URL) serta sembunyikan preview.
+ */
+window.clearImageInput = function() {
+    document.getElementById('productFileInput').value   = '';
+    document.getElementById('productImage').value       = '';
+    document.getElementById('productImageFinal').value  = '';
+
+    const prev = document.getElementById('imgPreview');
+    const wrap = document.getElementById('imgPreviewWrap');
+    if (prev) prev.src = '';
+    if (wrap) wrap.style.display = 'none';
+};
