@@ -28,17 +28,18 @@
             </button>
 
             <div class="collapse navbar-collapse mt-3 mt-md-0" id="batikNav">
-                <ul class="navbar-nav me-auto mb-3 mb-md-0 d-flex gap-2 position-relative">
-                    <!-- Sliding active tab indicator -->
-                    <div class="nav-active-pill"></div>
-                    
-                    <li class="nav-item"><a href="#produk" class="nav-link fw-medium px-3 rounded active">Katalog</a></li>
+                <!-- Menu Link biasa (kiri/tengah) -->
+                <ul class="navbar-nav mb-3 mb-md-0 d-flex gap-2">
                     <li class="nav-item"><a href="#tentang" class="nav-link fw-medium px-3 rounded">Tentang</a></li>
                     <li class="nav-item"><a href="#kontak" class="nav-link fw-medium px-3 rounded">Kontak</a></li>
                 </ul>
-                <div class="d-flex flex-column flex-md-row align-items-md-center gap-2">
+                <!-- Menu Utama / Aksi (kanan) -->
+                <div class="d-flex flex-column flex-md-row align-items-md-center gap-2 ms-md-auto">
+                    <a href="#produk" class="btn btn-outline-warning rounded-pill px-3 py-1 btn-sm fw-medium align-self-center">
+                        <i class="bi bi-bag me-1"></i>Katalog Produk
+                    </a>
                     <a href="../web-portofolio/index.html" class="nav-back d-inline-flex justify-content-center text-decoration-none">
-                        <i class="bi bi-arrow-left me-1"></i> Kembali ke Portofolio
+                        <i class="bi bi-arrow-left me-1"></i> Portofolio
                     </a>
                     <a href="admin.html" class="nav-admin d-inline-flex justify-content-center text-decoration-none">
                         <i class="bi bi-gear-fill me-1"></i> Admin
