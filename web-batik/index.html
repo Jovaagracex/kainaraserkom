@@ -26,9 +26,12 @@
         </a>
 
         <!-- MENU NAVIGASI (TENGAH) -->
-        <div class="collapse navbar-collapse" id="batikNav">
-          <ul class="nav nav-pills d-flex align-items-center gap-3 ms-auto me-auto position-relative">
+        <div class="collapse navbar-collapse justify-content-center" id="batikNav">
+          <ul class="nav nav-pills d-flex align-items-center gap-2 position-relative">
             <div class="nav-active-pill"></div>
+            <li class="nav-item">
+              <a class="nav-link text-dark px-3 py-2 fw-medium" href="#beranda">Beranda</a>
+            </li>
             <li class="nav-item">
               <a class="nav-link text-dark px-3 py-2 fw-medium" href="#katalog">Katalog</a>
             </li>
@@ -42,9 +45,14 @@
         </div>
 
         <!-- TOMBOL TEKNIS (KANAN) -->
-        <div class="d-flex align-items-center gap-2">
-          <a href="../web-portofolio/index.html" class="btn btn-outline-secondary rounded-pill px-3 py-1 btn-sm" style="font-size: 0.85rem;">&larr; Portofolio</a>
-          <a href="admin.html" class="btn btn-dark rounded-pill px-3 py-1 btn-sm" style="font-size: 0.85rem; background-color: #1E1E1E;">&#9881; Admin</a>
+        <div class="d-flex align-items-center bg-light rounded-pill p-1 border gap-1">
+          <a href="../web-portofolio/index.html" class="btn btn-sm btn-link text-decoration-none text-secondary px-2 py-1 fw-medium" style="font-size: 0.8rem;">
+            &larr; Portofolio
+          </a>
+          <span class="text-muted opacity-50">|</span>
+          <a href="admin.html" class="btn btn-sm btn-dark rounded-pill px-3 py-1 fw-medium" style="font-size: 0.8rem; background-color: #2D251E;">
+            &#9881; Admin
+          </a>
         </div>
 
         <!-- TOGGLE MOBILE -->
@@ -55,8 +63,8 @@
       </div>
     </nav>
 
-    <!-- ── HERO ── -->
-    <header class="catalog-hero">
+    <!-- ── HERO / BERANDA ── -->
+    <header id="beranda" class="catalog-hero">
         <div class="container">
             <div class="hero-inner">
                 <div class="hero-content">

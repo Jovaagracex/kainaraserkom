@@ -24,6 +24,15 @@ document.addEventListener('DOMContentLoaded', () => {
         navLinks.forEach(l => l.classList.remove('active'));
     }
 
+    function setActiveByHref(href) {
+        const link = document.querySelector(`.navbar-nav .nav-link[href="${href}"]`);
+        if (link) {
+            clearActive();
+            link.classList.add('active');
+            moveNavPill(link);
+        }
+    }
+
     // ── KLIK MENU → tampilkan pill ──
     navLinks.forEach(link => {
         link.addEventListener('click', function () {
@@ -46,10 +55,12 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // ── SCROLL SPY via IntersectionObserver ──
+    // Observasi #beranda + semua section[id]
+    const heroEl = document.getElementById('beranda');
     const sections = document.querySelectorAll('main > section[id]');
+    const allObserved = [heroEl, ...sections].filter(Boolean);
 
     const observer = new IntersectionObserver((entries) => {
-        // Pilih entry yang paling terlihat di viewport
         let best = null;
         let bestRatio = 0;
         entries.forEach(entry => {
@@ -58,41 +69,34 @@ document.addEventListener('DOMContentLoaded', () => {
                 bestRatio = entry.intersectionRatio;
             }
         });
-
         if (best) {
-            const link = document.querySelector(`.navbar-nav .nav-link[href="#${best.id}"]`);
-            if (link) {
-                clearActive();
-                link.classList.add('active');
-                moveNavPill(link);
-            }
+            setActiveByHref(`#${best.id}`);
         }
     }, {
-        threshold: [0, 0.25, 0.5, 0.75, 1],
-        rootMargin: '-10% 0px -60% 0px'
+        threshold: [0, 0.15, 0.3, 0.5, 0.7, 1],
+        rootMargin: '-5% 0px -60% 0px'
     });
 
-    sections.forEach(s => observer.observe(s));
+    allObserved.forEach(s => observer.observe(s));
 
-    // ── SCROLL → cek apakah masih di hero ──
-    function checkHero() {
-        const hero = document.querySelector('header, .catalog-hero');
-        if (!hero) return;
-        const heroBottom = hero.offsetTop + hero.offsetHeight;
-        const pastHero = window.scrollY + 120 > heroBottom;
-        if (!pastHero) {
-            hidePill();
-            clearActive();
-        }
-    }
-
-    window.addEventListener('scroll', () => {
+    // ── SCROLL → cek posisi hero ──
+    function onScroll() {
         // navbar shadow
         const nav = document.getElementById('mainNav');
         if (nav) nav.classList.toggle('scrolled', window.scrollY > 30);
-        checkHero();
-    }, { passive: true });
 
-    // Jalankan sekali saat load
-    checkHero();
+        // Jika masih di atas hero → set Beranda aktif
+        if (heroEl) {
+            const heroBottom = heroEl.offsetTop + heroEl.offsetHeight;
+            if (window.scrollY + 120 < heroBottom) {
+                setActiveByHref('#beranda');
+                return;
+            }
+        }
+    }
+
+    window.addEventListener('scroll', onScroll, { passive: true });
+
+    // Trigger sekali saat load
+    onScroll();
 });
