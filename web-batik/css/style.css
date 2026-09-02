@@ -262,7 +262,7 @@ h5,h6 { font-family: var(--font-sans); font-weight: 600; }
 
 /* Grid wrapper — styling ditangani Bootstrap .row .g-4         */
 /* JANGAN set display:grid di sini; biarkan Bootstrap yang handle */
-.product-grid { /* kelas lama — sudah diganti di HTML, biarkan kosong */ }
+/* kelas lama — sudah diganti di HTML, biarkan kosong */
 
 /* ── Card article ─────────────────────────────────── */
 .product-card {
@@ -356,6 +356,7 @@ h5,h6 { font-family: var(--font-sans); font-weight: 600; }
     /* Clamp 2 baris — tidak meluber */
     display: -webkit-box;
     -webkit-line-clamp: 2;
+    line-clamp: 2;
     -webkit-box-orient: vertical;
     overflow: hidden;
 }
@@ -369,6 +370,7 @@ h5,h6 { font-family: var(--font-sans); font-weight: 600; }
     /* Line clamp 2 baris */
     display: -webkit-box;
     -webkit-line-clamp: 2;
+    line-clamp: 2;
     -webkit-box-orient: vertical;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -594,7 +596,7 @@ footer.site-footer {
     border: 1px solid var(--sand-border);
 }
 .prod-name { font-weight: 600; color: var(--charcoal); font-size: 0.9rem; }
-.prod-desc { font-size: 0.76rem; color: var(--muted); margin-top: 2px; max-width: 240px; display: -webkit-box; -webkit-line-clamp: 1; -webkit-box-orient: vertical; overflow: hidden; }
+.prod-desc { font-size: 0.76rem; color: var(--muted); margin-top: 2px; max-width: 240px; display: -webkit-box; -webkit-line-clamp: 1; line-clamp: 1; -webkit-box-orient: vertical; overflow: hidden; }
 
 .cat-badge {
     display: inline-block; font-size: 0.68rem; font-weight: 700;
@@ -898,6 +900,7 @@ footer.site-footer {
     .style-search {
         max-width: 100% !important;
         width: 100% !important;
+    }
 }
 
 /* ── Mobile Layout Fixes (Added from UI/UX Audit) ── */
