@@ -952,3 +952,10 @@ footer.site-footer {
 .navbar-nav .nav-link:hover {
     color: var(--terracotta);
 }
+
+/* ── Custom Footer Button ── */
+.btn-back-katalog:hover {
+    background-color: var(--terracotta) !important; /* #d97706 */
+    border-color: var(--terracotta) !important;
+    color: var(--white) !important;
+}
