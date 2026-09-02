@@ -171,18 +171,43 @@ window.editProduct = function(id) {
 
 // ── Hapus Produk ──────────────────────────────────────────────
 window.deleteProduct = async function(id, name) {
-    if (!confirm(`Apakah Anda yakin ingin menghapus produk "${name}"?`)) return;
+    const result = await Swal.fire({
+        title: 'Apakah kamu yakin?',
+        text: "Produk yang dihapus tidak bisa dikembalikan!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#d33',
+        cancelButtonColor: '#3085d6',
+        confirmButtonText: 'Ya, hapus!',
+        cancelButtonText: 'Batal',
+        customClass: {
+            popup: 'rounded-4'
+        }
+    });
+
+    if (!result.isConfirmed) return;
 
     try {
         const { error } = await window.supabaseClient
             .from('products').delete().eq('id', id);
         if (error) throw error;
 
-        showAlert(`Produk "${name}" berhasil dihapus.`, 'success');
+        await Swal.fire({
+            title: 'Terhapus!',
+            text: 'Produk berhasil dihapus.',
+            icon: 'success',
+            customClass: { popup: 'rounded-4' }
+        });
+
         await loadProducts();
     } catch (err) {
         console.error('Error deleting product:', err);
-        showAlert('Gagal menghapus: ' + err.message, 'danger');
+        Swal.fire({
+            title: 'Gagal!',
+            text: 'Gagal menghapus: ' + err.message,
+            icon: 'error',
+            customClass: { popup: 'rounded-4' }
+        });
     }
 };
 
