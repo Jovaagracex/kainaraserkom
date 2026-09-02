@@ -28,10 +28,13 @@
             </button>
 
             <div class="collapse navbar-collapse mt-3 mt-md-0" id="batikNav">
-                <ul class="navbar-nav me-auto mb-3 mb-md-0 d-flex gap-2">
-                    <li class="nav-item"><a href="index.html" class="nav-link fw-medium px-3 rounded" style="color:var(--terracotta);background:var(--terracotta-light);">Katalog</a></li>
-                    <li class="nav-item"><a href="#tentang" class="nav-link fw-medium px-3 rounded" style="color:var(--charcoal-2);">Tentang</a></li>
-                    <li class="nav-item"><a href="#kontak" class="nav-link fw-medium px-3 rounded" style="color:var(--charcoal-2);">Kontak</a></li>
+                <ul class="navbar-nav me-auto mb-3 mb-md-0 d-flex gap-2 position-relative">
+                    <!-- Sliding active tab indicator -->
+                    <div class="nav-active-pill"></div>
+                    
+                    <li class="nav-item"><a href="#produk" class="nav-link fw-medium px-3 rounded active">Katalog</a></li>
+                    <li class="nav-item"><a href="#tentang" class="nav-link fw-medium px-3 rounded">Tentang</a></li>
+                    <li class="nav-item"><a href="#kontak" class="nav-link fw-medium px-3 rounded">Kontak</a></li>
                 </ul>
                 <div class="d-flex flex-column flex-md-row align-items-md-center gap-2">
                     <a href="../web-portofolio/index.html" class="nav-back d-inline-flex justify-content-center text-decoration-none">
@@ -250,7 +253,8 @@
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <!-- Inisialisasi window.supabaseClient -->
     <script src="js/supabaseClient.js"></script>
-    <!-- Katalog Produk -->
+    <!-- Custom Scripts -->
+    <script src="js/script.js"></script>
     <script src="js/catalog.js"></script>
 </body>
 </html>

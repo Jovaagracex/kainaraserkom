@@ -926,3 +926,26 @@ footer.site-footer {
         display: none !important;
     }
 }
+
+/* ── Sliding Active Tab Indicator ── */
+.nav-active-pill {
+    position: absolute;
+    background-color: #f5ebe0; /* warna krem oranye soft aktif */
+    border-radius: 8px;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: 0;
+    pointer-events: none;
+    height: 100%;
+}
+.navbar-nav .nav-link {
+    position: relative;
+    z-index: 1;
+    color: var(--charcoal-2);
+    transition: color 0.3s ease;
+}
+.navbar-nav .nav-link.active {
+    color: var(--terracotta) !important;
+}
+.navbar-nav .nav-link:hover {
+    color: var(--terracotta);
+}
