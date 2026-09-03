@@ -47,6 +47,11 @@
 
         <!-- TOMBOL TEKNIS (KANAN) -->
         <div class="d-flex align-items-center gap-2">
+          <!-- Cart Button -->
+          <button class="btn btn-outline-dark rounded-circle position-relative" style="width:36px;height:36px;padding:0;display:flex;align-items:center;justify-content:center;" onclick="Cart.openPanel()" aria-label="Keranjang">
+            <i class="bi bi-bag" style="font-size:0.95rem;"></i>
+            <span id="cartBadge" class="position-absolute d-none align-items-center justify-content-center rounded-circle fw-bold" style="width:18px;height:18px;font-size:0.6rem;background:#D97706;color:#fff;top:-4px;right:-4px;">0</span>
+          </button>
           <a href="../web-portofolio/index.html" class="btn btn-outline-dark rounded-pill px-3 py-1 btn-sm d-inline-flex align-items-center gap-1 fw-medium" style="font-size: 0.82rem; border-color: #d1d5db; color: #4b5563;">
             <span>&larr;</span> Portofolio
           </a>
@@ -87,6 +92,45 @@
         </div>
     </header>
 
+    <!-- ── FLASH SALE PROMO BANNER ── -->
+    <section class="promo-banner-section py-5">
+        <div class="container">
+            <div class="promo-banner rounded-4 overflow-hidden position-relative" style="background: #1A1817;">
+                <div class="row g-0 align-items-center">
+                    <div class="col-md-7 p-4 p-md-5 position-relative" style="z-index: 2;">
+                        <span class="badge rounded-pill px-3 py-2 mb-3 fw-semibold" style="background: rgba(239,68,68,0.15); color: #EF4444; font-size: 0.75rem;">
+                            <i class="bi bi-lightning-fill"></i> FLASH SALE — TERBATAS!
+                        </span>
+                        <h2 class="fw-bold text-white mb-2" style="font-size: 2.2rem; line-height: 1.1;">
+                            Diskon Hingga <span class="promo-glow" style="color: #D97706;">50%</span>
+                        </h2>
+                        <p class="text-white-50 mb-3" style="max-width: 400px; font-size: 0.95rem;">
+                            Koleksi batik pilihan dengan harga spesial. Berlaku hingga stok habis — jangan lewatkan!
+                        </p>
+                        <div class="d-flex align-items-center gap-3 mb-4">
+                            <div class="countdown-badge d-flex align-items-center gap-1 px-3 py-2 rounded-pill" style="background: rgba(217,119,6,0.12); border: 1px solid rgba(217,119,6,0.3);">
+                                <i class="bi bi-clock-fill" style="color: #D97706;"></i>
+                                <span class="text-white fw-semibold" style="font-size: 0.85rem;" id="promoCountdown">02 : 14 : 37</span>
+                            </div>
+                            <span class="text-white-50 small">Stok terbatas!</span>
+                        </div>
+                        <a href="#katalog" class="btn rounded-pill px-4 py-2 fw-semibold d-inline-flex align-items-center gap-2" style="background: linear-gradient(135deg, #D97706, #EF4444); color: #fff; border: none; font-size: 0.95rem;">
+                            <i class="bi bi-bag-check"></i> Klaim Diskon Sekarang
+                        </a>
+                    </div>
+                    <div class="col-md-5 d-flex align-items-center justify-content-center p-4 position-relative">
+                        <div class="promo-img-wrapper promo-float position-relative">
+                            <img src="https://images.unsplash.com/photo-1583391733956-6c78276477e2?w=500&h=500&fit=crop" alt="Promo Batik" class="img-fluid rounded-3 shadow-lg" style="max-height: 280px; width: 100%; object-fit: cover; transition: transform 0.4s ease;">
+                            <div class="promo-badge position-absolute d-flex align-items-center justify-content-center rounded-circle promo-glow" style="width: 80px; height: 80px; background: linear-gradient(135deg, #EF4444, #D97706); color: #fff; font-weight: 800; font-size: 1rem; top: -10px; right: -10px; box-shadow: 0 0 20px rgba(217,119,6,0.6); line-height: 1;">
+                                50%<br><span style="font-size: 0.6rem; font-weight: 600;">OFF</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- ── FULL CATALOG ── -->
     <main id="katalog">
         <section class="section">
@@ -112,6 +156,13 @@
                         <option value="Gaun">Gaun</option>
                         <option value="Kain">Kain</option>
                         <option value="Lainnya">Lainnya</option>
+                    </select>
+                    <select id="sortFilter" class="filter-select" aria-label="Urutkan">
+                        <option value="">Urutkan</option>
+                        <option value="harga-asc">Harga: Rendah</option>
+                        <option value="harga-desc">Harga: Tinggi</option>
+                        <option value="nama-asc">Nama: A-Z</option>
+                        <option value="nama-desc">Nama: Z-A</option>
                     </select>
                     <span class="filter-count" id="filterCount"></span>
                 </div>
@@ -168,6 +219,64 @@
                             <div class="feature-item"><i class="bi bi-check-circle-fill"></i> Bahan Premium & Ramah Kulit</div>
                             <div class="feature-item"><i class="bi bi-check-circle-fill"></i> Pengiriman ke Seluruh Indonesia</div>
                             <div class="feature-item"><i class="bi bi-check-circle-fill"></i> Garansi Kepuasan & Retur Mudah</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ── TESTIMONI ── -->
+        <section class="section section-testimoni">
+            <div class="container">
+                <div class="section-head center">
+                    <span class="eyebrow">Testimoni</span>
+                    <h2 class="section-title">Apa Kata Mereka?</h2>
+                    <p class="section-desc">Cerita nyata dari pelanggan yang puas dengan batik pilihan kami.</p>
+                </div>
+                <div class="row row-cols-1 row-cols-md-3 g-4">
+                    <div class="col">
+                        <div class="testimoni-card">
+                            <div class="d-flex align-items-center gap-3 mb-3">
+                                <div class="testimoni-avatar">S</div>
+                                <div>
+                                    <div class="fw-bold text-dark">Siti Rahayu</div>
+                                    <div class="text-muted" style="font-size:0.75rem;">Jakarta</div>
+                                </div>
+                            </div>
+                            <div class="testimoni-stars mb-2">
+                                <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
+                            </div>
+                            <p class="testimoni-text">"Batiknya sangat elegan dan premium. Bahannya adem, jahitan rapi. Sudah 3 kali beli disini, selalu puas!"</p>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="testimoni-card">
+                            <div class="d-flex align-items-center gap-3 mb-3">
+                                <div class="testimoni-avatar" style="background:#2D251E;">B</div>
+                                <div>
+                                    <div class="fw-bold text-dark">Budi Santoso</div>
+                                    <div class="text-muted" style="font-size:0.75rem;">Surabaya</div>
+                                </div>
+                            </div>
+                            <div class="testimoni-stars mb-2">
+                                <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
+                            </div>
+                            <p class="testimoni-text">"Kemeja batik untuk acara kantor. Motifnya unik, tidak pasaran. Pengiriman cepat dan packaging rapi."</p>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="testimoni-card">
+                            <div class="d-flex align-items-center gap-3 mb-3">
+                                <div class="testimoni-avatar" style="background:#78350f;">A</div>
+                                <div>
+                                    <div class="fw-bold text-dark">Anisa Putri</div>
+                                    <div class="text-muted" style="font-size:0.75rem;">Bandung</div>
+                                </div>
+                            </div>
+                            <div class="testimoni-stars mb-2">
+                                <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-half"></i>
+                            </div>
+                            <p class="testimoni-text">"Gaun batiknya cantik banget! Cocok buat kondangan. Adminnya ramah dan fast response. Recommended!"</p>
                         </div>
                     </div>
                 </div>
@@ -309,8 +418,8 @@
                 <div>
                   <label class="form-label small fw-bold text-muted mb-2">Pilih Cara Pembelian:</label>
                   <div class="d-grid gap-2">
-                    <button onclick="processCheckout()" class="btn btn-dark rounded-pill py-2 fw-semibold d-flex align-items-center justify-content-center gap-2" style="background-color: #2D251E;">
-                      <i class="bi bi-bag-check"></i> Beli Langsung (Checkout)
+                    <button onclick="if(currentProduct) Cart.addItem(currentProduct); bootstrap.Modal.getInstance(document.getElementById('productDetailModal')).hide();" class="btn btn-dark rounded-pill py-2 fw-semibold d-flex align-items-center justify-content-center gap-2" style="background-color: #2D251E;">
+                      <i class="bi bi-bag-plus"></i> Tambah ke Keranjang
                     </button>
                     <a id="modalBuyWA" href="#" target="_blank" rel="noopener" class="btn btn-outline-success rounded-pill py-2 btn-sm fw-medium d-flex align-items-center justify-content-center gap-2">
                       <i class="bi bi-whatsapp"></i> Order via WhatsApp
@@ -324,10 +433,105 @@
       </div>
     </div>
 
+    <!-- ── OFFCANVAS KERANJANG ── -->
+    <div class="offcanvas offcanvas-end" tabindex="-1" id="cartOffcanvas" style="width: 380px;">
+      <div class="offcanvas-header border-bottom">
+        <h5 class="fw-bold mb-0"><i class="bi bi-bag me-2"></i>Keranjang Belanja</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+      </div>
+      <div class="offcanvas-body p-3" id="cartPanelBody">
+        <div class="text-center py-5 text-muted">
+          <i class="bi bi-bag fs-1 d-block mb-2"></i>
+          <p>Keranjang kosong</p>
+        </div>
+      </div>
+      <div class="offcanvas-footer border-top p-3" id="cartPanelFooter" style="display:none;">
+        <div class="d-flex justify-content-between mb-3">
+          <span class="fw-bold">Total</span>
+          <span class="fw-bold fs-5" style="color:#D97706;" id="cartTotal">Rp 0</span>
+        </div>
+        <div class="d-grid gap-2">
+          <button class="btn btn-dark rounded-pill py-2 fw-semibold" onclick="Cart.checkout()" style="background-color:#2D251E;">
+            <i class="bi bi-bag-check"></i> Checkout
+          </button>
+          <button class="btn btn-outline-danger rounded-pill py-1 btn-sm" onclick="if(confirm('Kosongkan keranjang?')) Cart.clear();">Kosongkan Keranjang</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── MODAL CHECKOUT ── -->
+    <div class="modal fade" id="checkoutModal" tabindex="-1" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content rounded-4 border-0 shadow-lg">
+          <div class="modal-header border-bottom-0 p-4 pb-0">
+            <h5 class="fw-bold"><i class="bi bi-bag-check me-2"></i>Checkout Pesanan</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body p-4">
+            <div class="row g-4">
+              <!-- Ringkasan Order -->
+              <div class="col-md-5">
+                <h6 class="fw-bold mb-3">Ringkasan Pesanan</h6>
+                <div id="checkoutSummary"></div>
+                <div class="d-flex justify-content-between mt-3 pt-2 border-top">
+                  <span class="fw-bold fs-5">Total</span>
+                  <span class="fw-bold fs-5" style="color:#D97706;" id="checkoutTotal">Rp 0</span>
+                </div>
+              </div>
+              <!-- Form Data Diri -->
+              <div class="col-md-7">
+                <h6 class="fw-bold mb-3">Data Diri</h6>
+                <form id="checkoutForm" onsubmit="event.preventDefault(); Checkout.submit();">
+                  <div class="mb-3">
+                    <label class="form-label fw-semibold small">Nama Lengkap <span class="text-danger">*</span></label>
+                    <input type="text" id="checkoutName" class="form-control rounded-pill" required placeholder="Siti Rahayu">
+                  </div>
+                  <div class="mb-3">
+                    <label class="form-label fw-semibold small">No. Telepon / WhatsApp <span class="text-danger">*</span></label>
+                    <input type="tel" id="checkoutPhone" class="form-control rounded-pill" required placeholder="0812xxxxxxx">
+                  </div>
+                  <div class="mb-3">
+                    <label class="form-label fw-semibold small">Alamat Pengiriman <span class="text-danger">*</span></label>
+                    <textarea id="checkoutAddress" class="form-control rounded-3" rows="3" required placeholder="Jl. Merdeka No. 10, Jakarta Selatan"></textarea>
+                  </div>
+                  <div class="mb-3">
+                    <label class="form-label fw-semibold small">Catatan (Opsional)</label>
+                    <input type="text" id="checkoutNote" class="form-control rounded-pill" placeholder="Ukuran L, warna coklat, dll.">
+                  </div>
+                  <button type="submit" class="btn btn-dark rounded-pill py-2 fw-semibold w-100" style="background-color:#2D251E;">
+                    <i class="bi bi-whatsapp me-1"></i> Kirim Pesanan via WhatsApp
+                  </button>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="js/supabaseClient.js"></script>
     <script src="js/script.js"></script>
+    <script src="js/cart.js"></script>
+    <script src="js/checkout.js"></script>
     <script src="js/catalog.js"></script>
+    <!-- Promo Countdown Timer -->
+    <script>
+    (function() {
+        var el = document.getElementById('promoCountdown');
+        if (!el) return;
+        var total = 2 * 3600 + 14 * 60 + 37;
+        function update() {
+            var h = String(Math.floor(total / 3600)).padStart(2, '0');
+            var m = String(Math.floor((total % 3600) / 60)).padStart(2, '0');
+            var s = String(total % 60).padStart(2, '0');
+            el.textContent = h + ' : ' + m + ' : ' + s;
+            if (total > 0) total--;
+        }
+        update();
+        setInterval(update, 1000);
+    })();
+    </script>
 </body>
 </html>

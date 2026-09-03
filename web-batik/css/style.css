@@ -966,3 +966,84 @@ footer.site-footer {
     border-color: var(--terracotta) !important;
     color: var(--white) !important;
 }
+
+/* ── Flash Sale Promo Banner ── */
+.promo-banner-section { padding: var(--sp-6) 0; }
+.promo-banner { border: 1px solid rgba(255,255,255,0.05); }
+.promo-img-wrapper:hover img { transform: scale(1.05); }
+.promo-img-wrapper img { transition: transform 0.4s ease; }
+
+@keyframes pulseGlow {
+    0%, 100% { text-shadow: 0 0 10px rgba(217, 119, 6, 0.5), 0 0 20px rgba(217, 119, 6, 0.3); }
+    50% { text-shadow: 0 0 25px rgba(217, 119, 6, 0.9), 0 0 40px rgba(239, 68, 68, 0.6); }
+}
+@keyframes floatAnimation {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-10px); }
+}
+.promo-glow { animation: pulseGlow 2s infinite; }
+.promo-float { animation: floatAnimation 3.5s ease-in-out infinite; }
+
+/* ── Add to Cart Button ── */
+.btn-add-cart {
+    background: var(--terracotta);
+    color: var(--white);
+    border: none;
+    border-radius: var(--r-full);
+    font-size: 0.8rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+    padding: 0.35rem 0.65rem;
+}
+.btn-add-cart:hover {
+    background: var(--charcoal);
+    color: var(--white);
+    transform: scale(1.08);
+}
+
+/* ── Testimoni ── */
+.section-testimoni { background: var(--sand); }
+.testimoni-card {
+    background: var(--white);
+    border: 1px solid var(--sand-border);
+    border-radius: var(--r-xl);
+    padding: var(--sp-6);
+    height: 100%;
+    transition: all 0.3s;
+}
+.testimoni-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.06);
+}
+.testimoni-avatar {
+    width: 44px; height: 44px;
+    border-radius: 50%;
+    background: var(--terracotta);
+    color: var(--white);
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 700; font-size: 1rem;
+    flex-shrink: 0;
+}
+.testimoni-stars { color: #F59E0B; font-size: 0.8rem; }
+.testimoni-stars i { margin-right: 1px; }
+.testimoni-text {
+    color: var(--charcoal-3);
+    font-size: 0.875rem;
+    line-height: 1.65;
+    font-style: italic;
+    margin: 0;
+}
+
+/* ── Filter Select Styling ── */
+.filter-select {
+    border: 1px solid var(--sand-border);
+    border-radius: var(--r-full);
+    padding: 0.4rem 0.8rem;
+    font-size: 0.85rem;
+    font-family: var(--font-sans);
+    background: var(--white);
+    color: var(--charcoal);
+    cursor: pointer;
+}

@@ -19,6 +19,7 @@ const state = {
     filtered: [],
     search:   '',
     category: '',
+    sort:     '',
     loading:  false,
 };
 
@@ -54,6 +55,15 @@ const catalog = {
             this.applyFilters();
             this.render();
         });
+
+        const sortEl = document.getElementById('sortFilter');
+        if (sortEl) {
+            sortEl.addEventListener('change', e => {
+                state.sort = e.target.value;
+                this.applyFilters();
+                this.render();
+            });
+        }
     },
 
     async loadProducts() {
@@ -93,6 +103,11 @@ const catalog = {
         if (state.category) {
             result = result.filter(p => p.kategori === state.category);
         }
+        // Sorting
+        if (state.sort === 'harga-asc')  result.sort((a, b) => a.harga - b.harga);
+        if (state.sort === 'harga-desc') result.sort((a, b) => b.harga - a.harga);
+        if (state.sort === 'nama-asc')   result.sort((a, b) => (a.nama_produk || '').localeCompare(b.nama_produk || ''));
+        if (state.sort === 'nama-desc')  result.sort((a, b) => (b.nama_produk || '').localeCompare(a.nama_produk || ''));
         state.filtered = result;
     },
 
@@ -151,9 +166,14 @@ const catalog = {
                         <!-- Footer: Harga & Tombol — vertikal di HP -->
                         <div class="product-footer mt-auto d-flex flex-column gap-2">
                             <span class="product-price">${window.formatRupiah(p.harga)}</span>
-                            <button class="btn-detail w-100 btn-sm justify-content-center" onclick="openProductDetail('${escHtml(p.id)}')">
-                                <i class="bi bi-eye"></i> Detail
-                            </button>
+                            <div class="d-flex gap-2">
+                                <button class="btn-detail flex-fill btn-sm justify-content-center" onclick="openProductDetail('${escHtml(p.id)}')">
+                                    <i class="bi bi-eye"></i> Detail
+                                </button>
+                                <button class="btn-add-cart btn-sm px-3 justify-content-center" onclick="Cart.addItem({id:'${escHtml(p.id)}',nama_produk:'${escHtml(p.nama_produk).replace(/'/g,"\\'")}',harga:${p.harga || 0},image_url:'${escHtml(p.image_url || '').replace(/'/g,"\\'")}',kategori:'${escHtml(p.kategori || '').replace(/'/g,"\\'")}'})">
+                                    <i class="bi bi-bag-plus"></i>
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </article>
