@@ -1345,3 +1345,41 @@ body.page-enter { animation: page-in .45s ease both; }
 @media (prefers-reduced-motion: reduce) {
     .promo-glow, .promo-float, .skeleton { animation: none !important; }
 }
+/* ── Language switcher (i18n) ── */
+.lang-wrap { position: relative; }
+.lang-btn {
+    background: transparent; border: 1px solid var(--sand-border);
+    color: var(--charcoal-2); height: 36px; min-width: 36px; border-radius: 999px;
+    display: inline-flex; align-items: center; justify-content: center; gap: 4px;
+    padding: 0 10px; cursor: pointer; transition: all var(--t-base);
+    font-size: .78rem; font-weight: 700;
+}
+.lang-btn:hover { border-color: var(--terracotta); color: var(--terracotta); }
+.lang-menu {
+    position: absolute; top: calc(100% + 8px); right: 0; z-index: 1200;
+    background: var(--white); border: 1px solid var(--sand-border);
+    border-radius: 12px; box-shadow: var(--sh-lg); padding: 6px;
+    min-width: 150px; display: none;
+}
+.lang-menu.open { display: block; }
+.lang-menu [data-lang] {
+    display: flex; align-items: center; gap: 8px; width: 100%;
+    background: none; border: none; border-radius: 8px;
+    padding: 8px 10px; font-size: .83rem; color: var(--charcoal-2); cursor: pointer;
+}
+.lang-menu [data-lang]:hover { background: var(--sand-dark); }
+.lang-menu [data-lang] .lang-check { width: 16px; color: var(--terracotta); visibility: hidden; }
+.lang-menu [data-lang].active { color: var(--charcoal); font-weight: 700; }
+.lang-menu [data-lang].active .lang-check { visibility: visible; }
+
+/* ── Jepang: font Noto Sans JP ── */
+html[lang="ja"] body { font-family: 'Inter', 'Noto Sans JP', system-ui, sans-serif; }
+html[lang="ja"] h1, html[lang="ja"] h2, html[lang="ja"] h3, html[lang="ja"] h4 { font-family: 'Playfair Display', 'Noto Sans JP', serif; }
+
+/* ── Arab (RTL): penyesuaian kecil ── */
+html[dir="rtl"] .hero-note { text-align: left; }
+html[dir="rtl"] .reason-list li { padding: 0 3.2rem 1.1rem 0; }
+html[dir="rtl"] .reason-list li::before { left: auto; right: 0; }
+html[dir="rtl"] .search-wrap .bi-search { left: auto; right: var(--sp-4); }
+html[dir="rtl"] .search-input { padding: 0.625rem 2.5rem 0.625rem 1rem; }
+html[dir="rtl"] .filter-select { padding: 0.625rem 1rem 0.625rem 2rem; background-position: left 0.75rem center; }

@@ -17,25 +17,25 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
     <link rel="preconnect" href="https://images.unsplash.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@400;500;600;700&family=Caveat:wght@500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@400;500;600;700&family=Caveat:wght@500;600&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css?v=1.11.3">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="css/style.css">
-    <script>try{if(localStorage.getItem('site-theme')==='dark')document.documentElement.setAttribute('data-theme','dark');}catch(e){}</script>
+    <script>try{if(localStorage.getItem('site-theme')==='dark')document.documentElement.setAttribute('data-theme','dark');var _l=localStorage.getItem('site-lang')||'id';document.documentElement.lang=_l==='ar'?'ar':_l;if(_l==='ar')document.documentElement.dir='rtl';}catch(e){}</script>
 </head>
 <body class="page-enter">
 
     <div id="scrollProgress" aria-hidden="true"></div>
     <div id="offlineBar" role="alert" style="display:none;">
         <i class="bi bi-wifi-off"></i>
-        <span>Kamu lagi offline — katalog mungkin nggak update. Cek koneksi dulu ya.</span>
+        <span data-i18n="off_msg">Kamu lagi offline — katalog mungkin nggak update. Cek koneksi dulu ya.</span>
     </div>
 
     <!-- Loading transisi ke web portofolio -->
     <div id="pageLoader" aria-hidden="true">
         <div class="loader-ring"><span>E<em>.</em></span></div>
         <div class="loader-brand">Erlangga<span>.</span></div>
-        <div class="loader-sub">Kembali ke portofolio...</div>
+        <div class="loader-sub" data-i18n="loader_back">Kembali ke portofolio...</div>
         <div class="loader-bar"><span></span></div>
         <div class="loader-pct">0%</div>
     </div>
@@ -55,16 +55,16 @@
           <ul class="nav nav-pills d-flex align-items-center gap-2 position-relative">
             <div class="nav-active-pill"></div>
             <li class="nav-item">
-              <a class="nav-link text-dark px-3 py-2 fw-medium" href="#beranda">Beranda</a>
+              <a class="nav-link text-dark px-3 py-2 fw-medium" href="#beranda" data-i18n="nav_beranda">Beranda</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link text-dark px-3 py-2 fw-medium" href="#katalog">Katalog</a>
+              <a class="nav-link text-dark px-3 py-2 fw-medium" href="#katalog" data-i18n="nav_katalog">Katalog</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link text-dark px-3 py-2 fw-medium" href="#tentang">Tentang</a>
+              <a class="nav-link text-dark px-3 py-2 fw-medium" href="#tentang" data-i18n="nav_tentang">Tentang</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link text-dark px-3 py-2 fw-medium" href="#kontak">Kontak</a>
+              <a class="nav-link text-dark px-3 py-2 fw-medium" href="#kontak" data-i18n="nav_kontak">Kontak</a>
             </li>
           </ul>
         </div>
@@ -73,15 +73,15 @@
         <div class="d-flex align-items-center gap-2">
           <button class="theme-toggle" id="themeToggle" aria-label="Mode gelap / terang"><i class="bi bi-moon"></i></button>
           <!-- Cart Button -->
-          <button class="btn btn-outline-dark rounded-circle position-relative" style="width:36px;height:36px;padding:0;display:flex;align-items:center;justify-content:center;" onclick="Cart.openPanel()" aria-label="Keranjang">
+          <button class="btn btn-outline-dark rounded-circle position-relative" style="width:36px;height:36px;padding:0;display:flex;align-items:center;justify-content:center;" onclick="Cart.openPanel()" aria-label="Keranjang" data-i18n-aria="cart_aria">
             <i class="bi bi-bag" style="font-size:0.95rem;"></i>
             <span id="cartBadge" class="position-absolute d-none align-items-center justify-content-center rounded-circle fw-bold" style="width:18px;height:18px;font-size:0.6rem;background:#D97706;color:#fff;top:-4px;right:-4px;">0</span>
           </button>
           <a href="../web-portofolio/index.html" class="btn btn-outline-dark rounded-pill px-3 py-1 btn-sm d-inline-flex align-items-center gap-1 fw-medium" style="font-size: 0.82rem; border-color: #d1d5db; color: #4b5563;">
-            <span>&larr;</span> Portofolio
+            <span>&larr;</span> <span data-i18n="nav_portofolio">Portofolio</span>
           </a>
           <a href="admin.html" class="btn btn-dark rounded-pill px-3 py-1 btn-sm d-inline-flex align-items-center gap-1 fw-medium" style="font-size: 0.82rem; background-color: #2D251E; border: none;">
-            <span>&#9881;</span> Admin
+            <span>&#9881;</span> <span data-i18n="nav_admin">Admin</span>
           </a>
         </div>
 
@@ -98,20 +98,20 @@
         <div class="container">
             <div class="hero-inner">
                 <div class="hero-content">
-                    <span class="eyebrow"><i class="bi bi-circle-fill" style="font-size:0.4rem"></i> Koleksi Eksklusif 2026</span>
-                    <h1>Batik <em>Premium</em><br>dari Hati Pengrajin</h1>
-                    <p>Saya kerja sama langsung dengan pengrajin di Solo, Pekalongan, dan Lasem. Tiap motif saya pilih sendiri — yang lolos kurasi baru saya jual di sini.</p>
+                    <span class="eyebrow"><i class="bi bi-circle-fill" style="font-size:0.4rem"></i> <span data-i18n="hero_eyebrow">Koleksi Eksklusif 2026</span></span>
+                    <h1 data-i18n="hero_title">Batik <em>Premium</em><br>dari Hati Pengrajin</h1>
+                    <p data-i18n="hero_sub">Saya kerja sama langsung dengan pengrajin di Solo, Pekalongan, dan Lasem. Tiap motif saya pilih sendiri — yang lolos kurasi baru saya jual di sini.</p>
                     <div class="hero-btns">
                         <a href="#katalog" class="btn-terra">
-                            <i class="bi bi-shop"></i> Belanja Sekarang
+                            <i class="bi bi-shop"></i> <span data-i18n="hero_shop">Belanja Sekarang</span>
                         </a>
-                        <a href="#tentang" class="btn-outline">Cerita Kami</a>
+                        <a href="#tentang" class="btn-outline" data-i18n="hero_story">Cerita Kami</a>
                     </div>
                 </div>
                 <div class="hero-img-col">
-                    <p class="hero-note">stok difoto satu-satu pakai HP saya -></p>
+                    <p class="hero-note" data-i18n="hero_note">stok difoto satu-satu pakai HP saya -></p>
                     <div class="hero-img-box hero-img-tilt">
-                        <img src="https://images.unsplash.com/photo-1607083206869-4c7672e72a8a?auto=format&fit=crop&w=640&q=70" alt="Koleksi Batik Kainara Studio" fetchpriority="high" decoding="async">
+                        <img src="https://images.unsplash.com/photo-1607083206869-4c7672e72a8a?auto=format&fit=crop&w=640&q=70" alt="Koleksi Batik Kainara Studio" data-i18n-alt="hero_img_alt" fetchpriority="high" decoding="async">
                     </div>
                 </div>
             </div>
@@ -125,12 +125,12 @@
                 <div class="row g-0 align-items-center">
                     <div class="col-md-7 p-4 p-md-5 position-relative" style="z-index: 2;">
                         <span class="badge rounded-pill px-3 py-2 mb-3 fw-semibold" style="background: rgba(239,68,68,0.15); color: #EF4444; font-size: 0.75rem;">
-                            <i class="bi bi-lightning-fill"></i> FLASH SALE — TERBATAS!
+                            <i class="bi bi-lightning-fill"></i> <span data-i18n="promo_badge">FLASH SALE — TERBATAS!</span>
                         </span>
-                        <h2 class="fw-bold text-white mb-2" style="font-size: 2.2rem; line-height: 1.1;">
+                        <h2 class="fw-bold text-white mb-2" style="font-size: 2.2rem; line-height: 1.1;" data-i18n="promo_title">
                             Diskon Hingga <span class="promo-glow" style="color: #D97706;">50%</span>
                         </h2>
-                        <p class="text-white-50 mb-3" style="max-width: 400px; font-size: 0.95rem;">
+                        <p class="text-white-50 mb-3" style="max-width: 400px; font-size: 0.95rem;" data-i18n="promo_sub">
                             Koleksi batik pilihan dengan harga spesial. Berlaku hingga stok habis — jangan lewatkan!
                         </p>
                         <div class="d-flex align-items-center gap-3 mb-4">
@@ -138,15 +138,15 @@
                                 <i class="bi bi-clock-fill" style="color: #D97706;"></i>
                                 <span class="text-white fw-semibold" style="font-size: 0.85rem;" id="promoCountdown">02 : 14 : 37</span>
                             </div>
-                            <span class="text-white-50 small">Stok terbatas!</span>
+                            <span class="text-white-50 small" data-i18n="promo_limited">Stok terbatas!</span>
                         </div>
                         <a href="#katalog" class="btn rounded-pill px-4 py-2 fw-semibold d-inline-flex align-items-center gap-2" style="background: linear-gradient(135deg, #D97706, #EF4444); color: #fff; border: none; font-size: 0.95rem;">
-                            <i class="bi bi-bag-check"></i> Klaim Diskon Sekarang
+                            <i class="bi bi-bag-check"></i> <span data-i18n="promo_cta">Klaim Diskon Sekarang</span>
                         </a>
                     </div>
                     <div class="col-md-5 d-flex align-items-center justify-content-center p-4 position-relative">
                         <div class="promo-img-wrapper promo-float position-relative">
-                            <img src="https://images.unsplash.com/photo-1583391733956-6c78276477e2?w=500&h=500&fit=crop" alt="Promo Batik" class="img-fluid rounded-3 shadow-lg" style="max-height: 280px; width: 100%; object-fit: cover; transition: transform 0.4s ease;" loading="lazy" decoding="async">
+                            <img src="https://images.unsplash.com/photo-1583391733956-6c78276477e2?w=500&h=500&fit=crop" alt="Promo Batik" data-i18n-alt="promo_img_alt" class="img-fluid rounded-3 shadow-lg" style="max-height: 280px; width: 100%; object-fit: cover; transition: transform 0.4s ease;" loading="lazy" decoding="async">
                             <div class="promo-badge position-absolute d-flex align-items-center justify-content-center rounded-circle promo-glow" style="width: 80px; height: 80px; background: linear-gradient(135deg, #EF4444, #D97706); color: #fff; font-weight: 800; font-size: 1rem; top: -10px; right: -10px; box-shadow: 0 0 20px rgba(217,119,6,0.6); line-height: 1;">
                                 50%<br><span style="font-size: 0.6rem; font-weight: 600;">OFF</span>
                             </div>
@@ -161,8 +161,8 @@
     <!-- ── PITA BERJALAN ── -->
     <div class="kainara-marquee" aria-hidden="true">
         <div class="kainara-marquee-track">
-            <span>Batik Tulis <span class="o">✦</span> Batik Cap <span class="o">✦</span> Pengrajin Solo <span class="o">✦</span> Pekalongan <span class="o">✦</span> Lasem <span class="o">✦</span> Order via WhatsApp <span class="o">✦</span>&nbsp;</span>
-            <span>Batik Tulis <span class="o">✦</span> Batik Cap <span class="o">✦</span> Pengrajin Solo <span class="o">✦</span> Pekalongan <span class="o">✦</span> Lasem <span class="o">✦</span> Order via WhatsApp <span class="o">✦</span>&nbsp;</span>
+            <span data-i18n="marquee">Batik Tulis <span class="o">✦</span> Batik Cap <span class="o">✦</span> Pengrajin Solo <span class="o">✦</span> Pekalongan <span class="o">✦</span> Lasem <span class="o">✦</span> Order via WhatsApp <span class="o">✦</span>&nbsp;</span>
+            <span data-i18n="marquee">Batik Tulis <span class="o">✦</span> Batik Cap <span class="o">✦</span> Pengrajin Solo <span class="o">✦</span> Pekalongan <span class="o">✦</span> Lasem <span class="o">✦</span> Order via WhatsApp <span class="o">✦</span>&nbsp;</span>
         </div>
     </div>
 
@@ -170,19 +170,19 @@
         <section class="section">
             <div class="container">
                 <div class="section-head center">
-                    <span class="eyebrow">Katalog Produk</span>
-                    <h2 class="section-title">Koleksi Batik Terpilih</h2>
-                    <p class="section-desc">Setiap kain dibuat dengan penuh ketelitian — dari pilihan bahan hingga ketajaman motif.</p>
+                    <span class="eyebrow" data-i18n="cat_eyebrow">Katalog Produk</span>
+                    <h2 class="section-title" data-i18n="cat_title">Koleksi Batik Terpilih</h2>
+                    <p class="section-desc" data-i18n="cat_sub">Setiap kain dibuat dengan penuh ketelitian — dari pilihan bahan hingga ketajaman motif.</p>
                 </div>
 
                 <!-- Filter Bar -->
                 <div class="filter-bar" style="margin-bottom:var(--sp-8);">
                     <div class="search-wrap">
                         <i class="bi bi-search"></i>
-                        <input type="text" id="searchInput" class="search-input" placeholder="Cari nama produk, motif, deskripsi..." aria-label="Cari produk">
+                        <input type="text" id="searchInput" class="search-input" placeholder="Cari nama produk, motif, deskripsi..." data-i18n-ph="search_ph" aria-label="Cari produk" data-i18n-aria="search_aria">
                     </div>
                     <select id="categoryFilter" class="filter-select" aria-label="Filter kategori">
-                        <option value="">Semua Kategori</option>
+                        <option value="" data-i18n="all_cat">Semua Kategori</option>
                         <option value="Batik Tulis">Batik Tulis</option>
                         <option value="Batik Cap">Batik Cap</option>
                         <option value="Batik Printing">Batik Printing</option>
@@ -191,36 +191,36 @@
                         <option value="Kain">Kain</option>
                         <option value="Lainnya">Lainnya</option>
                     </select>
-                    <select id="sortFilter" class="filter-select" aria-label="Urutkan">
-                        <option value="">Urutkan</option>
-                        <option value="harga-asc">Harga: Rendah</option>
-                        <option value="harga-desc">Harga: Tinggi</option>
-                        <option value="nama-asc">Nama: A-Z</option>
-                        <option value="nama-desc">Nama: Z-A</option>
+                    <select id="sortFilter" class="filter-select" aria-label="Urutkan" data-i18n-aria="sort_l">
+                        <option value="" data-i18n="sort_l">Urutkan</option>
+                        <option value="harga-asc" data-i18n="sort_lo">Harga: Rendah</option>
+                        <option value="harga-desc" data-i18n="sort_hi">Harga: Tinggi</option>
+                        <option value="nama-asc" data-i18n="sort_az">Nama: A-Z</option>
+                        <option value="nama-desc" data-i18n="sort_za">Nama: Z-A</option>
                     </select>
-                    <input type="number" id="priceMin" class="filter-select" style="max-width:130px;" placeholder="Min Rp" min="0" aria-label="Harga minimum">
-                    <input type="number" id="priceMax" class="filter-select" style="max-width:130px;" placeholder="Max Rp" min="0" aria-label="Harga maksimum">
-                    <button id="wishToggle" class="filter-select" aria-label="Hanya favorit">♥ Favorit (<span id="wishCount">0</span>)</button>
-                    <button id="bestToggle" class="filter-select" aria-label="Hanya terlaris">🔥 Terlaris</button>
+                    <input type="number" id="priceMin" class="filter-select" style="max-width:130px;" placeholder="Min Rp" data-i18n-ph="min_ph" min="0" aria-label="Harga minimum" data-i18n-aria="min_aria">
+                    <input type="number" id="priceMax" class="filter-select" style="max-width:130px;" placeholder="Max Rp" data-i18n-ph="max_ph" min="0" aria-label="Harga maksimum" data-i18n-aria="max_aria">
+                    <button id="wishToggle" class="filter-select" aria-label="Hanya favorit" data-i18n-aria="fav_aria"><span data-i18n="fav">♥ Favorit</span> (<span id="wishCount">0</span>)</button>
+                    <button id="bestToggle" class="filter-select" aria-label="Hanya terlaris" data-i18n-aria="best_aria" data-i18n="best">🔥 Terlaris</button>
                     <span class="filter-count" id="filterCount"></span>
                 </div>
 
                 <!-- States -->
                 <div id="loadingState" class="state-box" style="display:none;">
                     <div style="width:48px;height:48px;border:3px solid var(--sand-border);border-top-color:var(--terracotta);border-radius:50%;animation:spin 0.8s linear infinite;"></div>
-                    <p>Memuat koleksi batik...</p>
+                    <p data-i18n="loading">Memuat koleksi batik...</p>
                 </div>
                 <div id="errorState" class="state-box" style="display:none;">
                     <i class="bi bi-exclamation-triangle text-warning"></i>
-                    <h4>Gagal Memuat Produk</h4>
+                    <h4 data-i18n="err_title">Gagal Memuat Produk</h4>
                     <p id="errorMessage"></p>
-                    <button class="btn-terra" onclick="catalog.loadProducts()">Coba Lagi</button>
+                    <button class="btn-terra" onclick="catalog.loadProducts()" data-i18n="retry">Coba Lagi</button>
                 </div>
                 <div id="emptyState" class="state-box" style="display:none;">
                     <i class="bi bi-search"></i>
-                    <h4>Produk Tidak Ditemukan</h4>
-                    <p>Coba ubah kata kunci atau pilih kategori lain</p>
-                    <button class="btn-outline" onclick="catalog.resetFilters()">Reset Filter</button>
+                    <h4 data-i18n="empty_title">Produk Tidak Ditemukan</h4>
+                    <p data-i18n="empty_sub">Coba ubah kata kunci atau pilih kategori lain</p>
+                    <button class="btn-outline" onclick="catalog.resetFilters()" data-i18n="reset">Reset Filter</button>
                 </div>
 
                 <!-- Product Grid -->
@@ -233,28 +233,28 @@
         <section id="cara-pesan" class="section section-alt">
             <div class="container">
                 <div class="section-head center">
-                    <span class="eyebrow">Gampang, nggak ribet</span>
-                    <h2 class="section-title">Cara Pesan</h2>
-                    <p class="section-desc">Nggak ada tombol bayar otomatis — semua lewat chat, biar bisa tanya-tanya dulu.</p>
+                    <span class="eyebrow" data-i18n="steps_eyebrow">Gampang, nggak ribet</span>
+                    <h2 class="section-title" data-i18n="steps_title">Cara Pesan</h2>
+                    <p class="section-desc" data-i18n="steps_sub">Nggak ada tombol bayar otomatis — semua lewat chat, biar bisa tanya-tanya dulu.</p>
                 </div>
                 <div class="steps-grid">
                     <div class="step-card">
                         <div class="step-num">01</div>
-                        <h3>Pilih batiknya</h3>
-                        <p>Scroll katalog, klik produk buat lihat detail, stok, dan ulasan pembeli lain.</p>
+                        <h3 data-i18n="s1t">Pilih batiknya</h3>
+                        <p data-i18n="s1d">Scroll katalog, klik produk buat lihat detail, stok, dan ulasan pembeli lain.</p>
                     </div>
                     <div class="step-card">
                         <div class="step-num">02</div>
-                        <h3>Klik order via WhatsApp</h3>
-                        <p>Bisa langsung dari halaman produk, dari keranjang, atau checkout sekalian. Pesan otomatis sudah terisi.</p>
+                        <h3 data-i18n="s2t">Klik order via WhatsApp</h3>
+                        <p data-i18n="s2d">Bisa langsung dari halaman produk, dari keranjang, atau checkout sekalian. Pesan otomatis sudah terisi.</p>
                     </div>
                     <div class="step-card">
                         <div class="step-num">03</div>
-                        <h3>Bayar &amp; paket dikirim</h3>
-                        <p>Transfer setelah saya konfirmasi stok. Paket dibungkus rapi, dikirim maks 2x24 jam.</p>
+                        <h3 data-i18n="s3t">Bayar &amp; paket dikirim</h3>
+                        <p data-i18n="s3d">Transfer setelah saya konfirmasi stok. Paket dibungkus rapi, dikirim maks 2x24 jam.</p>
                     </div>
                 </div>
-                <p class="steps-note">Masih bingung? Chat saja dulu — nanya-nanya gratis, nggak wajib beli.</p>
+                <p class="steps-note" data-i18n="steps_note">Masih bingung? Chat saja dulu — nanya-nanya gratis, nggak wajib beli.</p>
             </div>
         </section>
 
@@ -265,43 +265,43 @@
                     <!-- Kolom Kiri: Gambar -->
                     <div class="about-img-col">
                         <div class="about-img-main">
-                            <img src="https://images.unsplash.com/photo-1528459801416-a9e53bbf4e17?w=500&h=625&fit=crop" alt="Proses membatik" loading="lazy" decoding="async">
+                            <img src="https://images.unsplash.com/photo-1528459801416-a9e53bbf4e17?w=500&h=625&fit=crop" alt="Proses membatik" data-i18n-alt="about_img_alt" loading="lazy" decoding="async">
                         </div>
                         <div class="about-mini">
-                            <img src="https://images.unsplash.com/photo-1584917865442-de89df76afd3?auto=format&fit=crop&w=400&q=70" alt="Detail motif batik" loading="lazy" decoding="async">
+                            <img src="https://images.unsplash.com/photo-1584917865442-de89df76afd3?auto=format&fit=crop&w=400&q=70" alt="Detail motif batik" data-i18n-alt="about_mini_alt" loading="lazy" decoding="async">
                         </div>
                         <div class="xp-badge">
                             <strong>15+</strong>
-                            <small>Tahun<br>Berkarya</small>
+                            <small data-i18n="xp">Tahun<br>Berkarya</small>
                         </div>
                     </div>
                     <!-- Kolom Kanan: Teks -->
                     <div class="about-text">
-                        <span class="eyebrow">Tentang Kami</span>
-                        <h2 class="about-title">Kenapa saya jualan batik</h2>
+                        <span class="eyebrow" data-i18n="about_eyebrow">Tentang Kami</span>
+                        <h2 class="about-title" data-i18n="about_title">Kenapa saya jualan batik</h2>
                         <div class="about-divider"></div>
                         <blockquote class="owner-quote">
-                            "Awalnya cuma bantu jualin kain sisa tetangga yang pengrajin di Solo.
-                            Ternyata banyak yang suka. Ya sudah, saya seriusin."
-                            <cite>— Erlangga, pemilik Kainara Studio</cite>
+                            <span data-i18n="quote">"Awalnya cuma bantu jualin kain sisa tetangga yang pengrajin di Solo.
+                            Ternyata banyak yang suka. Ya sudah, saya seriusin."</span>
+                            <cite data-i18n="cite">— Erlangga, pemilik Kainara Studio</cite>
                         </blockquote>
-                        <p>
+                        <p data-i18n="p1">
                             Saya nggak punya toko fisik. Semua saya kerjakan sendiri: foto produk,
                             upload ke katalog, bungkus paket, sampai balas chat. Makanya kalau
                             chat dibalas agak lama, mohon maklum — kemungkinan saya lagi ke kantor pos.
                         </p>
                         <ol class="reason-list">
                             <li>
-                                <strong>Motif saya pilih sendiri.</strong>
-                                Nggak semua kain dari pengrajin saya ambil — cuma yang bahannya adem dan jahitannya rapi.
+                                <strong data-i18n="r1t">Motif saya pilih sendiri.</strong>
+                                <span data-i18n="r1d">Nggak semua kain dari pengrajin saya ambil — cuma yang bahannya adem dan jahitannya rapi.</span>
                             </li>
                             <li>
-                                <strong>Harga wajar, bukan harga turis.</strong>
-                                Karena tanpa perantara, selisihnya saya kembalikan ke harga, bukan ke kantong sendiri semua.
+                                <strong data-i18n="r2t">Harga wajar, bukan harga turis.</strong>
+                                <span data-i18n="r2d">Karena tanpa perantara, selisihnya saya kembalikan ke harga, bukan ke kantong sendiri semua.</span>
                             </li>
                             <li>
-                                <strong>Salah kirim? Tukar.</strong>
-                                Fotoin saja barangnya, saya kirim pengganti. Selama ini baru 2 kali kejadian.
+                                <strong data-i18n="r3t">Salah kirim? Tukar.</strong>
+                                <span data-i18n="r3d">Fotoin saja barangnya, saya kirim pengganti. Selama ini baru 2 kali kejadian.</span>
                             </li>
                         </ol>
                     </div>
@@ -313,9 +313,9 @@
         <section class="section section-testimoni">
             <div class="container">
                 <div class="section-head center">
-                    <span class="eyebrow">Testimoni</span>
-                    <h2 class="section-title">Apa Kata Mereka?</h2>
-                    <p class="section-desc">Cerita nyata dari pelanggan yang puas dengan batik pilihan kami.</p>
+                    <span class="eyebrow" data-i18n="testi_eyebrow">Testimoni</span>
+                    <h2 class="section-title" data-i18n="testi_title">Apa Kata Mereka?</h2>
+                    <p class="section-desc" data-i18n="testi_sub">Cerita nyata dari pelanggan yang puas dengan batik pilihan kami.</p>
                 </div>
                 <div class="row row-cols-1 row-cols-md-3 g-4">
                     <div class="col">
@@ -330,7 +330,7 @@
                             <div class="testimoni-stars mb-2">
                                 <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
                             </div>
-                            <p class="testimoni-text">"Batiknya sangat elegan dan premium. Bahannya adem, jahitan rapi. Sudah 3 kali beli disini, selalu puas!"</p>
+                            <p class="testimoni-text" data-i18n="t1">"Batiknya sangat elegan dan premium. Bahannya adem, jahitan rapi. Sudah 3 kali beli disini, selalu puas!"</p>
                         </div>
                     </div>
                     <div class="col">
@@ -345,7 +345,7 @@
                             <div class="testimoni-stars mb-2">
                                 <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
                             </div>
-                            <p class="testimoni-text">"Kemeja batik untuk acara kantor. Motifnya unik, tidak pasaran. Pengiriman cepat dan packaging rapi."</p>
+                            <p class="testimoni-text" data-i18n="t2">"Kemeja batik untuk acara kantor. Motifnya unik, tidak pasaran. Pengiriman cepat dan packaging rapi."</p>
                         </div>
                     </div>
                     <div class="col">
@@ -360,7 +360,7 @@
                             <div class="testimoni-stars mb-2">
                                 <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-half"></i>
                             </div>
-                            <p class="testimoni-text">"Gaun batiknya cantik banget! Cocok buat kondangan. Adminnya ramah dan fast response. Recommended!"</p>
+                            <p class="testimoni-text" data-i18n="t3">"Gaun batiknya cantik banget! Cocok buat kondangan. Adminnya ramah dan fast response. Recommended!"</p>
                         </div>
                     </div>
                 </div>
@@ -371,8 +371,8 @@
         <section id="kontak" class="section">
             <div class="container">
                 <div class="section-head center">
-                    <span class="eyebrow">Hubungi Kami</span>
-                    <h2 class="section-title">Butuh Bantuan?<br>Kami Siap Melayani</h2>
+                    <span class="eyebrow" data-i18n="ct_eyebrow">Hubungi Kami</span>
+                    <h2 class="section-title" data-i18n="ct_title">Butuh Bantuan?<br>Kami Siap Melayani</h2>
                 </div>
                 <div class="row row-cols-1 row-cols-sm-2 row-cols-md-4 g-3">
                     <div class="col">
@@ -382,8 +382,8 @@
                                     <i class="bi bi-whatsapp fs-5"></i>
                                 </div>
                             </div>
-                            <h6 class="fw-bold mb-1">WhatsApp</h6>
-                            <p class="text-muted small mb-0" style="font-size: 0.78rem;">Chat Admin</p>
+                            <h6 class="fw-bold mb-1" data-i18n="wa_l">WhatsApp</h6>
+                            <p class="text-muted small mb-0" style="font-size: 0.78rem;" data-i18n="wa_s">Chat Admin</p>
                         </a>
                     </div>
                     <div class="col">
@@ -393,7 +393,7 @@
                                     <i class="bi bi-envelope-fill fs-5"></i>
                                 </div>
                             </div>
-                            <h6 class="fw-bold mb-1">Email</h6>
+                            <h6 class="fw-bold mb-1" data-i18n="em_l">Email</h6>
                             <p class="text-muted small mb-0" style="font-size: 0.78rem;">hello@kainarastudio.com</p>
                         </a>
                     </div>
@@ -404,7 +404,7 @@
                                     <i class="bi bi-instagram fs-5"></i>
                                 </div>
                             </div>
-                            <h6 class="fw-bold mb-1">Instagram</h6>
+                            <h6 class="fw-bold mb-1" data-i18n="ig_l">Instagram</h6>
                             <p class="text-muted small mb-0" style="font-size: 0.78rem;">@kainarastudio</p>
                         </a>
                     </div>
@@ -415,19 +415,19 @@
                                     <i class="bi bi-tiktok fs-5"></i>
                                 </div>
                             </div>
-                            <h6 class="fw-bold mb-1">TikTok</h6>
+                            <h6 class="fw-bold mb-1" data-i18n="tt_l">TikTok</h6>
                             <p class="text-muted small mb-0" style="font-size: 0.78rem;">@kainarastudio</p>
                         </a>
                     </div>
                 </div>
                 <!-- Form kontak cepat → WhatsApp -->
                 <div class="card border-0 shadow-sm rounded-4 p-4 mt-4 mx-auto" style="max-width:640px;">
-                    <h6 class="fw-bold mb-3 text-center">Kirim Pesan Cepat</h6>
+                    <h6 class="fw-bold mb-3 text-center" data-i18n="form_t">Kirim Pesan Cepat</h6>
                     <form id="contactForm" class="row g-2">
-                        <div class="col-md-6"><input id="contactName" class="form-control" placeholder="Nama Anda" required maxlength="80"></div>
-                        <div class="col-md-6"><input id="contactPhone" class="form-control" placeholder="No. WhatsApp (opsional)" maxlength="20"></div>
-                        <div class="col-12"><textarea id="contactMsg" class="form-control" rows="3" placeholder="Tulis pesan..." required maxlength="1000"></textarea></div>
-                        <div class="col-12 text-center"><button class="btn btn-dark rounded-pill px-4" type="submit" style="background:#2D251E;"><i class="bi bi-send me-1"></i> Kirim via WhatsApp</button></div>
+                        <div class="col-md-6"><input id="contactName" class="form-control" placeholder="Nama Anda" data-i18n-ph="name_ph" required maxlength="80"></div>
+                        <div class="col-md-6"><input id="contactPhone" class="form-control" placeholder="No. WhatsApp (opsional)" data-i18n-ph="phone_ph" maxlength="20"></div>
+                        <div class="col-12"><textarea id="contactMsg" class="form-control" rows="3" placeholder="Tulis pesan..." data-i18n-ph="msg_ph" required maxlength="1000"></textarea></div>
+                        <div class="col-12 text-center"><button class="btn btn-dark rounded-pill px-4" type="submit" style="background:#2D251E;"><i class="bi bi-send me-1"></i> <span data-i18n="send">Kirim via WhatsApp</span></button></div>
                     </form>
                 </div>
             </div>
@@ -443,43 +443,43 @@
                         <img src="img/logo-k.svg" alt="Kainara Logo" style="height: 36px; width: auto;" class="rounded">
                         <span class="fw-bold fs-5" style="color: var(--white);">Kainara<span style="color: #d97706;">Studio</span></span>
                     </div>
-                    <p>Mewarisi warisan batik Indonesia dengan sentuhan modern. Setiap motif memiliki cerita, setiap kain memiliki jiwa.</p>
+                    <p data-i18n="ft_tag">Mewarisi warisan batik Indonesia dengan sentuhan modern. Setiap motif memiliki cerita, setiap kain memiliki jiwa.</p>
                     <div class="d-flex gap-2 mt-3">
                         <a href="https://instagram.com/kainarastudio" target="_blank" rel="noopener" class="btn btn-outline-light btn-sm rounded-circle" style="width:36px;height:36px;display:flex;align-items:center;justify-content:center;" aria-label="Instagram"><i class="bi bi-instagram"></i></a>
                         <a href="https://tiktok.com/@kainarastudio" target="_blank" rel="noopener" class="btn btn-outline-light btn-sm rounded-circle" style="width:36px;height:36px;display:flex;align-items:center;justify-content:center;" aria-label="TikTok"><i class="bi bi-tiktok"></i></a>
                     </div>
                 </div>
                 <div class="footer-col">
-                    <h6>Navigasi</h6>
+                    <h6 data-i18n="ft_nav">Navigasi</h6>
                     <ul>
-                        <li><a href="#katalog">Katalog</a></li>
-                        <li><a href="#tentang">Tentang Kami</a></li>
-                        <li><a href="#kontak">Kontak</a></li>
-                        <li><a href="admin.html">Panel Admin</a></li>
+                        <li><a href="#katalog" data-i18n="nav_katalog">Katalog</a></li>
+                        <li><a href="#tentang" data-i18n="ft_about">Tentang Kami</a></li>
+                        <li><a href="#kontak" data-i18n="ft_contact">Kontak</a></li>
+                        <li><a href="admin.html" data-i18n="ft_admin">Panel Admin</a></li>
                     </ul>
                 </div>
                 <div class="footer-col">
-                    <h6>Kategori</h6>
+                    <h6 data-i18n="ft_cat">Kategori</h6>
                     <ul>
                         <li><a href="#katalog">Batik Tulis</a></li>
                         <li><a href="#katalog">Batik Cap</a></li>
                         <li><a href="#katalog">Batik Printing</a></li>
-                        <li><a href="#katalog">Koleksi Khusus</a></li>
+                        <li><a href="#katalog" data-i18n="ft_special">Koleksi Khusus</a></li>
                     </ul>
                 </div>
                 <div class="footer-col">
-                    <h6>Informasi</h6>
+                    <h6 data-i18n="ft_info">Informasi</h6>
                     <ul>
-                        <li><a href="#cara-pesan">Cara Pemesanan</a></li>
-                        <li><a href="#tentang">Tentang Kami</a></li>
-                        <li><a href="#kontak">Kontak & Bantuan</a></li>
-                        <li><a href="#beranda">Kembali ke Atas</a></li>
+                        <li><a href="#cara-pesan" data-i18n="ft_how">Cara Pemesanan</a></li>
+                        <li><a href="#tentang" data-i18n="ft_about">Tentang Kami</a></li>
+                        <li><a href="#kontak" data-i18n="ft_help">Kontak & Bantuan</a></li>
+                        <li><a href="#beranda" data-i18n="ft_top">Kembali ke Atas</a></li>
                     </ul>
                 </div>
             </div>
             <div class="footer-bar">
-                <p>&copy; 2026 Kainara Studio — dibuat sendiri pakai HTML + Supabase, tanpa template toko.</p>
-                <a href="../web-portofolio/index.html"><i class="bi bi-person-badge me-1"></i> Portofolio Developer</a>
+                <p data-i18n="ft_copy">&copy; 2026 Kainara Studio — dibuat sendiri pakai HTML + Supabase, tanpa template toko.</p>
+                <a href="../web-portofolio/index.html"><i class="bi bi-person-badge me-1"></i> <span data-i18n="ft_dev">Portofolio Developer</span></a>
             </div>
         </div>
     </footer>
@@ -507,17 +507,17 @@
                   <div id="modalRating" class="testimoni-stars mb-1"></div>
                   <p id="modalProductPrice" class="fs-4 fw-bold mb-2" style="color: #d97706;">Rp 0</p>
                   <p id="modalProductDesc" class="text-muted small mb-3">Deskripsi produk lengkap...</p>
-                  <div class="small text-secondary mb-3">Stok Tersedia: <strong id="modalProductStock" class="text-dark">0</strong> pcs</div>
+                  <div class="small text-secondary mb-3"><span data-i18n="m_stock">Stok Tersedia:</span> <strong id="modalProductStock" class="text-dark">0</strong> <span data-i18n="m_pcs">pcs</span></div>
                 </div>
                 <!-- TOMBOL OPSI PEMBELIAN -->
                 <div>
-                  <label class="form-label small fw-bold text-muted mb-2">Pilih Cara Pembelian:</label>
+                  <label class="form-label small fw-bold text-muted mb-2" data-i18n="m_how">Pilih Cara Pembelian:</label>
                   <div class="d-grid gap-2">
                     <button id="modalAddCart" class="btn btn-dark rounded-pill py-2 fw-semibold d-flex align-items-center justify-content-center gap-2" style="background-color: #2D251E;">
-                      <i class="bi bi-bag-plus"></i> Tambah ke Keranjang
+                      <i class="bi bi-bag-plus"></i> <span data-i18n="m_add">Tambah ke Keranjang</span>
                     </button>
                     <a id="modalBuyWA" href="#" target="_blank" rel="noopener" class="btn btn-outline-success rounded-pill py-2 btn-sm fw-medium d-flex align-items-center justify-content-center gap-2">
-                      <i class="bi bi-whatsapp"></i> Order via WhatsApp
+                      <i class="bi bi-whatsapp"></i> <span data-i18n="m_wa">Order via WhatsApp</span>
                     </a>
                     <div class="d-flex gap-2 justify-content-center mt-1">
                       <a id="shareWA" href="#" target="_blank" rel="noopener" class="btn btn-sm btn-outline-secondary rounded-circle" aria-label="Bagikan WA"><i class="bi bi-whatsapp"></i></a>
@@ -529,19 +529,19 @@
                 </div>
                 <hr>
                 <div>
-                  <h6 class="fw-bold small">Produk Terkait</h6>
+                  <h6 class="fw-bold small" data-i18n="m_rel">Produk Terkait</h6>
                   <div id="relatedGrid" class="related-grid"></div>
                 </div>
                 <hr>
                 <div>
-                  <h6 class="fw-bold small">Ulasan Pembeli</h6>
+                  <h6 class="fw-bold small" data-i18n="m_rev">Ulasan Pembeli</h6>
                   <div id="reviewList"></div>
                   <form id="reviewForm" class="mt-2">
                     <div class="row g-2">
-                      <div class="col-6"><input id="reviewName" class="form-control form-control-sm" placeholder="Nama" required maxlength="50"></div>
+                      <div class="col-6"><input id="reviewName" class="form-control form-control-sm" placeholder="Nama" data-i18n-ph="rev_name_ph" required maxlength="50"></div>
                       <div class="col-6"><select id="reviewRating" class="form-select form-select-sm"><option value="5">★★★★★</option><option value="4">★★★★</option><option value="3">★★★</option><option value="2">★★</option><option value="1">★</option></select></div>
-                      <div class="col-12"><textarea id="reviewText" class="form-control form-control-sm" rows="2" placeholder="Tulis ulasan..." required maxlength="500"></textarea></div>
-                      <div class="col-12"><button class="btn btn-sm btn-dark rounded-pill px-3" type="submit">Kirim Ulasan</button></div>
+                      <div class="col-12"><textarea id="reviewText" class="form-control form-control-sm" rows="2" placeholder="Tulis ulasan..." data-i18n-ph="rev_text_ph" required maxlength="500"></textarea></div>
+                      <div class="col-12"><button class="btn btn-sm btn-dark rounded-pill px-3" type="submit" data-i18n="rev_send">Kirim Ulasan</button></div>
                     </div>
                   </form>
                 </div>
@@ -555,25 +555,25 @@
     <!-- ── OFFCANVAS KERANJANG ── -->
     <div class="offcanvas offcanvas-end" tabindex="-1" id="cartOffcanvas" style="width: 380px;">
       <div class="offcanvas-header border-bottom">
-        <h5 class="fw-bold mb-0"><i class="bi bi-bag me-2"></i>Keranjang Belanja</h5>
+        <h5 class="fw-bold mb-0"><i class="bi bi-bag me-2"></i><span data-i18n="c_title">Keranjang Belanja</span></h5>
         <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
       </div>
       <div class="offcanvas-body p-3" id="cartPanelBody">
         <div class="text-center py-5 text-muted">
           <i class="bi bi-bag fs-1 d-block mb-2"></i>
-          <p>Keranjang kosong</p>
+          <p data-i18n="c_empty">Keranjang kosong</p>
         </div>
       </div>
       <div class="offcanvas-footer border-top p-3" id="cartPanelFooter" style="display:none;">
         <div class="d-flex justify-content-between mb-3">
-          <span class="fw-bold">Total</span>
+          <span class="fw-bold" data-i18n="c_total">Total</span>
           <span class="fw-bold fs-5" style="color:#D97706;" id="cartTotal">Rp 0</span>
         </div>
         <div class="d-grid gap-2">
           <button class="btn btn-dark rounded-pill py-2 fw-semibold" onclick="Cart.checkout()" style="background-color:#2D251E;">
-            <i class="bi bi-bag-check"></i> Checkout
+            <i class="bi bi-bag-check"></i> <span data-i18n="c_checkout">Checkout</span>
           </button>
-          <button class="btn btn-outline-danger rounded-pill py-1 btn-sm" onclick="if(confirm('Kosongkan keranjang?')) Cart.clear();">Kosongkan Keranjang</button>
+          <button class="btn btn-outline-danger rounded-pill py-1 btn-sm" onclick="if(confirm(window.I18n?window.I18n.t('c_confirm'):'Kosongkan keranjang?')) Cart.clear();" data-i18n="c_clear">Kosongkan Keranjang</button>
         </div>
       </div>
     </div>
@@ -583,42 +583,42 @@
       <div class="modal-dialog modal-dialog-centered modal-lg">
         <div class="modal-content rounded-4 border-0 shadow-lg">
           <div class="modal-header border-bottom-0 p-4 pb-0">
-            <h5 class="fw-bold"><i class="bi bi-bag-check me-2"></i>Checkout Pesanan</h5>
+            <h5 class="fw-bold"><i class="bi bi-bag-check me-2"></i><span data-i18n="co_title">Checkout Pesanan</span></h5>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
           <div class="modal-body p-4">
             <div class="row g-4">
               <!-- Ringkasan Order -->
               <div class="col-md-5">
-                <h6 class="fw-bold mb-3">Ringkasan Pesanan</h6>
+                <h6 class="fw-bold mb-3" data-i18n="co_sum">Ringkasan Pesanan</h6>
                 <div id="checkoutSummary"></div>
                 <div class="d-flex justify-content-between mt-3 pt-2 border-top">
-                  <span class="fw-bold fs-5">Total</span>
+                  <span class="fw-bold fs-5" data-i18n="co_total">Total</span>
                   <span class="fw-bold fs-5" style="color:#D97706;" id="checkoutTotal">Rp 0</span>
                 </div>
               </div>
               <!-- Form Data Diri -->
               <div class="col-md-7">
-                <h6 class="fw-bold mb-3">Data Diri</h6>
+                <h6 class="fw-bold mb-3" data-i18n="co_self">Data Diri</h6>
                 <form id="checkoutForm" onsubmit="event.preventDefault(); Checkout.submit();">
                   <div class="mb-3">
-                    <label class="form-label fw-semibold small">Nama Lengkap <span class="text-danger">*</span></label>
-                    <input type="text" id="checkoutName" class="form-control rounded-pill" required placeholder="Siti Rahayu">
+                    <label class="form-label fw-semibold small"><span data-i18n="co_name">Nama Lengkap</span> <span class="text-danger">*</span></label>
+                    <input type="text" id="checkoutName" class="form-control rounded-pill" required placeholder="Siti Rahayu" data-i18n-ph="co_name_ph">
                   </div>
                   <div class="mb-3">
-                    <label class="form-label fw-semibold small">No. Telepon / WhatsApp <span class="text-danger">*</span></label>
-                    <input type="tel" id="checkoutPhone" class="form-control rounded-pill" required placeholder="0812xxxxxxx">
+                    <label class="form-label fw-semibold small"><span data-i18n="co_phone">No. Telepon / WhatsApp</span> <span class="text-danger">*</span></label>
+                    <input type="tel" id="checkoutPhone" class="form-control rounded-pill" required placeholder="0812xxxxxxx" data-i18n-ph="co_phone_ph">
                   </div>
                   <div class="mb-3">
-                    <label class="form-label fw-semibold small">Alamat Pengiriman <span class="text-danger">*</span></label>
-                    <textarea id="checkoutAddress" class="form-control rounded-3" rows="3" required placeholder="Jl. Merdeka No. 10, Jakarta Selatan"></textarea>
+                    <label class="form-label fw-semibold small"><span data-i18n="co_addr">Alamat Pengiriman</span> <span class="text-danger">*</span></label>
+                    <textarea id="checkoutAddress" class="form-control rounded-3" rows="3" required placeholder="Jl. Merdeka No. 10, Jakarta Selatan" data-i18n-ph="co_addr_ph"></textarea>
                   </div>
                   <div class="mb-3">
-                    <label class="form-label fw-semibold small">Catatan (Opsional)</label>
-                    <input type="text" id="checkoutNote" class="form-control rounded-pill" placeholder="Ukuran L, warna coklat, dll.">
+                    <label class="form-label fw-semibold small" data-i18n="co_note">Catatan (Opsional)</label>
+                    <input type="text" id="checkoutNote" class="form-control rounded-pill" placeholder="Ukuran L, warna coklat, dll." data-i18n-ph="co_note_ph">
                   </div>
                   <button type="submit" class="btn btn-dark rounded-pill py-2 fw-semibold w-100" style="background-color:#2D251E;">
-                    <i class="bi bi-whatsapp me-1"></i> Kirim Pesanan via WhatsApp
+                    <i class="bi bi-whatsapp me-1"></i> <span data-i18n="co_submit">Kirim Pesanan via WhatsApp</span>
                   </button>
                 </form>
               </div>
@@ -633,12 +633,13 @@
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="js/supabaseClient.js"></script>
     <!-- Back to top + Cookie -->
-    <button id="backToTop" aria-label="Kembali ke atas">↑</button>
+    <button id="backToTop" aria-label="Kembali ke atas" data-i18n-aria="top_aria">↑</button>
     <div id="cookieBanner" class="cookie-banner" role="dialog" aria-label="Persetujuan cookie">
-        <span>Kami memakai penyimpanan lokal untuk keranjang & favorit. Lanjut berarti setuju.</span>
-        <button id="cookieOk" class="btn btn-sm btn-dark rounded-pill px-3">OK</button>
+        <span data-i18n="cookie_msg">Kami memakai penyimpanan lokal untuk keranjang & favorit. Lanjut berarti setuju.</span>
+        <button id="cookieOk" class="btn btn-sm btn-dark rounded-pill px-3" data-i18n="cookie_ok">OK</button>
     </div>
 
+    <script src="js/i18n.js"></script>
     <script src="js/script.js"></script>
     <script src="js/cart.js"></script>
     <script src="js/checkout.js"></script>
@@ -670,10 +671,10 @@
             var n = document.getElementById('contactName')?.value.trim();
             var p = document.getElementById('contactPhone')?.value.trim();
             var m = document.getElementById('contactMsg')?.value.trim();
-            if (!n || !m) { if (window.showToast) showToast('warning', 'Isi nama dan pesan!'); return; }
+            if (!n || !m) { if (window.showToast) showToast('warning', window.I18n ? window.I18n.t('ts_cfill') : 'Isi nama dan pesan!'); return; }
             var msg = 'Halo Kainara Studio! Saya ' + n + (p ? ' (' + p + ')' : '') + '. ' + m;
             window.open('https://wa.me/6281234567890?text=' + encodeURIComponent(msg), '_blank');
-            if (window.showToast) showToast('success', 'Membuka WhatsApp...');
+            if (window.showToast) showToast('success', window.I18n ? window.I18n.t('ts_cwa') : 'Membuka WhatsApp...');
             this.reset();
         });
     })();

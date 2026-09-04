@@ -23,19 +23,36 @@ const state = {
 const PLACEHOLDER = 'https://images.unsplash.com/photo-1583391733956-6c78276477e2?w=120&h=120&fit=crop';
 const LOW_STOCK = 5;
 
+function T(key, vars) {
+    try { if (window.I18n) return window.I18n.t(key, vars); } catch (e) {}
+    return key;
+}
+function dateLocale() {
+    try {
+        const l = window.I18n ? window.I18n.get() : 'id';
+        return { id: 'id-ID', en: 'en-US', ja: 'ja-JP', ar: 'ar-EG' }[l] || 'id-ID';
+    } catch (e) { return 'id-ID'; }
+}
+function paintDate() {
+    try {
+        setText('todayLine', new Date().toLocaleDateString(dateLocale(),
+            { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' }));
+    } catch {}
+}
+
 // ── Helper tanggal id ──────────────────────────────────────────
 function fmtDate(iso) {
     if (!iso) return '—';
     try {
-        return new Date(iso).toLocaleDateString('id-ID', { day: 'numeric', month: 'short', year: 'numeric' });
+        return new Date(iso).toLocaleDateString(dateLocale(), { day: 'numeric', month: 'short', year: 'numeric' });
     } catch { return '—'; }
 }
 
 function stockMeta(stok) {
     const s = Number(stok) || 0;
-    if (s <= 0)  return { cls: 'out',  text: 'Habis' };
-    if (s <= LOW_STOCK) return { cls: 'warn', text: `${s} Menipis` };
-    return { cls: 'ok', text: `${s} Tersedia` };
+    if (s <= 0)  return { cls: 'out',  text: T('a_out') };
+    if (s <= LOW_STOCK) return { cls: 'warn', text: T('a_low', { n: s }) };
+    return { cls: 'ok', text: T('a_ok', { n: s }) };
 }
 
 // ── Load dari Supabase ─────────────────────────────────────────
@@ -52,7 +69,7 @@ async function loadProducts() {
         applyFilters();
     } catch (err) {
         console.error('Error loading products:', err);
-        showAlert('Gagal memuat data: ' + err.message, 'danger');
+        showAlert(T('a_loadfail') + err.message, 'danger');
         state.products = [];
         applyFilters();
     }
@@ -66,7 +83,7 @@ function renderSkeleton() {
             .join('');
     }
     const info = document.getElementById('pagerInfo');
-    if (info) info.textContent = 'Memuat…';
+    if (info) info.textContent = T('a_loading');
 }
 
 // ── Statistik ──────────────────────────────────────────────────
@@ -86,8 +103,7 @@ function renderStats() {
         const show = menipis.length > 0;
         banner.classList.toggle('show', show);
         if (show) {
-            setText('lowBannerText',
-                `${menipis.length} produk stoknya ≤ ${LOW_STOCK} — restock sebelum kehabisan.`);
+            setText('lowBannerText', T('a_banner', { n: menipis.length, low: LOW_STOCK }));
         }
     }
     document.getElementById('statMenipis')?.classList.toggle('active', state.lowOnly);
@@ -104,7 +120,7 @@ function renderKategoriOptions() {
     const wrap = document.getElementById('catPills');
     if (!wrap) return;
     const cats = [...new Set(state.products.map(p => (p.kategori || '').trim()).filter(Boolean))].sort();
-    const pills = [{ v: '', t: `Semua (${state.products.length})` }]
+    const pills = [{ v: '', t: T('a_all', { n: state.products.length }) }]
         .concat(cats.map(c => {
             const n = state.products.filter(p => (p.kategori || '') === c).length;
             return { v: c, t: `${c} (${n})` };
@@ -161,8 +177,8 @@ function renderTable() {
 
     if (info) {
         info.textContent = total === 0
-            ? 'Tidak ada produk'
-            : `Menampilkan ${start + 1}–${start + items.length} dari ${total} produk`;
+            ? T('a_none')
+            : T('a_showing', { a: start + 1, b: start + items.length, total: total });
     }
     if (prev) prev.disabled = state.page <= 1;
     if (next) next.disabled = state.page >= maxPage;
@@ -174,13 +190,13 @@ function renderTable() {
         grid.innerHTML = `
             <div class="empty-state">
                 <i class="bi ${isFiltered ? 'bi-search' : 'bi-inbox'}"></i>
-                <h3>${isFiltered ? 'Tidak ketemu' : 'Etalase masih kosong'}</h3>
+                <h3>${isFiltered ? T('a_empty_t1') : T('a_empty_t2')}</h3>
                 <p>${isFiltered
-                    ? 'Coba kata kunci lain, atau bersihkan filter di bawah.'
-                    : 'Tambahkan produk pertamamu — langsung tampil di katalog toko.'}</p>
+                    ? T('a_tryother')
+                    : T('a_empty_d')}</p>
                 ${isFiltered
-                    ? '<button class="tool-btn" data-action="clear-filter"><i class="bi bi-x-circle"></i> Bersihkan Filter</button>'
-                    : '<button class="btn-terra-ad" data-action="add"><i class="bi bi-plus-lg"></i> Tambah Produk Pertama</button>'}
+                    ? `<button class="tool-btn" data-action="clear-filter"><i class="bi bi-x-circle"></i> ${T('a_clearfilter')}</button>`
+                    : `<button class="btn-terra-ad" data-action="add"><i class="bi bi-plus-lg"></i> ${T('a_addfirst')}</button>`}
             </div>`;
         return;
     }
@@ -194,22 +210,22 @@ function gridCardHtml(p) {
         <article class="p-card">
             <div class="p-card-img">
                 <img src="${escHtml(p.image_url || PLACEHOLDER)}" alt="${escHtml(p.nama_produk || 'Produk')}" loading="lazy" onerror="this.src='${PLACEHOLDER}'">
-                <span class="p-flag ${m.cls}">${m.cls === 'ok' ? 'Tersedia' : m.text}</span>
+                <span class="p-flag ${m.cls}">${m.text}</span>
             </div>
             <div class="p-card-body">
                 <h3>${escHtml(p.nama_produk || '—')}</h3>
                 <div class="p-meta"><span>${escHtml(p.kategori || '—')}</span><span class="sep">${fmtDate(p.created_at)}</span></div>
                 <div class="p-price">${window.formatRupiah(p.harga)}</div>
                 <div class="p-stockline" data-row="${escHtml(p.id)}">
-                    <span class="p-stocktxt">Stok: ${Number(p.stok) || 0}</span>
+                    <span class="p-stocktxt">${T('a_stock', { n: Number(p.stok) || 0 })}</span>
                     <span class="stepper">
-                        <button data-admin="minus" title="Kurangi 1" aria-label="Kurangi stok">−</button>
-                        <button data-admin="plus" title="Tambah 1" aria-label="Tambah stok">+</button>
+                        <button data-admin="minus" title="${T('a_stockdec')}" aria-label="${T('a_stockdec')}">−</button>
+                        <button data-admin="plus" title="${T('a_add1')}" aria-label="${T('a_add1')}">+</button>
                     </span>
                 </div>
                 <div class="p-actions" data-row="${escHtml(p.id)}">
-                    <button class="p-edit" data-admin="edit"><i class="bi bi-pencil"></i> Edit</button>
-                    <button class="p-del" data-admin="del"><i class="bi bi-trash"></i> Hapus</button>
+                    <button class="p-edit" data-admin="edit"><i class="bi bi-pencil"></i> ${T('a_edit')}</button>
+                    <button class="p-del" data-admin="del"><i class="bi bi-trash"></i> ${T('a_del')}</button>
                 </div>
             </div>
         </article>`;
@@ -226,7 +242,7 @@ function showAlert(msg, type = 'success') {
     const x = document.createElement('button');
     x.type = 'button';
     x.className = 'btn-close ms-3';
-    x.setAttribute('aria-label', 'Tutup');
+    x.setAttribute('aria-label', T('a_close'));
     x.addEventListener('click', () => toast.remove());
     toast.appendChild(x);
     document.body.appendChild(toast);
@@ -237,7 +253,7 @@ function showAlert(msg, type = 'success') {
 window.resetForm = function() {
     document.getElementById('productForm').reset();
     document.getElementById('productId').value = '';
-    document.getElementById('modalTitle').textContent = 'Tambah Produk Baru';
+    document.getElementById('modalTitle').textContent = T('modal_add');
     document.getElementById('productImageFinal').value = '';
     const wrap = document.getElementById('imgPreviewWrap');
     const prev = document.getElementById('imgPreview');
@@ -257,7 +273,7 @@ window.editProduct = function(id) {
     if (!p) return;
 
     state.editingId = id;
-    document.getElementById('modalTitle').textContent = 'Edit Produk';
+    document.getElementById('modalTitle').textContent = T('modal_edit');
     document.getElementById('productId').value          = p.id;
     document.getElementById('productName').value        = p.nama_produk || '';
     document.getElementById('productCategory').value    = p.kategori    || '';
@@ -291,7 +307,7 @@ async function bumpStock(id, delta) {
         applyFilters();
     } catch (err) {
         console.error('Error update stok:', err);
-        showAlert('Gagal update stok: ' + err.message, 'danger');
+        showAlert(T('a_stockfail') + err.message, 'danger');
     }
 }
 
@@ -300,14 +316,14 @@ window.deleteProduct = async function(id) {
     const found = state.products.find(p => String(p.id) === String(id));
     const name = found?.nama_produk || 'produk ini';
     const result = await Swal.fire({
-        title: 'Hapus produk?',
-        html: `<strong>${escHtml(name)}</strong> akan dihapus permanen dari katalog.`,
+        title: T('a_del_t'),
+        html: T('a_del_h', { name: escHtml(name) }),
         icon: 'warning',
         showCancelButton: true,
         confirmButtonColor: '#DC2626',
         cancelButtonColor: '#6B7280',
-        confirmButtonText: 'Ya, hapus!',
-        cancelButtonText: 'Batal',
+        confirmButtonText: T('a_confirm_yes'),
+        cancelButtonText: T('f_cancel'),
         customClass: { popup: 'rounded-4' }
     });
     if (!result.isConfirmed) return;
@@ -315,12 +331,12 @@ window.deleteProduct = async function(id) {
     try {
         const { error } = await window.supabaseClient.from('products').delete().eq('id', id);
         if (error) throw error;
-        await Swal.fire({ title: 'Terhapus!', text: 'Produk berhasil dihapus.', icon: 'success', customClass: { popup: 'rounded-4' } });
-        if (window.showToast) showToast('success', 'Produk berhasil dihapus!');
+        await Swal.fire({ title: T('a_del_ok_t'), text: T('a_del_ok_x'), icon: 'success', customClass: { popup: 'rounded-4' } });
+        if (window.showToast) showToast('success', T('a_deleted'));
         await loadProducts();
     } catch (err) {
         console.error('Error deleting product:', err);
-        Swal.fire({ title: 'Gagal!', text: 'Gagal menghapus: ' + err.message, icon: 'error', customClass: { popup: 'rounded-4' } });
+        Swal.fire({ title: T('a_fail'), text: T('a_delfail') + err.message, icon: 'error', customClass: { popup: 'rounded-4' } });
     }
 };
 
@@ -336,17 +352,17 @@ window.handleFormSubmit = async function(e) {
     const imageFinal = (document.getElementById('productImageFinal')?.value || '').trim()
         || (document.getElementById('productImage')?.value || '').trim();
 
-    if (name.length < 3)        return showAlert('Nama produk minimal 3 huruf.', 'warning');
-    if (!kategori)              return showAlert('Pilih kategorinya dulu.', 'warning');
-    if (isNaN(harga) || harga <= 0) return showAlert('Harga harus lebih dari Rp 0.', 'warning');
-    if (isNaN(stok) || stok < 0)    return showAlert('Stok tidak boleh negatif.', 'warning');
-    if (!imageFinal)            return showAlert('Harap pilih gambar atau masukkan URL gambar!', 'warning');
-    if (desc.length < 10)       return showAlert('Deskripsi minimal 10 karakter — ceritain motif & bahannya.', 'warning');
+    if (name.length < 3)        return showAlert(T('a_name3'), 'warning');
+    if (!kategori)              return showAlert(T('a_cat'), 'warning');
+    if (isNaN(harga) || harga <= 0) return showAlert(T('a_price0'), 'warning');
+    if (isNaN(stok) || stok < 0)    return showAlert(T('a_stockneg'), 'warning');
+    if (!imageFinal)            return showAlert(T('a_img'), 'warning');
+    if (desc.length < 10)       return showAlert(T('a_desc10'), 'warning');
 
     const submitBtn = e.target.querySelector('button[type="submit"]');
     const originalHtml = submitBtn.innerHTML;
     submitBtn.disabled = true;
-    submitBtn.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span>Menyimpan...';
+    submitBtn.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span>' + T('f_saving');
 
     const productData = { nama_produk: name, kategori, harga, stok, image_url: imageFinal, deskripsi: desc };
 
@@ -355,19 +371,19 @@ window.handleFormSubmit = async function(e) {
             const { error } = await window.supabaseClient
                 .from('products').update(productData).eq('id', state.editingId);
             if (error) throw error;
-            showAlert('Produk berhasil diperbarui!', 'success');
+            showAlert(T('a_updated'), 'success');
         } else {
             const { error } = await window.supabaseClient.from('products').insert([productData]);
             if (error) throw error;
-            showAlert('Produk baru berhasil ditambahkan!', 'success');
+            showAlert(T('a_added'), 'success');
         }
-        if (window.showToast) showToast('success', 'Tersimpan!');
+        if (window.showToast) showToast('success', T('a_saved'));
         const modalEl = document.getElementById('productModal');
         (bootstrap.Modal.getInstance(modalEl) || new bootstrap.Modal(modalEl)).hide();
         await loadProducts();
     } catch (err) {
         console.error('Error saving product:', err);
-        showAlert('Gagal menyimpan: ' + err.message, 'danger');
+        showAlert(T('a_savefail') + err.message, 'danger');
     } finally {
         submitBtn.disabled = false;
         submitBtn.innerHTML = originalHtml;
@@ -459,11 +475,8 @@ window.clearImageInput = function() {
 
 // ── Init + wiring ──────────────────────────────────────────────
 document.addEventListener('DOMContentLoaded', () => {
-    // Sapaan tanggal
-    try {
-        setText('todayLine', new Date().toLocaleDateString('id-ID',
-            { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' }));
-    } catch {}
+    // Sapaan tanggal (mengikuti bahasa aktif)
+    paintDate();
 
     loadProducts();
 
@@ -564,7 +577,7 @@ document.addEventListener('DOMContentLoaded', () => {
         a.addEventListener('click', e => {
             e.preventDefault();
             if (a.id === 'btnLogout') {
-                playTransition('Mengunci dashboard…', () => {
+                playTransition(T('top_lock') + '…', () => {
                     try { sessionStorage.removeItem('kainara_admin_ok'); } catch (err) {}
                     location.reload();
                 });
@@ -573,7 +586,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const href = a.getAttribute('href');
             if (!href || href === '#') return;
             const label = a.id === 'btnLogout' ? '' :
-                /portofolio/i.test(href) ? 'Membuka portofolio…' : 'Membuka toko…';
+                /portofolio/i.test(href) ? T('top_port') + '…' : T('top_shop') + '…';
             playTransition(label, () => { window.location.href = href; });
         });
     });
@@ -595,5 +608,13 @@ document.addEventListener('DOMContentLoaded', () => {
         else if (btn.dataset.admin === 'del') window.deleteProduct(id);
         else if (btn.dataset.admin === 'plus') bumpStock(id, 1);
         else if (btn.dataset.admin === 'minus') bumpStock(id, -1);
+    });
+
+    // Render ulang + tanggal lokal saat bahasa diganti
+    document.addEventListener('langchange', () => {
+        paintDate();
+        renderKategoriOptions();
+        renderStats();
+        renderTable();
     });
 });

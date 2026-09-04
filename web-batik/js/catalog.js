@@ -12,6 +12,11 @@ function debounce(fn, ms) {
     return (...args) => { clearTimeout(t); t = setTimeout(() => fn(...args), ms); };
 }
 
+function T(key, vars) {
+    try { if (window.I18n) return window.I18n.t(key, vars); } catch (e) {}
+    return key;
+}
+
 // ── Wishlist (localStorage) ────────────────────────────────────
 const WISH_KEY = 'kainara_wishlist';
 const Wishlist = {
@@ -30,7 +35,7 @@ const Wishlist = {
         const n = list.length;
         const badge = document.getElementById('wishCount');
         if (badge) badge.textContent = n;
-        if (window.showToast) showToast('success', list.includes(id) ? 'Ditambahkan ke favorit!' : 'Dihapus dari favorit!');
+        if (window.showToast) showToast('success', list.includes(id) ? T('ts_favadd') : T('ts_favdel'));
     }
 };
 window.Wishlist = Wishlist;
@@ -201,13 +206,13 @@ const catalog = {
             const rating = parseInt($('reviewRating')?.value, 10) || 5;
             const text = $('reviewText')?.value.trim();
             if (!name || !text) {
-                if (window.showToast) showToast('warning', 'Isi nama dan ulasan dulu!');
+                if (window.showToast) showToast('warning', T('ts_revfill'));
                 return;
             }
             Reviews.add(pid, { name, rating, text });
             form.reset();
             openProductDetail(pid); // re-render modal (rating + list)
-            if (window.showToast) showToast('success', 'Terima kasih atas ulasannya!');
+            if (window.showToast) showToast('success', T('ts_revthanks'));
         });
     },
 
@@ -293,8 +298,8 @@ const catalog = {
         if (el.filterCount) {
             const total = state.all.length;
             el.filterCount.textContent = (!state.search && !state.category && !state.priceMin && !state.priceMax && !state.wishOnly && !state.bestOnly)
-                ? `${total} produk`
-                : `${products.length} dari ${total} produk`;
+                ? T('count_all', { total: total })
+                : T('count_some', { shown: products.length, total: total });
         }
 
         if (state.all.length === 0 || products.length === 0) {
@@ -321,7 +326,7 @@ const catalog = {
             btns += `<li class="page-item ${i === state.page ? 'active' : ''}"><button class="page-link" data-page="${i}">${i}</button></li>`;
         }
         wrap.innerHTML = `
-            <nav aria-label="Navigasi halaman produk"><ul class="pagination justify-content-center mt-4">
+            <nav aria-label="${T('pag_aria')}"><ul class="pagination justify-content-center mt-4">
                 <li class="page-item ${state.page === 1 ? 'disabled' : ''}"><button class="page-link" data-page="${state.page - 1}">‹</button></li>
                 ${btns}
                 <li class="page-item ${state.page === totalPages ? 'disabled' : ''}"><button class="page-link" data-page="${state.page + 1}">›</button></li>
@@ -331,7 +336,7 @@ const catalog = {
     cardHtml(p) {
         const img        = p.image_url || PLACEHOLDER;
         const stockClass = p.stok > 10 ? 'in-stock'  : p.stok > 0 ? 'low-stock' : 'out-stock';
-        const stockText  = p.stok > 10 ? 'Tersedia'  : p.stok > 0 ? `Sisa ${p.stok}` : 'Habis';
+        const stockText  = p.stok > 10 ? T('card_avail')  : p.stok > 0 ? T('card_left', { n: p.stok }) : T('card_out');
         const stockIcon  = p.stok > 10 ? 'bi-check-circle' : p.stok > 0 ? 'bi-exclamation-circle' : 'bi-x-circle';
         const wished = Wishlist.has(p.id);
         const avg = Reviews.avg(p.id);
@@ -346,9 +351,9 @@ const catalog = {
                              class="product-card-img"
                              loading="lazy"
                              onerror="this.src='${PLACEHOLDER}'">
-                        <span class="badge-cat">${escHtml(p.kategori || 'Batik')}</span>
-                        ${best ? '<span class="badge-best"><i class="bi bi-fire"></i> Terlaris</span>' : ''}
-                        <button class="btn-wish ${wished ? 'active' : ''}" data-action="wish" data-id="${escHtml(p.id)}" aria-label="Favorit">
+                        <span class="badge-cat">${escHtml(p.kategori || T('card_defcat'))}</span>
+                        ${best ? '<span class="badge-best"><i class="bi bi-fire"></i> ' + T('card_best') + '</span>' : ''}
+                        <button class="btn-wish ${wished ? 'active' : ''}" data-action="wish" data-id="${escHtml(p.id)}" aria-label="${T('card_wish_aria')}">
                             <i class="bi ${wished ? 'bi-heart-fill' : 'bi-heart'}"></i>
                         </button>
                         <span class="badge-stock ${stockClass}">
@@ -356,16 +361,16 @@ const catalog = {
                         </span>
                     </div>
                     <div class="product-body d-flex flex-column">
-                        <div class="product-rating">${starsHtml(avg)} <span class="rating-num">${avg ? avg.toFixed(1) : 'Baru'}</span></div>
+                        <div class="product-rating">${starsHtml(avg)} <span class="rating-num">${avg ? avg.toFixed(1) : T('card_new')}</span></div>
                         <h3 class="product-name">${escHtml(p.nama_produk)}</h3>
-                        <p class="product-desc">${escHtml(p.deskripsi || 'Tidak ada deskripsi.')}</p>
+                        <p class="product-desc">${escHtml(p.deskripsi || T('card_nodesc'))}</p>
                         <div class="product-footer mt-auto d-flex flex-column gap-2">
                             <span class="product-price">${window.formatRupiah(p.harga)}</span>
                             <div class="d-flex gap-2">
                                 <button class="btn-detail flex-fill btn-sm justify-content-center" data-action="detail" data-id="${escHtml(p.id)}">
-                                    <i class="bi bi-eye"></i> Detail
+                                    <i class="bi bi-eye"></i> ${T('card_detail')}
                                 </button>
-                                <button class="btn-add-cart btn-sm px-3 justify-content-center" data-action="cart" data-id="${escHtml(p.id)}" aria-label="Tambah ke keranjang" ${p.stok <= 0 ? 'disabled style="opacity:.5"' : ''}>
+                                <button class="btn-add-cart btn-sm px-3 justify-content-center" data-action="cart" data-id="${escHtml(p.id)}" aria-label="${T('card_add_aria')}" ${p.stok <= 0 ? 'disabled style="opacity:.5"' : ''}>
                                     <i class="bi bi-bag-plus"></i>
                                 </button>
                             </div>
@@ -387,6 +392,7 @@ const catalog = {
 
 // ── Bootstrap ─────────────────────────────────────────────────
 document.addEventListener('DOMContentLoaded', () => catalog.init());
+document.addEventListener('langchange', () => catalog.render());
 window.catalog = catalog;
 
 // ── Modal Detail Produk ───────────────────────────────────────
@@ -407,16 +413,16 @@ function openProductDetail(id) {
         modalImg.src = product.image_url || PLACEHOLDER;
         modalImg.alt = name;
     }
-    setText('modalProductCategory', product.kategori || 'Batik');
+    setText('modalProductCategory', product.kategori || T('card_defcat'));
     setText('modalProductTitle', name);
     setText('modalProductPrice', window.formatRupiah(price));
-    setText('modalProductDesc', product.deskripsi || 'Tidak ada deskripsi.');
+    setText('modalProductDesc', product.deskripsi || T('card_nodesc'));
     setText('modalProductStock', product.stok ?? 0);
 
     // Rating
     const avg = Reviews.avg(product.id);
     const rWrap = document.getElementById('modalRating');
-    if (rWrap) rWrap.innerHTML = `${starsHtml(avg)} <span class="rating-num">${avg ? avg.toFixed(1) + ` (${Reviews.getAll(product.id).length} ulasan)` : 'Belum ada ulasan'}</span>`;
+    if (rWrap) rWrap.innerHTML = `${starsHtml(avg)} <span class="rating-num">${avg ? avg.toFixed(1) + T('rev_count', { n: Reviews.getAll(product.id).length }) : T('no_rev_short')}</span>`;
 
     // Tombol keranjang di modal (delegasi via data-id, tanpa inline JS ber-data)
     const addBtn = document.getElementById('modalAddCart');
@@ -434,7 +440,7 @@ function openProductDetail(id) {
     if (modalWA) {
         const msg = encodeURIComponent(`Halo Kainara Studio, saya mau beli ${name} seharga ${window.formatRupiah(price)}`);
         modalWA.href = `https://wa.me/${WA_NUMBER}?text=${msg}`;
-        modalWA.onclick = () => { if (window.showToast) showToast('info', 'Membuka percakapan WhatsApp...'); };
+        modalWA.onclick = () => { if (window.showToast) showToast('info', T('ts_waopen')); };
     }
 
     // Share
@@ -446,8 +452,8 @@ function openProductDetail(id) {
     setHref('shareX', `https://twitter.com/intent/tweet?text=${shareText}&url=${pageUrl}`);
     const copyBtn = document.getElementById('shareCopy');
     if (copyBtn) copyBtn.onclick = async () => {
-        try { await navigator.clipboard.writeText(decodeURIComponent(pageUrl)); if (window.showToast) showToast('success', 'Link produk disalin!'); }
-        catch { if (window.showToast) showToast('warning', 'Gagal menyalin link'); }
+        try { await navigator.clipboard.writeText(decodeURIComponent(pageUrl)); if (window.showToast) showToast('success', T('ts_copied')); }
+        catch { if (window.showToast) showToast('warning', T('ts_copyfail')); }
     };
 
     // Related (kategori sama, kecualikan diri sendiri, maks 4)
@@ -460,7 +466,7 @@ function openProductDetail(id) {
                 <img src="${escHtml(p.image_url || PLACEHOLDER)}" alt="${escHtml(p.nama_produk)}" loading="lazy" onerror="this.src='${PLACEHOLDER}'">
                 <span class="related-name">${escHtml(p.nama_produk)}</span>
                 <span class="related-price">${window.formatRupiah(p.harga)}</span>
-            </button>`).join('') || '<p class="text-muted small">Belum ada produk terkait.</p>';
+            </button>`).join('') || `<p class="text-muted small">${T('no_rel')}</p>`;
         relWrap.querySelectorAll('[data-rel]').forEach(b => {
             b.onclick = () => openProductDetail(b.dataset.rel);
         });
@@ -478,7 +484,7 @@ function openProductDetail(id) {
                 </div>
                 <p>${escHtml(r.text)}</p>
                 <small class="text-muted">${escHtml(r.date || '')}</small>
-            </div>`).join('') : '<p class="text-muted small">Belum ada ulasan. Jadilah yang pertama!</p>';
+            </div>`).join('') : `<p class="text-muted small">${T('no_rev')}</p>`;
     }
     const form = document.getElementById('reviewForm');
     if (form) form.dataset.pid = product.id;
@@ -494,7 +500,7 @@ function processCheckout() {
     const name  = currentProduct.nama_produk || 'Produk';
     bootstrap.Modal.getInstance(document.getElementById('productDetailModal'))?.hide();
     setTimeout(() => {
-        if (window.showToast) showToast('success', `Pesanan "${name}" berhasil dibuat! Mengalihkan ke checkout...`);
+        if (window.showToast) showToast('success', T('ts_made', { name: name }));
         else alert(`Pesanan "${name}" sedang diproses ke Sistem Checkout.`);
     }, 300);
 }

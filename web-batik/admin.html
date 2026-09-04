@@ -11,8 +11,9 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
   <link rel="preconnect" href="https://images.unsplash.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Playfair+Display:wght@600;700&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/admin.css">
+  <script>try{var _l=localStorage.getItem('site-lang')||'id';document.documentElement.lang=_l==='ar'?'ar':_l;if(_l==='ar')document.documentElement.dir='rtl';}catch(e){}</script>
 </head>
 <body class="admin-body">
 
@@ -21,14 +22,14 @@
     <div class="lock-card">
       <div class="lock-check" id="lockCheck" aria-hidden="true"><span><i class="bi bi-check-lg"></i></span></div>
       <img src="img/logo-k.svg" alt="Kainara">
-      <h5>Dashboard Terkunci</h5>
-      <p>Halaman ini khusus pemilik toko. Masukkan PIN admin.</p>
+      <h5 data-i18n="lock_t">Dashboard Terkunci</h5>
+      <p data-i18n="lock_s">Halaman ini khusus pemilik toko. Masukkan PIN admin.</p>
       <form id="adminLockForm">
-        <input type="password" id="adminPin" placeholder="PIN admin" autocomplete="off" maxlength="20" aria-label="PIN admin">
-        <div class="lock-err" id="adminPinError">PIN salah, coba lagi.</div>
-        <button type="submit" class="btn-terra-ad w-100 justify-content-center mt-3">Buka Dashboard</button>
+        <input type="password" id="adminPin" placeholder="PIN admin" data-i18n-ph="lock_ph" autocomplete="off" maxlength="20" aria-label="PIN admin" data-i18n-aria="lock_ph">
+        <div class="lock-err" id="adminPinError" data-i18n="lock_err">PIN salah, coba lagi.</div>
+        <button type="submit" class="btn-terra-ad w-100 justify-content-center mt-3" data-i18n="lock_btn">Buka Dashboard</button>
       </form>
-      <p class="mt-3 mb-0" style="font-size:.74rem;">PIN demo untuk asesor: <strong>kainara26</strong></p>
+      <p class="mt-3 mb-0" style="font-size:.74rem;" data-i18n="lock_demo">PIN demo untuk asesor: <strong>kainara26</strong></p>
     </div>
   </div>
 
@@ -37,11 +38,12 @@
     <div class="admin-top-inner">
       <a class="admin-brand" href="index.html">
         <img src="img/logo-k.svg" alt="Kainara">
-        <span><strong>Kainara<em>.</em></strong><small>Admin Panel</small></span>
+        <span><strong>Kainara<em>.</em></strong><small data-i18n="brand_s">Admin Panel</small></span>
       </a>
-      <a class="top-link" href="index.html"><i class="bi bi-shop"></i> <span class="lbl">Lihat Toko</span></a>
-      <a class="top-link" href="../web-portofolio/index.html"><i class="bi bi-person-badge"></i> <span class="lbl">Portofolio</span></a>
-      <a class="top-link lock" href="#" id="btnLogout"><i class="bi bi-box-arrow-right"></i> <span class="lbl">Kunci</span></a>
+      <span id="adminLangSlot"></span>
+      <a class="top-link" href="index.html"><i class="bi bi-shop"></i> <span class="lbl" data-i18n="top_shop">Lihat Toko</span></a>
+      <a class="top-link" href="../web-portofolio/index.html"><i class="bi bi-person-badge"></i> <span class="lbl" data-i18n="top_port">Portofolio</span></a>
+      <a class="top-link lock" href="#" id="btnLogout"><i class="bi bi-box-arrow-right"></i> <span class="lbl" data-i18n="top_lock">Kunci</span></a>
     </div>
   </header>
 
@@ -49,35 +51,35 @@
     <!-- KONTEN -->
     <main class="admin-main">
       <div class="greet">
-        <h1>Halo, Bos. <em>👋</em></h1>
-        <p>Ini kondisi tokomu hari ini — <span id="todayLine">memuat…</span></p>
+        <h1 data-i18n="greet">Halo, Bos. <em>👋</em></h1>
+        <p><span data-i18n="greet_s">Ini kondisi tokomu hari ini — </span><span id="todayLine">memuat…</span></p>
       </div>
 
       <!-- STATISTIK (klik = filter) -->
       <div class="stat-grid" role="group" aria-label="Statistik toko">
-        <div class="stat-card" id="statProduk" role="button" tabindex="0" title="Tampilkan semua produk">
+        <div class="stat-card" id="statProduk" role="button" tabindex="0" title="Tampilkan semua produk" data-i18n-title="st_prod_s">
           <div class="stat-dot c1"></div>
-          <strong id="statProdukNum">–</strong><span>Total Produk</span><small>Klik: tampilkan semua</small>
+          <strong id="statProdukNum">–</strong><span data-i18n="st_prod">Total Produk</span><small data-i18n="st_prod_s">Klik: tampilkan semua</small>
         </div>
-        <div class="stat-card" id="statStok" role="button" tabindex="0" title="Total unit di gudang">
+        <div class="stat-card" id="statStok" role="button" tabindex="0" title="Total unit di gudang" data-i18n-title="st_stock_s">
           <div class="stat-dot c2"></div>
-          <strong id="statStokNum">–</strong><span>Total Stok</span><small>Unit di gudang</small>
+          <strong id="statStokNum">–</strong><span data-i18n="st_stock">Total Stok</span><small data-i18n="st_stock_s">Unit di gudang</small>
         </div>
-        <div class="stat-card" id="statNilai" role="button" tabindex="0" title="Perkiraan nilai inventaris">
+        <div class="stat-card" id="statNilai" role="button" tabindex="0" title="Perkiraan nilai inventaris" data-i18n-title="st_val_s">
           <div class="stat-dot c3"></div>
-          <strong id="statNilaiNum">–</strong><span>Nilai Inventaris</span><small>Harga × stok</small>
+          <strong id="statNilaiNum">–</strong><span data-i18n="st_val">Nilai Inventaris</span><small data-i18n="st_val_s">Harga × stok</small>
         </div>
-        <div class="stat-card" id="statMenipis" role="button" tabindex="0" title="Tampilkan stok ≤ 5">
+        <div class="stat-card" id="statMenipis" role="button" tabindex="0" title="Tampilkan stok ≤ 5" data-i18n-title="st_low_s">
           <div class="stat-dot c4"></div>
-          <strong id="statMenipisNum">–</strong><span>Stok Menipis</span><small>Klik: filter ≤ 5</small>
+          <strong id="statMenipisNum">–</strong><span data-i18n="st_low">Stok Menipis</span><small data-i18n="st_low_s">Klik: filter ≤ 5</small>
         </div>
       </div>
 
       <!-- BANNER STOK MENIPIS -->
       <div class="low-banner" id="lowBanner" role="alert">
         <i class="bi bi-exclamation-triangle-fill"></i>
-        <span id="lowBannerText">Ada produk yang stoknya menipis.</span>
-        <button id="btnLowShow">Tampilkan</button>
+        <span id="lowBannerText" data-i18n="banner">Ada produk yang stoknya menipis.</span>
+        <button id="btnLowShow" data-i18n="banner_btn">Tampilkan</button>
       </div>
 
       <!-- PANEL PRODUK -->
@@ -85,19 +87,19 @@
         <div class="toolbar">
           <div class="search-wrap">
             <i class="bi bi-search"></i>
-            <input type="text" id="searchInput" placeholder="Cari nama, kategori, deskripsi…" autocomplete="off">
+            <input type="text" id="searchInput" placeholder="Cari nama, kategori, deskripsi…" data-i18n-ph="search_ph" autocomplete="off">
           </div>
           <select id="sortProduk" aria-label="Urutkan">
-            <option value="terbaru">Terbaru dulu</option>
-            <option value="harga_asc">Harga: termurah</option>
-            <option value="harga_desc">Harga: termahal</option>
-            <option value="stok_asc">Stok: tersedikit</option>
-            <option value="nama_asc">Nama: A–Z</option>
+            <option value="terbaru" data-i18n="sort_new">Terbaru dulu</option>
+            <option value="harga_asc" data-i18n="sort_lo">Harga: termurah</option>
+            <option value="harga_desc" data-i18n="sort_hi">Harga: termahal</option>
+            <option value="stok_asc" data-i18n="sort_low">Stok: tersedikit</option>
+            <option value="nama_asc" data-i18n="sort_az">Nama: A–Z</option>
           </select>
-          <span class="chip-low" id="chipLow">Stok ≤ 5 <button id="chipLowX" aria-label="Hapus filter">✕</button></span>
+          <span class="chip-low" id="chipLow"><span data-i18n="chip">Stok ≤ 5</span> <button id="chipLowX" aria-label="Hapus filter">✕</button></span>
           <button class="tool-btn" id="btnExport"><i class="bi bi-download"></i> CSV</button>
           <button class="tool-btn" id="btnRefresh"><i class="bi bi-arrow-clockwise"></i></button>
-          <button class="btn-terra-ad" id="btnTambahTop"><i class="bi bi-plus-lg"></i> Tambah Produk</button>
+          <button class="btn-terra-ad" id="btnTambahTop"><i class="bi bi-plus-lg"></i> <span data-i18n="add">Tambah Produk</span></button>
         </div>
 
         <div class="cat-pills" id="catPills" role="group" aria-label="Filter kategori"></div>
@@ -107,8 +109,8 @@
         <div class="pager">
           <span class="pager-info" id="pagerInfo">–</span>
           <div class="pager-btns">
-            <button class="tool-btn" id="btnPrev"><i class="bi bi-chevron-left"></i> Sebelumnya</button>
-            <button class="tool-btn" id="btnNext">Berikutnya <i class="bi bi-chevron-right"></i></button>
+            <button class="tool-btn" id="btnPrev"><i class="bi bi-chevron-left"></i> <span data-i18n="prev">Sebelumnya</span></button>
+            <button class="tool-btn" id="btnNext"><span data-i18n="next">Berikutnya</span> <i class="bi bi-chevron-right"></i></button>
           </div>
         </div>
       </section>
@@ -121,8 +123,8 @@
       <div class="modal-content rounded-4 border-0">
         <div class="modal-header border-bottom-0 p-4 pb-0">
           <div>
-            <h5 class="modal-title fw-bold" id="modalTitle">Tambah Produk Baru</h5>
-            <p class="text-muted small mb-0">Semua kolom bertanda <span class="text-danger">*</span> wajib diisi.</p>
+            <h5 class="modal-title fw-bold" id="modalTitle" data-i18n="modal_add">Tambah Produk Baru</h5>
+            <p class="text-muted small mb-0" data-i18n="modal_req">Semua kolom bertanda <span class="text-danger">*</span> wajib diisi.</p>
           </div>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Tutup"></button>
         </div>
@@ -131,13 +133,13 @@
             <input type="hidden" id="productId">
             <div class="row g-3">
               <div class="col-12">
-                <label class="form-label fw-semibold" for="productName">Nama Produk <span class="text-danger">*</span></label>
-                <input type="text" id="productName" class="form-control" required placeholder="Contoh: Kemeja Batik Parang">
+                <label class="form-label fw-semibold" for="productName"><span data-i18n="f_name">Nama Produk</span> <span class="text-danger">*</span></label>
+                <input type="text" id="productName" class="form-control" required placeholder="Contoh: Kemeja Batik Parang" data-i18n-ph="f_name_ph">
               </div>
               <div class="col-md-6">
-                <label class="form-label fw-semibold" for="productCategory">Kategori <span class="text-danger">*</span></label>
+                <label class="form-label fw-semibold" for="productCategory"><span data-i18n="f_cat">Kategori</span> <span class="text-danger">*</span></label>
                 <select id="productCategory" class="form-select" required>
-                  <option value="" selected disabled>Pilih Kategori...</option>
+                  <option value="" selected disabled data-i18n="f_cat_ph">Pilih Kategori...</option>
                   <option value="Kemeja">Kemeja</option>
                   <option value="Kain">Kain</option>
                   <option value="Gaun">Gaun</option>
@@ -145,39 +147,39 @@
                 </select>
               </div>
               <div class="col-md-3">
-                <label class="form-label fw-semibold" for="productPrice">Harga (Rp) <span class="text-danger">*</span></label>
+                <label class="form-label fw-semibold" for="productPrice"><span data-i18n="f_price">Harga (Rp)</span> <span class="text-danger">*</span></label>
                 <input type="number" id="productPrice" class="form-control" min="0" step="500" required placeholder="250000">
               </div>
               <div class="col-md-3">
-                <label class="form-label fw-semibold" for="productStock">Stok <span class="text-danger">*</span></label>
+                <label class="form-label fw-semibold" for="productStock"><span data-i18n="f_stock">Stok</span> <span class="text-danger">*</span></label>
                 <input type="number" id="productStock" class="form-control" min="0" required placeholder="10">
               </div>
               <div class="col-12">
-                <label class="form-label fw-semibold">Gambar Produk <span class="text-danger">*</span></label>
+                <label class="form-label fw-semibold"><span data-i18n="f_img">Gambar Produk</span> <span class="text-danger">*</span></label>
                 <div class="mb-2">
-                  <label class="form-label text-muted small mb-1" for="productFileInput"><i class="bi bi-upload me-1"></i>Upload dari Komputer (maks 2MB)</label>
+                  <label class="form-label text-muted small mb-1" for="productFileInput"><i class="bi bi-upload me-1"></i><span data-i18n="f_up">Upload dari Komputer (maks 2MB)</span></label>
                   <input type="file" id="productFileInput" class="form-control form-control-sm" accept="image/*">
                 </div>
                 <div id="imgPreviewWrap" class="mb-2 align-items-center gap-2" style="display:none;">
                   <img id="imgPreview" src="" alt="Preview" class="ad-modal-img">
                   <button type="button" class="btn btn-sm btn-outline-danger" id="btnClearImg">
-                    <i class="bi bi-x-circle"></i> Hapus
+                    <i class="bi bi-x-circle"></i> <span data-i18n="f_clear">Hapus</span>
                   </button>
                 </div>
                 <div>
-                  <label class="form-label text-muted small mb-1" for="productImage"><i class="bi bi-link-45deg me-1"></i>Atau masukkan URL Gambar</label>
+                  <label class="form-label text-muted small mb-1" for="productImage"><i class="bi bi-link-45deg me-1"></i><span data-i18n="f_url">Atau masukkan URL Gambar</span></label>
                   <input type="url" id="productImage" class="form-control form-control-sm" placeholder="https://images.unsplash.com/...">
                 </div>
                 <input type="hidden" id="productImageFinal">
               </div>
               <div class="col-12">
-                <label class="form-label fw-semibold" for="productDescription">Deskripsi <span class="text-danger">*</span></label>
-                <textarea id="productDescription" class="form-control" rows="3" required placeholder="Motif apa, bahan apa, cocok untuk acara apa…"></textarea>
+                <label class="form-label fw-semibold" for="productDescription"><span data-i18n="f_desc">Deskripsi</span> <span class="text-danger">*</span></label>
+                <textarea id="productDescription" class="form-control" rows="3" required placeholder="Motif apa, bahan apa, cocok untuk acara apa…" data-i18n-ph="f_desc_ph"></textarea>
               </div>
             </div>
             <div class="mt-4 text-end">
-              <button type="button" class="btn btn-light rounded-pill px-4" data-bs-dismiss="modal">Batal</button>
-              <button type="submit" class="btn-terra-ad"><i class="bi bi-check-lg"></i> Simpan Produk</button>
+              <button type="button" class="btn btn-light rounded-pill px-4" data-bs-dismiss="modal" data-i18n="f_cancel">Batal</button>
+              <button type="submit" class="btn-terra-ad"><i class="bi bi-check-lg"></i> <span data-i18n="f_save">Simpan Produk</span></button>
             </div>
           </form>
         </div>
@@ -189,7 +191,7 @@
   <div id="goLoader" aria-hidden="true">
     <div class="go-ring">K<em>.</em></div>
     <div class="go-brand">Kainara<span>Studio</span></div>
-    <div class="go-sub" id="goSub">Membuka…</div>
+    <div class="go-sub" id="goSub" data-i18n="go_opening">Membuka…</div>
     <div class="go-bar"><span id="goFill"></span></div>
     <div class="go-pct" id="goPct">0%</div>
   </div>
@@ -198,6 +200,7 @@
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="js/supabaseClient.js"></script>
+  <script src="js/i18n.js"></script>
   <script src="js/admin.js"></script>
   <script>
     // Kunci PIN sederhana (level demo — di produksi pakai Supabase Auth).
@@ -217,7 +220,7 @@
           document.getElementById('adminPinError').style.display = 'none';
           if (btn) {
             btn.disabled = true;
-            btn.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span>Membuka…';
+            btn.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span>' + (window.I18n ? window.I18n.t('lock_opening') : 'Membuka…');
           }
           setTimeout(() => document.getElementById('lockCheck')?.classList.add('show'), 350);
           setTimeout(() => lock?.classList.add('hide'), 950);

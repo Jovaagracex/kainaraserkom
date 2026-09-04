@@ -5,9 +5,13 @@
  * ============================================================
  */
 
+function T(key, vars) {
+    try { if (window.I18n) return window.I18n.t(key, vars); } catch (e) {}
+    return key;
+}
+
 const Checkout = {
-    renderSummary() {
-        const container = document.getElementById('checkoutSummary');
+    renderSummary() {        const container = document.getElementById('checkoutSummary');
         if (!container) return;
         const items = Cart.getItems();
 
@@ -31,11 +35,11 @@ const Checkout = {
         const note = document.getElementById('checkoutNote')?.value.trim();
 
         if (!name || !phone || !address) {
-            if (window.showToast) showToast('warning', 'Harap isi nama, telepon, dan alamat!');
+            if (window.showToast) showToast('warning', T('ts_fill'));
             return;
         }
         if (!/^[0-9+\-\s]{9,16}$/.test(phone)) {
-            if (window.showToast) showToast('warning', 'Nomor telepon tidak valid!');
+            if (window.showToast) showToast('warning', T('ts_phonebad'));
             return;
         }
 
@@ -46,7 +50,7 @@ const Checkout = {
             const p = window.catalog?.getById?.(it.id);
             const max = p ? parseInt(p.stok, 10) : Infinity;
             if (!isNaN(max) && it.qty > max) {
-                if (window.showToast) showToast('warning', `"${it.nama_produk}" melebihi stok (${max})!`);
+                if (window.showToast) showToast('warning', T('ts_over', { name: it.nama_produk, max: max }));
                 return;
             }
         }
@@ -76,7 +80,7 @@ const Checkout = {
         // Buka WhatsApp
         setTimeout(() => {
             window.open(url, '_blank');
-            if (window.showToast) showToast('success', 'Pesanan dikirim ke WhatsApp!');
+            if (window.showToast) showToast('success', T('ts_sent'));
             // Reset form
             document.getElementById('checkoutForm')?.reset();
         }, 300);

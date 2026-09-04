@@ -7,6 +7,12 @@
 const CART_KEY = 'kainara_cart';
 const ORDER_KEY = 'kainara_orders';
 
+// Helper terjemahan (aman bila i18n.js belum dimuat)
+function T(key, vars) {
+    try { if (window.I18n) return window.I18n.t(key, vars); } catch (e) {}
+    return key;
+}
+
 function cartStockOf(id) {
     const p = window.catalog?.getById?.(id);
     const s = p ? parseInt(p.stok, 10) : NaN;
@@ -31,14 +37,14 @@ const Cart = {
         const stock = parseInt(product.stok, 10);
         const maxStock = isNaN(stock) ? Infinity : stock;
         if (maxStock <= 0) {
-            if (window.showToast) showToast('warning', 'Stok produk habis!');
+            if (window.showToast) showToast('warning', T('ts_out'));
             return;
         }
         const items = this.getItems();
         const existing = items.find(i => String(i.id) === String(product.id));
         const curQty = existing ? existing.qty : 0;
         if (curQty + qty > maxStock) {
-            if (window.showToast) showToast('warning', `Stok tersisa ${maxStock} pcs!`);
+            if (window.showToast) showToast('warning', T('ts_left', { max: maxStock }));
             if (existing) existing.qty = maxStock;
             else items.push({
                 id: product.id,
@@ -66,7 +72,7 @@ const Cart = {
             });
         }
         this.save(items);
-        if (window.showToast) showToast('success', `"${product.nama_produk}" ditambahkan ke keranjang!`);
+        if (window.showToast) showToast('success', T('ts_added', { name: product.nama_produk }));
     },
 
     removeItem(id) {
@@ -80,7 +86,7 @@ const Cart = {
         if (!item) return;
         const maxStock = cartStockOf(id);
         if (qty > maxStock) {
-            if (window.showToast) showToast('warning', `Maksimal ${maxStock} pcs (stok tersedia)!`);
+            if (window.showToast) showToast('warning', T('ts_max', { max: maxStock }));
             qty = maxStock;
         }
         item.qty = Math.max(1, qty);
@@ -121,7 +127,7 @@ const Cart = {
             panel.innerHTML = `
                 <div class="text-center py-5 text-muted">
                     <i class="bi bi-bag fs-1 d-block mb-2"></i>
-                    <p>Keranjang kosong</p>
+                    <p>${T('c_empty')}</p>
                 </div>
                 ${this.historyHtml()}`;
             if (footer) footer.style.display = 'none';
@@ -137,14 +143,14 @@ const Cart = {
                     <div class="fw-semibold text-dark" style="font-size:0.85rem;">${escHtml(item.nama_produk)}</div>
                     <div style="color:#D97706;font-size:0.8rem;">${window.formatRupiah(item.harga)}</div>
                     <div class="d-flex align-items-center gap-2 mt-1" data-cart-row="${escHtml(item.id)}">
-                        <button class="btn btn-sm btn-outline-secondary rounded-circle" style="width:26px;height:26px;padding:0;" data-cart="dec" aria-label="Kurangi">
+                        <button class="btn btn-sm btn-outline-secondary rounded-circle" style="width:26px;height:26px;padding:0;" data-cart="dec" aria-label="${T('c_dec')}">
                             <i class="bi bi-dash" style="font-size:0.7rem;"></i>
                         </button>
                         <span class="fw-semibold" style="font-size:0.85rem;min-width:20px;text-align:center;">${item.qty}</span>
-                        <button class="btn btn-sm btn-outline-secondary rounded-circle" style="width:26px;height:26px;padding:0;" data-cart="inc" aria-label="Tambah">
+                        <button class="btn btn-sm btn-outline-secondary rounded-circle" style="width:26px;height:26px;padding:0;" data-cart="inc" aria-label="${T('c_inc')}">
                             <i class="bi bi-plus" style="font-size:0.7rem;"></i>
                         </button>
-                        <button class="btn btn-sm btn-outline-danger ms-auto" style="font-size:0.7rem;padding:2px 6px;" data-cart="del" aria-label="Hapus">
+                        <button class="btn btn-sm btn-outline-danger ms-auto" style="font-size:0.7rem;padding:2px 6px;" data-cart="del" aria-label="${T('c_del')}">
                             <i class="bi bi-trash"></i>
                         </button>
                     </div>
@@ -165,11 +171,11 @@ const Cart = {
         if (!orders.length) return '';
         return `
             <div class="mt-4">
-                <h6 class="fw-bold small text-muted">Riwayat Pesanan (${orders.length})</h6>
+                <h6 class="fw-bold small text-muted">${T('c_hist', { n: orders.length })}</h6>
                 ${orders.slice(0, 3).map(o => `
                     <div class="small border rounded-3 p-2 mb-2">
                         <div class="fw-semibold">${escHtml(o.date || '')} — ${escHtml(o.name || '')}</div>
-                        <div class="text-muted">${(o.items || []).length} item • ${window.formatRupiah(o.total || 0)}</div>
+                        <div class="text-muted">${(o.items || []).length} ${T('c_item')} • ${window.formatRupiah(o.total || 0)}</div>
                     </div>`).join('')}
             </div>`;
     },
@@ -197,13 +203,13 @@ const Cart = {
         // Validasi stok sebelum checkout
         const items = this.getItems();
         if (items.length === 0) {
-            if (window.showToast) showToast('warning', 'Keranjang kosong!');
+            if (window.showToast) showToast('warning', T('ts_empty'));
             return;
         }
         for (const it of items) {
             const max = cartStockOf(it.id);
             if (it.qty > max) {
-                if (window.showToast) showToast('warning', `"${it.nama_produk}" melebihi stok (${max})!`);
+                if (window.showToast) showToast('warning', T('ts_over', { name: it.nama_produk, max: max }));
                 return;
             }
         }
@@ -219,7 +225,6 @@ window.Cart = Cart;
 
 document.addEventListener('DOMContentLoaded', () => {
     Cart.updateBadge();
-    // Delegasi tombol cart (aman, tanpa id di inline onclick)
     document.getElementById('cartPanelBody')?.addEventListener('click', e => {
         const btn = e.target.closest('[data-cart]');
         if (!btn) return;
@@ -234,4 +239,6 @@ document.addEventListener('DOMContentLoaded', () => {
         else if (act === 'dec') Cart.updateQty(id, cur - 1);
         else if (act === 'del') Cart.removeItem(id);
     });
+    // Render ulang saat bahasa diganti
+    document.addEventListener('langchange', () => Cart.updatePanel());
 });

@@ -298,3 +298,37 @@ body.admin-body {
     .stat-card, .greet, .p-card, .low-banner.show, .lock-card { animation: none; }
     .p-card:hover .p-card-img img { transform: none; }
 }
+
+/* ── Language switcher (i18n) ── */
+#adminLangSlot { display: inline-flex; }
+.lang-wrap { position: relative; display: inline-flex; }
+.lang-btn {
+    background: rgba(255,255,255,.7); border: 1px solid var(--ad-line, #E5E2DC);
+    color: var(--ad-ink, #333); height: 34px; min-width: 34px; border-radius: 999px;
+    display: inline-flex; align-items: center; justify-content: center; gap: 4px;
+    padding: 0 10px; cursor: pointer; font-size: .76rem; font-weight: 700;
+}
+.lang-btn:hover { border-color: var(--ad-accent); color: var(--ad-accent); }
+.lang-menu {
+    position: absolute; top: calc(100% + 8px); right: 0; z-index: 1200;
+    background: #fff; border: 1px solid var(--ad-line, #E5E2DC);
+    border-radius: 12px; box-shadow: 0 12px 32px rgba(0,0,0,.12); padding: 6px;
+    min-width: 150px; display: none;
+}
+.lang-menu.open { display: block; }
+.lang-menu [data-lang] {
+    display: flex; align-items: center; gap: 8px; width: 100%;
+    background: none; border: none; border-radius: 8px;
+    padding: 8px 10px; font-size: .83rem; color: #444; cursor: pointer;
+}
+.lang-menu [data-lang]:hover { background: #f5f2ec; }
+.lang-menu [data-lang] .lang-check { width: 16px; color: var(--ad-accent); visibility: hidden; }
+.lang-menu [data-lang].active { font-weight: 700; color: #111; }
+.lang-menu [data-lang].active .lang-check { visibility: visible; }
+
+/* ── Jepang: font Noto Sans JP ── */
+html[lang="ja"] body { font-family: 'Plus Jakarta Sans', 'Noto Sans JP', system-ui, sans-serif; }
+
+/* ── Arab (RTL): penyesuaian kecil ── */
+html[dir="rtl"] .toolbar .search-wrap i { left: auto; }
+html[dir="rtl"] .admin-top-inner { direction: rtl; }
