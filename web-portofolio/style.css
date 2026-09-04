@@ -635,57 +635,12 @@ footer a:hover { color: var(--terracotta); }
     .hero-stats { gap: 1rem; }
 }
 
-/* ═══════════════════════════════════════════════
-   WOW PACK — preloader, progress, cursor, magnetic,
-   typing, dark mode, tilt, bento
-   ═══════════════════════════════════════════════ */
-
 /* ── Scroll progress bar ── */
 #scrollProgress {
     position: fixed; top: 0; left: 0; height: 3px; width: 0;
     z-index: 2000;
     background: linear-gradient(90deg, var(--terracotta), var(--amber));
 }
-
-/* ── Preloader ── */
-#preloader {
-    position: fixed; inset: 0; z-index: 3000;
-    display: flex; flex-direction: column; gap: 14px;
-    align-items: center; justify-content: center;
-    background: var(--sand);
-    transition: opacity .5s ease, visibility .5s ease;
-}
-#preloader.done { opacity: 0; visibility: hidden; }
-.preloader-mark {
-    font-family: var(--font-serif); font-size: 3.2rem; font-weight: 700;
-    color: var(--terracotta); line-height: 1;
-    animation: preload-pulse 1.2s ease-in-out infinite;
-}
-.preloader-mark span { color: var(--charcoal); }
-.preloader-name { font-size: .8rem; letter-spacing: .25em; text-transform: uppercase; color: var(--muted); }
-.preloader-bar { width: 180px; height: 4px; border-radius: 999px; background: var(--sand-border); overflow: hidden; }
-.preloader-bar span { display: block; height: 100%; width: 40%; border-radius: inherit;
-    background: linear-gradient(90deg, var(--terracotta), var(--amber));
-    animation: preload-slide 1.1s ease-in-out infinite; }
-@keyframes preload-pulse { 0%,100% { transform: scale(1); opacity: 1; } 50% { transform: scale(1.06); opacity: .8; } }
-@keyframes preload-slide { 0% { transform: translateX(-110%); } 100% { transform: translateX(460%); } }
-
-/* ── Custom cursor (desktop presisi saja) ── */
-.cursor-dot, .cursor-ring { position: fixed; top: 0; left: 0; pointer-events: none; z-index: 2500; border-radius: 50%; display: none; }
-@media (pointer: fine) { .cursor-dot, .cursor-ring { display: block; } }
-.cursor-dot { width: 7px; height: 7px; background: var(--terracotta); }
-.cursor-ring { width: 34px; height: 34px; border: 1.5px solid var(--terracotta); opacity: .55;
-    transition: width .2s ease, height .2s ease, opacity .2s ease; }
-.cursor-ring.grow { width: 54px; height: 54px; opacity: .9; }
-
-/* ── Magnetic buttons ── */
-.magnetic { transition: transform .25s ease; will-change: transform; }
-
-/* ── Typing line ── */
-.typing-line { font-size: 1rem; color: var(--charcoal-3); min-height: 1.6em; }
-.typing-line #typingText { font-weight: 600; color: var(--terracotta); }
-.caret { display: inline-block; color: var(--terracotta); font-weight: 700; animation: blink 1s step-end infinite; }
-@keyframes blink { 50% { opacity: 0; } }
 
 /* ── Theme toggle ── */
 .theme-toggle {
@@ -696,28 +651,49 @@ footer a:hover { color: var(--terracotta); }
 }
 .theme-toggle:hover { border-color: var(--terracotta); color: var(--terracotta); transform: rotate(15deg); }
 
-/* ── 3D tilt cards ── */
-[data-tilt] { transform-style: preserve-3d; will-change: transform; }
+/* ── Coretan tangan + polaroid ── */
+.photo-note {
+    font-family: 'Caveat', cursive; font-size: 1.35rem; font-weight: 600;
+    color: var(--terracotta); transform: rotate(-3deg); margin-bottom: .5rem;
+}
+.photo-polaroid .photo-ratio {
+    background: var(--white); padding: 10px 10px 34px;
+    border: 1px solid var(--sand-border); border-radius: 6px;
+    box-shadow: var(--sh-lg); transform: rotate(2deg);
+    transition: transform var(--t-base);
+}
+.photo-polaroid .photo-ratio:hover { transform: rotate(0deg); }
+.photo-polaroid .photo-img { border-radius: 2px; box-shadow: none; }
 
-/* ── Bento grid ── */
-.bento-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-top: 1.5rem; }
-.bento-item {
-    background: var(--white); border: 1px solid var(--sand-border);
-    border-radius: var(--r-xl); padding: 1.1rem 1.2rem; box-shadow: var(--sh-sm);
-    transition: transform var(--t-base), box-shadow var(--t-base), border-color var(--t-base);
+/* ── About: judul sticky ── */
+.sticky-title { position: sticky; top: 110px; }
+@media (max-width: 991.98px) { .sticky-title { position: static; } }
+
+/* ── Kotak "sedang dipelajari" ── */
+.learning-box {
+    background: var(--sand-dark); border: 1px dashed var(--sand-border);
+    border-radius: var(--r-xl); padding: 1.1rem 1.25rem;
 }
-.bento-item:hover { transform: translateY(-4px); box-shadow: var(--sh-md); border-color: rgba(194,94,0,.3); }
-.bento-wide { grid-column: span 2; }
-.bento-label { font-size: .72rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--terracotta); }
-.bento-ico {
-    width: 40px; height: 40px; border-radius: var(--r-md);
-    background: var(--terracotta-light); color: var(--terracotta);
-    display: flex; align-items: center; justify-content: center; font-size: 1.1rem; margin-bottom: .6rem;
+.learning-box p { font-size: .88rem; color: var(--charcoal-3); }
+.chip-learning { opacity: .75; border-style: dashed; }
+
+/* ── Timeline perjalanan ── */
+.journey-narrow { max-width: 720px; }
+.journey { border-left: 2px solid var(--sand-border); margin-left: 8px; padding-left: 1.75rem; }
+.journey-item { position: relative; padding-bottom: 2rem; }
+.journey-item:last-child { padding-bottom: 0; }
+.journey-item::before {
+    content: ''; position: absolute; left: -1.75rem; top: 4px;
+    width: 12px; height: 12px; border-radius: 50%;
+    background: var(--terracotta); transform: translateX(-50%);
+    box-shadow: 0 0 0 4px var(--terracotta-light);
 }
-.bento-title { font-weight: 700; font-size: .95rem; color: var(--charcoal); margin-bottom: .25rem; }
-.bento-item p { font-size: .83rem; color: var(--charcoal-3); margin: 0; line-height: 1.6; }
-.pulse-dot { animation: preload-pulse 1.6s ease-in-out infinite; }
-@media (max-width: 767.98px) { .bento-grid { grid-template-columns: repeat(2, 1fr); } }
+.journey-year {
+    display: inline-block; font-size: .75rem; font-weight: 700;
+    color: var(--terracotta); background: var(--terracotta-light);
+    border-radius: var(--r-full); padding: .1rem .7rem; margin-bottom: .4rem;
+}
+.journey-item p { color: var(--charcoal-3); font-size: .93rem; line-height: 1.75; margin: 0; }
 
 /* ── Dark mode ── */
 [data-theme="dark"] { color-scheme: dark; }
@@ -735,6 +711,5 @@ footer a:hover { color: var(--terracotta); }
 [data-theme="dark"] img { filter: saturate(.94); }
 
 @media (prefers-reduced-motion: reduce) {
-    .preloader-mark, .preloader-bar span, .caret, .pulse-dot { animation: none !important; }
-    .magnetic, [data-tilt] { transform: none !important; }
+    .photo-polaroid .photo-ratio, .photo-note { transform: none !important; }
 }

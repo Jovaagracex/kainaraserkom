@@ -339,7 +339,7 @@ const catalog = {
 
         return `
             <div class="col">
-                <article class="product-card h-100" data-tilt>
+                <article class="product-card h-100">
                     <div class="product-img-wrap">
                         <img src="${escHtml(img)}"
                              alt="${escHtml(p.nama_produk)}"
