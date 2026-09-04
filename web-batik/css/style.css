@@ -1132,12 +1132,20 @@ body.page-enter { animation: page-in .45s ease both; }
     transition: opacity .28s ease, visibility .28s ease;
 }
 #pageLoader.show { opacity: 1; visibility: visible; }
-.loader-logo {
-    height: 72px; width: auto; border-radius: 14px;
-    box-shadow: 0 0 42px rgba(217,119,6,.4);
-    animation: loader-pulse 1.1s ease-in-out infinite;
+.loader-ring {
+    width: 88px; height: 88px; border-radius: 50%;
+    border: 2px solid rgba(255,255,255,.16); border-top-color: #F0A63C;
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 0 42px rgba(217,119,6,.35);
+    animation: loader-spin .9s linear infinite;
 }
-@keyframes loader-pulse { 0%,100% { transform: scale(1); opacity: 1; } 50% { transform: scale(1.07); opacity: .85; } }
+.loader-ring span {
+    font-family: var(--font-serif); font-size: 1.9rem; font-weight: 700;
+    animation: loader-spin-rev .9s linear infinite;
+}
+.loader-ring span em { font-style: normal; color: #D97706; }
+@keyframes loader-spin { to { transform: rotate(360deg); } }
+@keyframes loader-spin-rev { to { transform: rotate(-360deg); } }
 .loader-brand { font-family: var(--font-serif); font-size: 1.4rem; }
 .loader-brand span { color: #D97706; }
 .loader-sub { font-size: .72rem; letter-spacing: .22em; text-transform: uppercase; opacity: .55; }
@@ -1147,7 +1155,6 @@ body.page-enter { animation: page-in .45s ease both; }
 .loader-pct { font-size: .8rem; font-weight: 600; font-variant-numeric: tabular-nums; color: #D97706; }
 @media (prefers-reduced-motion: reduce) {
     body.page-enter { animation: none; }
-    .loader-logo { animation: none; }
 }
 
 /* ── Theme toggle ── */
