@@ -222,9 +222,9 @@ h5,h6 { font-family: var(--font-sans); font-weight: 600; }
 }
 .hero-img-box img { width: 100%; aspect-ratio: 4/5; object-fit: cover; }
 
-/* ─── Section Commons ─────────────────────────── */
-.section { padding: var(--sp-16) 0; }
-.section-alt { background: var(--white); padding: var(--sp-24) 0; }
+/* ─── Section Commons — padding sengaja beda-beda biar ritmenya nggak monoton ─── */
+.section { padding: 3.5rem 0; }
+.section-alt { background: var(--white); padding: 5rem 0; }
 .section-head { margin-bottom: var(--sp-8); display: flex; flex-direction: column; gap: var(--sp-2); }
 .section-head.center { text-align: center; align-items: center; }
 .section-title { font-size: clamp(1.625rem, 3vw, 2.25rem); letter-spacing: -0.02em; }
@@ -815,10 +815,7 @@ footer.site-footer {
     .filter-select { min-width: auto; }
 }
 
-/* ═══════════════════════════════════════════════════════════════
-   ADMIN PANEL — RESPONSIVE TABLE-TO-CARD (Mobile-First)
-   Mengubah tabel produk menjadi card individual di layar HP
-   ═══════════════════════════════════════════════════════════════ */
+/* tabel produk jadi kartu di layar HP */
 @media (max-width: 767.98px) {
 
     /* ── 1. Main Container: kurangi padding atas-bawah di HP ── */
@@ -1021,6 +1018,9 @@ footer.site-footer {
     transform: translateY(-4px);
     box-shadow: 0 8px 25px rgba(0,0,0,0.06);
 }
+/* kartu tengah sengaja miring dikit — biar nggak kelihatan terlalu rapi */
+.testimoni-card.tilt { transform: rotate(.5deg); }
+.testimoni-card.tilt:hover { transform: rotate(0) translateY(-4px); }
 .testimoni-avatar {
     width: 44px; height: 44px;
     border-radius: 50%;
@@ -1074,11 +1074,10 @@ input.filter-select { cursor: text; }
 
 /* ── Skeleton ── */
 .skeleton-card { background: var(--white); border-radius: var(--r-xl); padding: 12px; border: 1px solid var(--sand-border); }
-.skeleton { border-radius: 8px; background: linear-gradient(90deg, #eee 25%, #f7f7f7 50%, #eee 75%); background-size: 200% 100%; animation: shimmer 1.2s infinite; }
+.skeleton { border-radius: 8px; background: #efede8; }
 .skeleton-img { height: 180px; }
 .skeleton-line { height: 12px; margin-top: 10px; }
 .skeleton-line.short { width: 60%; }
-@keyframes shimmer { to { background-position: -200% 0; } }
 
 /* ── Related + reviews ── */
 .related-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
@@ -1106,18 +1105,15 @@ input.filter-select { cursor: text; }
 
 /* ── Aksesibilitas gerak ── */
 @media (prefers-reduced-motion: reduce) {
-    .promo-glow, .promo-float, .skeleton { animation: none !important; }
+    .promo-glow, .promo-float { animation: none !important; }
     .hero-enter { opacity: 1 !important; animation: none !important; }
     .rv { opacity: 1 !important; transform: none !important; transition: none !important; }
-    .kainara-marquee-track { animation: none !important; }
-    #productGrid .product-card { opacity: 1 !important; animation: none !important; }
     .btn-terra::after { display: none; }
 }
 
-/* ══════════════════════════════════════════
-   ANIMASI TOKO — entrance, reveal, marquee,
-   kartu produk, kilau tombol. Pelan & sopan.
-   ══════════════════════════════════════════ */
+/* Animasi toko: entrance hero + reveal scroll saja. Sisanya
+   (stagger kartu, marquee, badge pop, page-enter, kilau non-hover)
+   saya buang — kebanyakan gerak malah kelihatan template. */
 
 /* 1) Anchor tidak ketutup navbar fixed */
 html { scroll-padding-top: 96px; }
@@ -1141,22 +1137,7 @@ html { scroll-padding-top: 96px; }
 }
 .rv.in { opacity: 1; transform: none; }
 
-/* 4) Kartu produk: muncul berjenjang tiap render (CSS murni,
-   jadi ikut jalan tiap ganti halaman/filter) */
-@keyframes card-in {
-    from { opacity: 0; transform: translateY(18px) scale(.98); }
-    to   { opacity: 1; transform: none; }
-}
-#productGrid .product-card { animation: card-in .5s cubic-bezier(.22, 1, .36, 1) backwards; }
-#productGrid .product-card:nth-child(2) { animation-delay: .06s; }
-#productGrid .product-card:nth-child(3) { animation-delay: .12s; }
-#productGrid .product-card:nth-child(4) { animation-delay: .18s; }
-#productGrid .product-card:nth-child(5) { animation-delay: .24s; }
-#productGrid .product-card:nth-child(6) { animation-delay: .3s; }
-#productGrid .product-card:nth-child(7) { animation-delay: .36s; }
-#productGrid .product-card:nth-child(8) { animation-delay: .42s; }
-
-/* 5) Kilau menyapu tombol utama saat hover */
+/* 4) Kilau menyapu tombol utama saat hover */
 .btn-terra { position: relative; overflow: hidden; isolation: isolate; }
 .btn-terra::after {
     content: '';
@@ -1170,38 +1151,6 @@ html { scroll-padding-top: 96px; }
     pointer-events: none;
 }
 .btn-terra:hover::after { transform: skewX(-18deg) translateX(340px); }
-
-/* 6) Pita berjalan: motif • pengrajin • etc */
-.kainara-marquee {
-    overflow: hidden;
-    border-top: 1px solid var(--sand-border);
-    border-bottom: 1px solid var(--sand-border);
-    background: var(--white);
-    padding: .8rem 0;
-}
-.kainara-marquee-track {
-    display: flex;
-    gap: 2.5rem;
-    width: max-content;
-    white-space: nowrap;
-    animation: kainara-slide 28s linear infinite;
-    font-size: .8rem;
-    font-weight: 600;
-    letter-spacing: .18em;
-    text-transform: uppercase;
-    color: var(--charcoal-3);
-}
-.kainara-marquee:hover .kainara-marquee-track { animation-play-state: paused; }
-.kainara-marquee-track .o { color: var(--terracotta); }
-@keyframes kainara-slide { to { transform: translateX(-50%); } }
-
-/* 7) Badge keranjang memantul tiap jumlah berubah */
-@keyframes badge-pop {
-    0% { transform: scale(.4); }
-    60% { transform: scale(1.25); }
-    100% { transform: scale(1); }
-}
-#cartBadge.pop { animation: badge-pop .35s cubic-bezier(.22, 1, .36, 1); }
 
 /* ── Hero mobile: tampilkan gambar kecil, bukan hilang ── */
 @media (max-width: 991px) {
@@ -1243,9 +1192,7 @@ html { scroll-padding-top: 96px; }
     background: linear-gradient(90deg, var(--terracotta), var(--amber));
 }
 
-/* ── Loading transisi pindah halaman ── */
-body.page-enter { animation: page-in .45s ease both; }
-@keyframes page-in { from { opacity: 0; } to { opacity: 1; } }
+/* ── Loading transisi pindah halaman (overlay + persen, dipicu via JS) ── */
 #pageLoader {
     position: fixed; inset: 0; z-index: 4000;
     display: flex; flex-direction: column; gap: 14px;
@@ -1281,9 +1228,6 @@ body.page-enter { animation: page-in .45s ease both; }
 .loader-bar span { display: block; height: 100%; width: 0; border-radius: inherit;
     background: linear-gradient(90deg, #C25E00, #D97706); }
 .loader-pct { font-size: .8rem; font-weight: 600; font-variant-numeric: tabular-nums; color: #D97706; }
-@media (prefers-reduced-motion: reduce) {
-    body.page-enter { animation: none; }
-}
 
 /* ── Theme toggle ── */
 .theme-toggle {

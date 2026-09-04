@@ -159,7 +159,7 @@ document.addEventListener('DOMContentLoaded', () => {
     syncOffline();
 });
 
-// ── Entrance hero + reveal scroll + badge pop ──
+// ── Entrance hero + reveal scroll ──
 document.addEventListener('DOMContentLoaded', () => {
     const calmMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
@@ -171,7 +171,6 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // 2) Elemen section muncul lembut saat di-scroll
-    // (kartu produk TIDAK di sini — ia punya animasi sendiri tiap render)
     const rvSel = '.section-head, .step-card, .about-img-col, .about-text, ' +
         '.promo-banner-section .container, #kontak .section-head';
     const rvEls = document.querySelectorAll(rvSel);
@@ -195,15 +194,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // 3) Badge keranjang memantul tiap jumlahnya berubah
-    const badge = document.getElementById('cartBadge');
-    if (badge && !calmMotion && 'MutationObserver' in window) {
-        new MutationObserver(() => {
-            badge.classList.remove('pop');
-            void badge.offsetWidth; // paksa reflow agar animasi mengulang
-            badge.classList.add('pop');
-        }).observe(badge, { childList: true, characterData: true, subtree: true });
-    }
 });
 
 // ── Dark mode + scroll progress ──

@@ -659,9 +659,7 @@ footer a:hover { color: var(--terracotta); }
     background: linear-gradient(90deg, var(--terracotta), var(--amber));
 }
 
-/* ── Loading transisi pindah halaman ── */
-body.page-enter { animation: page-in .45s ease both; }
-@keyframes page-in { from { opacity: 0; } to { opacity: 1; } }
+/* ── Loading transisi pindah halaman (overlay, dipicu via JS) ── */
 #pageLoader {
     position: fixed; inset: 0; z-index: 4000;
     display: flex; flex-direction: column; gap: 14px;
@@ -697,7 +695,6 @@ body.page-enter { animation: page-in .45s ease both; }
 .loader-bar span { display: block; height: 100%; width: 0; border-radius: inherit;
     background: linear-gradient(90deg, #C25E00, #D97706); }
 .loader-pct { font-size: .8rem; font-weight: 600; font-variant-numeric: tabular-nums; color: #D97706; }
-@media (prefers-reduced-motion: reduce) { body.page-enter { animation: none; } }
 
 /* ── Theme toggle ── */
 .theme-toggle {
@@ -777,10 +774,8 @@ body.page-enter { animation: page-in .45s ease both; }
 .skill-card:hover h5 { color: var(--terracotta); }
 .skill-card h5 { transition: color var(--t-fast); }
 
-/* ══════════════════════════════════════════
-   ANIMASI — formal tapi santai: pelan, lembut,
-   muncul berurutan (stagger), tanpa efek kaku.
-   ══════════════════════════════════════════ */
+/* Animasi: entrance hero + reveal scroll + kilau tombol (hover saja).
+   Pita berjalan & stagger berlebihan sudah dibuang. */
 
 /* 1) Entrance hero saat halaman dimuat */
 @keyframes hero-rise {
@@ -814,10 +809,7 @@ body.page-enter { animation: page-in .45s ease both; }
     .rv { opacity: 1; transform: none; transition: none; }
 }
 
-/* ══════════════════════════════════════════
-   ANIMASI TAMBAHAN — angka menghitung, kilau
-   tombol, pita skill. Tetap pelan & sopan.
-   ══════════════════════════════════════════ */
+/* ── Kartu layanan ── */
 
 /* 5) Angka statistik tidak bergeser saat menghitung */
 .stat-num { font-variant-numeric: tabular-nums; }
@@ -843,32 +835,7 @@ body.page-enter { animation: page-in .45s ease both; }
     transform: skewX(-18deg) translateX(320px);
 }
 
-/* 7) Pita skill berjalan */
-.skill-marquee {
-    overflow: hidden;
-    border-top: 1px solid var(--sand-border);
-    border-bottom: 1px solid var(--sand-border);
-    background: var(--white);
-    padding: .85rem 0;
-}
-.skill-marquee-track {
-    display: flex;
-    gap: 2.75rem;
-    width: max-content;
-    white-space: nowrap;
-    animation: marquee-slide 26s linear infinite;
-    font-size: .82rem;
-    font-weight: 600;
-    letter-spacing: .18em;
-    text-transform: uppercase;
-    color: var(--charcoal-3);
-}
-.skill-marquee:hover .skill-marquee-track { animation-play-state: paused; }
-.skill-marquee-track .o { color: var(--terracotta); }
-@keyframes marquee-slide { to { transform: translateX(-50%); } }
-
 @media (prefers-reduced-motion: reduce) {
-    .skill-marquee-track { animation: none; }
     #hero .btn::after, #hero .btn-outline::after { display: none; }
 }
 

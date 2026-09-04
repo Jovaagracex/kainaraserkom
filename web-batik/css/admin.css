@@ -1,8 +1,4 @@
-/* ══════════════════════════════════════════
-   ADMIN KAINARA v2 — command center terang
-   Tanpa sidebar. Topbar kaca + angka serif +
-   kartu produk visual. Hanya untuk admin.html.
-   ══════════════════════════════════════════ */
+/* Admin Kainara — topbar kaca + kartu produk. Hanya untuk admin.html. */
 :root {
     --ad-bg:      #FBF9F5;
     --ad-card:    #FFFFFF;
@@ -67,11 +63,7 @@ body.admin-body {
     background: var(--ad-card); border: 1px solid var(--ad-line); border-radius: var(--ad-r);
     padding: 1.15rem 1.25rem; cursor: pointer; position: relative; overflow: hidden;
     transition: transform .25s var(--ad-ease), box-shadow .25s ease, border-color .25s ease;
-    animation: ad-rise .6s var(--ad-ease) backwards;
 }
-.stat-card:nth-child(2) { animation-delay: .07s; }
-.stat-card:nth-child(3) { animation-delay: .14s; }
-.stat-card:nth-child(4) { animation-delay: .21s; }
 .stat-card:hover { transform: translateY(-3px); box-shadow: var(--ad-shadow); }
 .stat-card.active { border-color: var(--ad-accent); box-shadow: 0 0 0 3px rgba(194, 94, 0, .14); }
 .stat-dot { width: 10px; height: 10px; border-radius: 50%; margin-bottom: .7rem; }
@@ -99,6 +91,15 @@ body.admin-body {
     transition: background .2s ease, transform .2s var(--ad-ease);
 }
 .low-banner button:hover { background: var(--ad-accent-2); transform: translateY(-1px); }
+
+/* kartu "segera hadir" — sengaja dashed, biar kelihatan belum jadi */
+.soon-card {
+    display: flex; align-items: center; gap: .7rem;
+    border: 1.5px dashed var(--ad-line); border-radius: var(--ad-r);
+    padding: .8rem 1.1rem; margin-bottom: 1.5rem;
+    font-size: .83rem; color: var(--ad-faint); background: transparent;
+}
+.soon-card i { color: var(--ad-accent); }
 
 /* ── Toolbar ── */
 .toolbar {
@@ -206,9 +207,8 @@ body.admin-body {
 
 /* Skeleton + empty */
 .skel-card { border: 1px solid var(--ad-line); border-radius: var(--ad-r); overflow: hidden; background: #fff; }
-.skel-img { aspect-ratio: 4 / 3; background: linear-gradient(90deg, #eee 25%, #f7f7f7 50%, #eee 75%); background-size: 200% 100%; animation: ad-shimmer 1.2s infinite; }
-.skel-line { height: 14px; border-radius: 7px; margin: .8rem 1rem; background: linear-gradient(90deg, #eee 25%, #f7f7f7 50%, #eee 75%); background-size: 200% 100%; animation: ad-shimmer 1.2s infinite; }
-@keyframes ad-shimmer { to { background-position: -200% 0; } }
+.skel-img { aspect-ratio: 4 / 3; background: #efede8; border-radius: var(--ad-r) var(--ad-r) 0 0; }
+.skel-line { height: 14px; border-radius: 7px; margin: .8rem 1rem; background: #efede8; }
 .empty-state {
     grid-column: 1 / -1; text-align: center; padding: 3.5rem 1.5rem;
     background: #fff; border: 1.5px dashed var(--ad-line); border-radius: var(--ad-r); color: var(--ad-muted);
