@@ -22,9 +22,16 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>try{if(localStorage.getItem('site-theme')==='dark')document.documentElement.setAttribute('data-theme','dark');}catch(e){}</script>
 </head>
-<body>
+<body class="page-enter">
 
     <div id="scrollProgress" aria-hidden="true"></div>
+
+    <!-- Transisi keluar ke web portofolio -->
+    <div id="pageWipe" aria-hidden="true">
+        <div class="wipe-mark">Erlangga<span>.</span></div>
+        <div class="wipe-sub">Kembali ke portofolio...</div>
+        <div class="wipe-bar"><span></span></div>
+    </div>
 
     <!-- ── NAVBAR ── -->
     <nav id="mainNav" class="navbar navbar-expand-lg py-3 px-4">

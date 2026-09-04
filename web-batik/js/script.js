@@ -170,5 +170,19 @@ document.addEventListener('DOMContentLoaded', () => {
         };
         window.addEventListener('scroll', onScrollProgress, { passive: true });
         onScrollProgress();
+
+        // Transisi keluar ke web portofolio: tahan klik, naikkan wipe, baru pindah
+        const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        document.addEventListener('click', (e) => {
+            const a = e.target.closest ? e.target.closest('a[href*="web-portofolio"]') : null;
+            if (!a || a.target === '_blank' || e.metaKey || e.ctrlKey || e.shiftKey) return;
+            const href = a.getAttribute('href');
+            if (!href || reducedMotion) return;
+            e.preventDefault();
+            const wipe = document.getElementById('pageWipe');
+            if (!wipe) { window.location.href = href; return; }
+            wipe.classList.add('show');
+            setTimeout(() => { window.location.href = href; }, 620);
+        });
     });
 })();

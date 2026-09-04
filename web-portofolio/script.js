@@ -37,5 +37,19 @@
         }
         window.addEventListener('scroll', updateBar, { passive: true });
         updateBar();
+
+        // Transisi keluar ke web toko: tahan klik, naikkan wipe, baru pindah
+        var reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        document.addEventListener('click', function (e) {
+            var a = e.target.closest ? e.target.closest('a[href*="web-batik"]') : null;
+            if (!a || a.target === '_blank' || e.metaKey || e.ctrlKey || e.shiftKey) return;
+            var href = a.getAttribute('href');
+            if (!href || reducedMotion) return; // biarkan pindah biasa
+            e.preventDefault();
+            var wipe = document.getElementById('pageWipe');
+            if (!wipe) { window.location.href = href; return; }
+            wipe.classList.add('show');
+            setTimeout(function () { window.location.href = href; }, 620);
+        });
     });
 })();

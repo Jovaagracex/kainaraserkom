@@ -23,9 +23,16 @@
     <link rel="stylesheet" href="style.css">
     <script>try{if(localStorage.getItem('site-theme')==='dark')document.documentElement.setAttribute('data-theme','dark');}catch(e){}</script>
 </head>
-<body>
+<body class="page-enter">
 
     <div id="scrollProgress" aria-hidden="true"></div>
+
+    <!-- Transisi keluar ke web toko -->
+    <div id="pageWipe" aria-hidden="true">
+        <div class="wipe-mark">Kainara<span>Studio</span></div>
+        <div class="wipe-sub">Membuka toko...</div>
+        <div class="wipe-bar"><span></span></div>
+    </div>
 
     <!-- ══════════════════════════════════════
          NAVBAR
