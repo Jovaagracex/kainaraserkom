@@ -649,15 +649,21 @@ body.page-enter { animation: page-in .45s ease both; }
     position: fixed; inset: 0; z-index: 4000;
     display: flex; flex-direction: column; gap: 14px;
     align-items: center; justify-content: center;
-    background: #191918; color: #FBF9F5;
+    color: #FBF9F5;
+    background:
+        radial-gradient(520px 380px at 18% 12%, rgba(217,119,6,.28), transparent 60%),
+        radial-gradient(560px 460px at 85% 88%, rgba(194,94,0,.25), transparent 62%),
+        repeating-linear-gradient(45deg, rgba(255,255,255,.022) 0 2px, transparent 2px 14px),
+        linear-gradient(160deg, #2A1E12 0%, #42260C 55%, #1C140D 100%);
     opacity: 0; visibility: hidden;
     transition: opacity .28s ease, visibility .28s ease;
 }
 #pageLoader.show { opacity: 1; visibility: visible; }
 .loader-ring {
     width: 88px; height: 88px; border-radius: 50%;
-    border: 2px solid rgba(255,255,255,.12); border-top-color: #D97706;
+    border: 2px solid rgba(255,255,255,.16); border-top-color: #F0A63C;
     display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 0 42px rgba(217,119,6,.35);
     animation: loader-spin .9s linear infinite;
 }
 .loader-ring span {
