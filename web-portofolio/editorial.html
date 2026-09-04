@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Erlangga. — Junior Web Developer</title>
+    <meta name="description" content="Portofolio pribadi Erlangga — Junior Web Developer. Ngoprek web sejak 2024, dari HTML polos sampai toko online pakai Supabase.">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%23F8F7F4'/><text x='50' y='72' font-size='62' text-anchor='middle' font-family='Georgia' font-weight='bold' fill='%23191918'>E<tspan fill='%23D97706'>.</tspan></text></svg>">
+
+    <!-- Tipografi: serif elegan + sans bersih -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,800;1,500;1,600&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        /* ══════════════════════════════════════════
+           0. TOKEN DESAIN
+           ══════════════════════════════════════════ */
+        :root {
+            --cream:      #F8F7F4;
+            --ink:        #191918;
+            --ink-soft:   #55534E;
+            --ink-faint:  #8A8781;
+            --accent:     #D97706;
+            --accent-hot: #B45309;
+            --green:      #22C55E;
+            --card:       #FFFFFF;
+            --serif: 'Playfair Display', Georgia, serif;
+            --sans:  'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+            --pad: clamp(20px, 4vw, 56px);
+            --ease-out: cubic-bezier(.22, 1, .36, 1);
+        }
+
+        /* ══════════════════════════════════════════
+           1. BASE
+           ══════════════════════════════════════════ */
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: var(--sans);
+            background: var(--cream);
+            color: var(--ink);
+            min-height: 100svh;
+            padding: var(--pad);
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* Panggung full-screen: header / hero / footer */
+        .stage {
+            min-height: calc(100svh - (var(--pad) * 2));
+            display: flex;
+            flex-direction: column;
+        }
+
+        a { color: inherit; }
+
+        /* ══════════════════════════════════════════
+           2. LOAD ANIMATION — fade-in staggered
+           Elemen muncul berurutan: opacity 0→1,
+           translateY bawah→atas.
+           ══════════════════════════════════════════ */
+        @keyframes rise {
+            from { opacity: 0; transform: translateY(26px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+
+        .reveal {
+            opacity: 0;
+            animation: rise .9s var(--ease-out) forwards;
+            animation-delay: var(--d, 0s);
+        }
+
+        /* ══════════════════════════════════════════
+           3. NAVBAR
+           ══════════════════════════════════════════ */
+        .navbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+            position: relative;
+        }
+
+        .logo {
+            font-family: var(--serif);
+            font-weight: 800;
+            font-size: 1.5rem;
+            letter-spacing: -.01em;
+            text-decoration: none;
+            transition: transform .25s var(--ease-out);
+        }
+        .logo:hover { transform: translateY(-1px); }
+        .logo .dot { color: var(--accent); }
+
+        .nav-menu {
+            display: flex;
+            gap: clamp(1rem, 2.5vw, 2.25rem);
+            list-style: none;
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        .nav-menu a {
+            text-decoration: none;
+            font-size: .86rem;
+            font-weight: 500;
+            color: var(--ink-faint);
+            transition: color .25s ease;
+            position: relative;
+        }
+        /* Abu redup → hitam pekat saat hover */
+        .nav-menu a:hover { color: var(--ink); }
+        .nav-menu a::after {
+            content: '';
+            position: absolute;
+            left: 0; bottom: -4px;
+            width: 100%; height: 1.5px;
+            background: var(--ink);
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform .3s var(--ease-out);
+        }
+        .nav-menu a:hover::after { transform: scaleX(1); }
+
+        .status {
+            display: inline-flex;
+            align-items: center;
+            gap: .5rem;
+            font-size: .8rem;
+            font-weight: 600;
+            color: var(--ink-soft);
+            white-space: nowrap;
+        }
+        /* Titik hijau berkedip */
+        .status-dot {
+            width: 8px; height: 8px;
+            border-radius: 50%;
+            background: var(--green);
+            animation: blink 1.8s ease-in-out infinite;
+        }
+        @keyframes blink {
+            0%, 100% { opacity: 1; box-shadow: 0 0 0 0 rgba(34, 197, 94, .45); }
+            50%      { opacity: .55; box-shadow: 0 0 0 6px rgba(34, 197, 94, 0); }
+        }
+
+        /* ══════════════════════════════════════════
+           4. HERO
+           ══════════════════════════════════════════ */
+        .hero {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 3rem 0;
+        }
+
+        /* — Kartu polaroid miring di atas judul — */
+        .polaroid {
+            background: var(--card);
+            padding: 12px 12px 14px;
+            width: clamp(180px, 22vw, 240px);
+            transform: rotate(-3deg);
+            box-shadow: 0 16px 40px rgba(25, 25, 24, .14);
+            transition: transform .45s var(--ease-out), box-shadow .45s var(--ease-out);
+            margin-bottom: clamp(-1.5rem, -2vw, -1rem);
+            position: relative;
+            z-index: 1;
+        }
+        /* Hover: terangkat + rotasi melurus */
+        .polaroid:hover {
+            transform: rotate(0deg) translateY(-8px) scale(1.03);
+            box-shadow: 0 26px 55px rgba(25, 25, 24, .2);
+        }
+        .polaroid img {
+            display: block;
+            width: 100%;
+            aspect-ratio: 1 / 1;
+            object-fit: cover;
+            filter: grayscale(100%) contrast(1.05);
+        }
+        .polaroid figcaption {
+            font-family: var(--serif);
+            font-style: italic;
+            font-size: .82rem;
+            color: var(--ink-soft);
+            padding-top: .65rem;
+            line-height: 1.5;
+        }
+
+        /* — Judul raksasa — */
+        .hero-title {
+            font-family: var(--serif);
+            font-weight: 800;
+            font-size: clamp(4.5rem, 17vw, 15rem);
+            letter-spacing: -.035em;
+            line-height: 1;
+            position: relative;
+            z-index: 0;
+        }
+        .hero-title .dot { color: var(--accent); }
+
+        /* — Sub-teks — */
+        .hero-sub {
+            margin-top: 1.5rem;
+            max-width: 560px;
+            font-size: clamp(.92rem, 1.4vw, 1.02rem);
+            line-height: 1.8;
+            color: var(--ink-soft);
+        }
+        .hero-sub a {
+            font-weight: 700;
+            color: var(--ink);
+            text-decoration: none;
+            border-bottom: 3px solid var(--accent);
+            padding-bottom: 1px;
+            transition: color .25s ease, border-color .25s ease, background .25s ease;
+        }
+        .hero-sub a:hover {
+            color: var(--accent-hot);
+            border-color: var(--accent-hot);
+            background: rgba(217, 119, 6, .08);
+        }
+
+        /* ══════════════════════════════════════════
+           5. FOOTER
+           ══════════════════════════════════════════ */
+        .footer {
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-between;
+            gap: 1rem;
+        }
+
+        .social {
+            display: flex;
+            flex-direction: column;
+            gap: .7rem;
+        }
+        .social a {
+            text-decoration: none;
+            font-size: .82rem;
+            font-weight: 700;
+            letter-spacing: .04em;
+            color: var(--ink);
+            transition: color .25s ease, transform .25s var(--ease-out);
+        }
+        .social a:hover { color: var(--accent); transform: translateX(4px); }
+
+        .scroll-hint {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: .35rem;
+            font-size: .78rem;
+            font-weight: 500;
+            color: var(--ink-faint);
+            text-decoration: none;
+            transition: color .25s ease;
+        }
+        .scroll-hint:hover { color: var(--ink); }
+        /* Panah looping naik-turun */
+        .scroll-hint .arrow {
+            font-size: 1rem;
+            line-height: 1;
+            animation: bob 1.8s ease-in-out infinite;
+        }
+        @keyframes bob {
+            0%, 100% { transform: translateY(-3px); }
+            50%      { transform: translateY(4px); }
+        }
+
+        .roles {
+            font-family: var(--serif);
+            font-size: clamp(.92rem, 1.5vw, 1.05rem);
+            line-height: 1.55;
+            text-align: right;
+            font-weight: 700;
+        }
+        .roles span { display: block; font-weight: 500; font-style: italic; color: var(--ink-soft); }
+
+        /* ══════════════════════════════════════════
+           6. RESPONSIF
+           ══════════════════════════════════════════ */
+        @media (max-width: 720px) {
+            .nav-menu { display: none; } /* menu masuk akal disembunyikan di layar kecil satu-layar */
+            .status { font-size: .72rem; }
+            .hero { padding: 2rem 0; }
+            .hero-title { font-size: 21vw; }
+            .polaroid { width: 46vw; max-width: 220px; }
+            .scroll-hint { display: none; }
+            .roles { font-size: .85rem; }
+        }
+
+        /* ══════════════════════════════════════════
+           7. AKSESIBILITAS GERAK
+           ══════════════════════════════════════════ */
+        @media (prefers-reduced-motion: reduce) {
+            .reveal { opacity: 1; animation: none; }
+            .status-dot, .scroll-hint .arrow { animation: none; }
+            .polaroid { transform: none; }
+            .polaroid:hover { transform: translateY(-4px); }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="stage">
+
+        <!-- ══════════ NAVBAR ══════════ -->
+        <header class="navbar">
+            <a href="#" class="logo reveal" style="--d:.05s">Erlangga<span class="dot">.</span></a>
+
+            <nav aria-label="Navigasi utama">
+                <ul class="nav-menu reveal" style="--d:.15s">
+                    <li><a href="#tentang">Tentang</a></li>
+                    <li><a href="#layanan">Layanan</a></li>
+                    <li><a href="#keahlian">Keahlian</a></li>
+                    <li><a href="#proyek">Proyek</a></li>
+                    <li><a href="#kontak">Kontak</a></li>
+                </ul>
+            </nav>
+
+            <span class="status reveal" style="--d:.25s">
+                <span class="status-dot" aria-hidden="true"></span>
+                Junior Web Developer
+            </span>
+        </header>
+
+        <!-- ══════════ HERO ══════════ -->
+        <main class="hero">
+            <figure class="polaroid reveal" style="--d:.35s">
+                <img
+                    src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=480&h=480&fit=crop&crop=face"
+                    alt="Foto hitam-putih Erlangga"
+                    loading="eager"
+                >
+                <figcaption>ini saya, waktu begadang ngerjain katalog</figcaption>
+            </figure>
+
+            <h1 class="hero-title reveal" style="--d:.5s">Erlangga<span class="dot">.</span></h1>
+
+            <p class="hero-sub reveal" style="--d:.65s">
+                Saya ngoprek web sejak 2024 — dari HTML polos sampai toko online
+                beneran pakai Supabase.
+                <a href="../web-batik/index.html">Lihat toko saya -&gt;</a>
+            </p>
+        </main>
+
+        <!-- ══════════ FOOTER ══════════ -->
+        <footer class="footer">
+            <div class="social reveal" style="--d:.8s">
+                <a href="#" aria-label="X (Twitter)">X</a>
+                <a href="#" aria-label="LinkedIn">In</a>
+                <a href="#" aria-label="Instagram">Ig</a>
+            </div>
+
+            <a href="#tentang" class="scroll-hint reveal" style="--d:.9s">
+                scroll dulu
+                <span class="arrow" aria-hidden="true">&darr;</span>
+            </a>
+
+            <p class="roles reveal" style="--d:1s">
+                Web Designer
+                <span>Junior Developer</span>
+            </p>
+        </footer>
+
+    </div>
+
+    <script>
+        // Parallax halus: polaroid mengikuti sedikit gerakan kursor (desktop saja).
+        // Murni pemanis — halaman tetap utuh tanpa JS.
+        (function () {
+            const card = document.querySelector('.polaroid');
+            const fine = window.matchMedia('(pointer: fine)').matches;
+            const calm = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+            if (!card || !fine || calm) return;
+
+            let ticking = false;
+            document.addEventListener('mousemove', (e) => {
+                if (ticking) return;
+                ticking = true;
+                requestAnimationFrame(() => {
+                    const x = (e.clientX / window.innerWidth - 0.5) * 10;  // ±5px
+                    const y = (e.clientY / window.innerHeight - 0.5) * 10;
+                    card.style.translate = `${x}px ${y}px`;
+                    ticking = false;
+                });
+            });
+        })();
+    </script>
+
+</body>
+</html>
