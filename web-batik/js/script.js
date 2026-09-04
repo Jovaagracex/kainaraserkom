@@ -140,6 +140,25 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 });
 
+// ── Auto-close navbar mobile setelah link diklik ──
+document.addEventListener('DOMContentLoaded', () => {
+    document.addEventListener('click', (e) => {
+        const link = e.target.closest ? e.target.closest('#batikNav .nav-link') : null;
+        if (!link) return;
+        const nav = document.getElementById('batikNav');
+        if (nav && nav.classList.contains('show') && window.bootstrap) {
+            bootstrap.Collapse.getOrCreateInstance(nav).hide();
+        }
+    });
+
+    // ── Indikator offline ──
+    const offBar = document.getElementById('offlineBar');
+    const syncOffline = () => { if (offBar) offBar.style.display = navigator.onLine ? 'none' : 'flex'; };
+    window.addEventListener('online', syncOffline);
+    window.addEventListener('offline', syncOffline);
+    syncOffline();
+});
+
 // ── Dark mode + scroll progress ──
 (function () {
     'use strict';

@@ -16,6 +16,23 @@
 </head>
 <body class="bg-light d-flex flex-column min-vh-100" style="background-color: #FBF9F5 !important;">
 
+  <!-- KUNCI ADMIN (demo) — cegah pengunjung iseng buka panel -->
+  <div id="adminLock" style="position:fixed;inset:0;z-index:5000;display:flex;align-items:center;justify-content:center;background:#F4EFE6;padding:1rem;">
+    <div class="card border-0 shadow rounded-4 p-4" style="max-width:360px;width:100%;">
+      <div class="text-center mb-3">
+        <img src="img/logo-k.svg" alt="Kainara" style="height:48px;width:auto;" class="rounded mb-2">
+        <h5 class="fw-bold mb-1">Panel Admin Terkunci</h5>
+        <p class="text-muted small mb-0">Halaman ini khusus pemilik toko. Masukkan PIN admin.</p>
+      </div>
+      <form id="adminLockForm">
+        <input type="password" id="adminPin" class="form-control text-center" placeholder="PIN admin" autocomplete="off" maxlength="20">
+        <div class="text-danger small mt-1" id="adminPinError" style="display:none;">PIN salah, coba lagi.</div>
+        <button type="submit" class="btn rounded-pill w-100 mt-3 text-white fw-semibold" style="background-color:#D97706;border:none;">Buka Panel</button>
+      </form>
+      <p class="text-muted text-center mt-3 mb-0" style="font-size:.75rem;">PIN demo untuk asesor: <strong>kainara26</strong></p>
+    </div>
+  </div>
+
   <!-- NAVBAR BERSIH & RESPONSIF -->
   <nav class="navbar navbar-expand-lg navbar-light bg-white border-bottom sticky-top py-3">
     <div class="container">
@@ -182,5 +199,26 @@
   <script src="js/supabaseClient.js"></script>
   <!-- Logika Admin CRUD -->
   <script src="js/admin.js"></script>
+  <script>
+    // Kunci PIN sederhana (level demo — di produksi pakai Supabase Auth).
+    // PIN diganti lewat konstanta ADMIN_PIN di bawah.
+    (function () {
+      const ADMIN_PIN = 'kainara26';
+      const lock = document.getElementById('adminLock');
+      try {
+        if (sessionStorage.getItem('kainara_admin_ok') === '1' && lock) lock.remove();
+      } catch (e) { /* storage mati = tetap terkunci, aman */ }
+      document.getElementById('adminLockForm')?.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const val = document.getElementById('adminPin').value;
+        if (val === ADMIN_PIN) {
+          try { sessionStorage.setItem('kainara_admin_ok', '1'); } catch (err) {}
+          lock?.remove();
+        } else {
+          document.getElementById('adminPinError').style.display = 'block';
+        }
+      });
+    })();
+  </script>
 </body>
 </html>

@@ -15,7 +15,7 @@
     <link rel="icon" type="image/svg+xml" href="img/logo-k.svg">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600;700&family=Caveat:wght@500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css?v=1.11.3">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="css/style.css">
@@ -25,6 +25,10 @@
 <body class="page-enter">
 
     <div id="scrollProgress" aria-hidden="true"></div>
+    <div id="offlineBar" role="alert" style="display:none;">
+        <i class="bi bi-wifi-off"></i>
+        <span>Kamu lagi offline — katalog mungkin nggak update. Cek koneksi dulu ya.</span>
+    </div>
 
     <!-- Loading transisi ke web portofolio -->
     <div id="pageLoader" aria-hidden="true">
@@ -104,7 +108,8 @@
                     </div>
                 </div>
                 <div class="hero-img-col">
-                    <div class="hero-img-box">
+                    <p class="hero-note">stok difoto satu-satu pakai HP saya -></p>
+                    <div class="hero-img-box hero-img-tilt">
                         <img src="https://images.unsplash.com/photo-1607083206869-4c7672e72a8a?auto=format&fit=crop&w=800&q=80" alt="Koleksi Batik Kainara Studio">
                     </div>
                 </div>
@@ -212,6 +217,35 @@
                 <!-- Product Grid -->
                 <div class="row row-cols-2 row-cols-md-3 row-cols-lg-4 g-3" id="productGrid"></div>
                 <div id="paginationWrap"></div>
+            </div>
+        </section>
+
+        <!-- ── CARA PEMESANAN ── -->
+        <section id="cara-pesan" class="section section-alt">
+            <div class="container">
+                <div class="section-head center">
+                    <span class="eyebrow">Gampang, nggak ribet</span>
+                    <h2 class="section-title">Cara Pesan</h2>
+                    <p class="section-desc">Nggak ada tombol bayar otomatis — semua lewat chat, biar bisa tanya-tanya dulu.</p>
+                </div>
+                <div class="steps-grid">
+                    <div class="step-card">
+                        <div class="step-num">01</div>
+                        <h3>Pilih batiknya</h3>
+                        <p>Scroll katalog, klik produk buat lihat detail, stok, dan ulasan pembeli lain.</p>
+                    </div>
+                    <div class="step-card">
+                        <div class="step-num">02</div>
+                        <h3>Klik order via WhatsApp</h3>
+                        <p>Bisa langsung dari halaman produk, dari keranjang, atau checkout sekalian. Pesan otomatis sudah terisi.</p>
+                    </div>
+                    <div class="step-card">
+                        <div class="step-num">03</div>
+                        <h3>Bayar &amp; paket dikirim</h3>
+                        <p>Transfer setelah saya konfirmasi stok. Paket dibungkus rapi, dikirim maks 2x24 jam.</p>
+                    </div>
+                </div>
+                <p class="steps-note">Masih bingung? Chat saja dulu — nanya-nanya gratis, nggak wajib beli.</p>
             </div>
         </section>
 
@@ -427,7 +461,7 @@
                 <div class="footer-col">
                     <h6>Informasi</h6>
                     <ul>
-                        <li><a href="#katalog">Cara Pemesanan</a></li>
+                        <li><a href="#cara-pesan">Cara Pemesanan</a></li>
                         <li><a href="#tentang">Tentang Kami</a></li>
                         <li><a href="#kontak">Kontak & Bantuan</a></li>
                         <li><a href="#beranda">Kembali ke Atas</a></li>
@@ -435,7 +469,7 @@
                 </div>
             </div>
             <div class="footer-bar">
-                <p>&copy; 2026 Kainara Studio</p>
+                <p>&copy; 2026 Kainara Studio — dibuat sendiri pakai HTML + Supabase, tanpa template toko.</p>
                 <a href="../web-portofolio/index.html"><i class="bi bi-person-badge me-1"></i> Portofolio Developer</a>
             </div>
         </div>

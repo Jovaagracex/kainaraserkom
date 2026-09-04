@@ -194,10 +194,17 @@ h5,h6 { font-family: var(--font-sans); font-weight: 600; }
     pointer-events: none;
 }
 .hero-inner {
-    display: grid; grid-template-columns: 1fr 1fr;
+    display: grid; grid-template-columns: 1.08fr 0.92fr;
     align-items: center; gap: var(--sp-12);
     position: relative; z-index: 1;
 }
+.hero-note {
+    font-family: 'Caveat', cursive; font-size: 1.3rem; font-weight: 600;
+    color: var(--terracotta); transform: rotate(-2deg);
+    margin-bottom: .4rem; text-align: right;
+}
+.hero-img-tilt { transform: rotate(1.5deg); transition: transform var(--t-base); }
+.hero-img-tilt:hover { transform: rotate(0deg); }
 .hero-content { display: flex; flex-direction: column; gap: var(--sp-4); }
 .hero-content h1 {
     font-size: clamp(2.25rem, 5vw, 3.5rem);
@@ -1107,6 +1114,33 @@ input.filter-select { cursor: text; }
     .hero-img-col { display: block !important; }
     .hero-img-box img { aspect-ratio: 16/9 !important; }
 }
+
+/* ── Bar offline ── */
+#offlineBar {
+    position: fixed; left: 12px; right: 12px; bottom: 12px; z-index: 1500;
+    display: none; align-items: center; justify-content: center; gap: 8px;
+    background: #2D251E; color: #FBF9F5; font-size: .83rem;
+    border-radius: 12px; padding: 10px 14px;
+    box-shadow: 0 8px 24px rgba(0,0,0,.2);
+}
+#offlineBar i { color: #F0A63C; }
+
+/* ── Langkah pemesanan ── */
+.steps-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--sp-4); margin-top: var(--sp-8); }
+.step-card {
+    background: var(--white); border: 1px solid var(--sand-border);
+    border-radius: var(--r-xl); padding: var(--sp-6);
+    box-shadow: var(--sh-sm); transition: all var(--t-base);
+}
+.step-card:hover { transform: translateY(-4px); box-shadow: var(--sh-md); border-color: rgba(194,94,0,.3); }
+.step-num {
+    font-family: var(--font-serif); font-weight: 700; font-size: 2rem;
+    color: var(--terracotta); opacity: .85; line-height: 1;
+}
+.step-card h3 { font-size: 1.05rem; margin: .6rem 0 .4rem; }
+.step-card p { font-size: .88rem; color: var(--charcoal-3); margin: 0; line-height: 1.7; }
+.steps-note { text-align: center; margin-top: var(--sp-6); color: var(--muted); font-size: .87rem; }
+@media (max-width: 767.98px) { .steps-grid { grid-template-columns: 1fr; } }
 
 /* ── Scroll progress bar ── */
 #scrollProgress {

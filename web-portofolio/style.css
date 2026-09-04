@@ -575,6 +575,23 @@ h5, h6 { font-family: var(--font-sans); font-weight: 600; }
 }
 .form-group textarea { min-height: 130px; resize: vertical; }
 
+/* ── Validasi form: error per field + box sukses ── */
+.field-error {
+    display: block; min-height: 1.1em;
+    font-size: 0.78rem; color: #b91c1c; margin-top: 2px;
+}
+.form-group.invalid input,
+.form-group.invalid textarea { border-color: #b91c1c; background: #FEF2F2; }
+.form-group.invalid input:focus,
+.form-group.invalid textarea:focus { box-shadow: 0 0 0 3px rgba(185,28,28,.1); }
+.form-success {
+    display: flex; gap: 0.75rem; align-items: flex-start;
+    background: #F0FDF4; border: 1px solid #BBF7D0; color: #166534;
+    border-radius: var(--r-lg); padding: 1rem 1.1rem; margin-bottom: 1.25rem;
+}
+.form-success i { font-size: 1.25rem; flex-shrink: 0; }
+.form-success p { font-size: 0.85rem; margin: 2px 0 0; opacity: .85; }
+
 /* ─────────────────────────────────────────────────
    FOOTER
 ───────────────────────────────────────────────── */
@@ -752,4 +769,37 @@ body.page-enter { animation: page-in .45s ease both; }
 
 @media (prefers-reduced-motion: reduce) {
     .photo-polaroid .photo-ratio, .photo-note { transform: none !important; }
+}
+
+/* ── Micro-interaksi skill cards ── */
+.skill-card .skill-icon-wrap { transition: transform var(--t-base); }
+.skill-card:hover .skill-icon-wrap { transform: rotate(-8deg) scale(1.12); }
+.skill-card:hover h5 { color: var(--terracotta); }
+.skill-card h5 { transition: color var(--t-fast); }
+
+/* ── Kartu layanan ── */
+.service-card {
+    background: var(--white); border: 1px solid var(--sand-border);
+    border-radius: var(--r-xl); padding: 1.75rem;
+    box-shadow: var(--sh-sm); transition: all var(--t-base);
+    height: 100%;
+}
+.service-card:hover {
+    transform: translateY(-5px); box-shadow: var(--sh-lg);
+    border-color: rgba(194,94,0,.3);
+}
+.service-num {
+    font-family: var(--font-serif); font-weight: 700; font-size: 2.1rem;
+    color: var(--terracotta); opacity: .8; line-height: 1;
+}
+.service-card h5 { margin: .7rem 0 .5rem; font-size: 1.02rem; }
+.service-card > p { font-size: .88rem; color: var(--charcoal-3); line-height: 1.7; }
+.service-card ul { list-style: none; padding: 0; margin: .9rem 0 0; }
+.service-card ul li {
+    font-size: .83rem; color: var(--charcoal-2);
+    padding: .3rem 0 .3rem 1.4rem; position: relative;
+}
+.service-card ul li::before {
+    content: '✓'; position: absolute; left: 0;
+    color: var(--terracotta); font-weight: 700;
 }
