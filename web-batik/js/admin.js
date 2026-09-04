@@ -577,8 +577,8 @@ document.addEventListener('DOMContentLoaded', () => {
         a.addEventListener('click', e => {
             e.preventDefault();
             if (a.id === 'btnLogout') {
+                // Kunci lagi: reload saja — PIN selalu ditanya tiap halaman dibuka
                 playTransition(T('top_lock') + '…', () => {
-                    try { sessionStorage.removeItem('kainara_admin_ok'); } catch (err) {}
                     location.reload();
                 });
                 return;

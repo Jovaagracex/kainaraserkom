@@ -210,18 +210,15 @@
   <script src="js/admin.js"></script>
   <script>
     // Kunci PIN sederhana (level demo — di produksi pakai Supabase Auth).
+    // PIN ditanya SETIAP kali halaman dibuka (tidak disimpan di sessionStorage).
     (function () {
       const ADMIN_PIN = 'kainara26';
       const lock = document.getElementById('adminLock');
-      try {
-        if (sessionStorage.getItem('kainara_admin_ok') === '1' && lock) lock.remove();
-      } catch (e) {}
       document.getElementById('adminLockForm')?.addEventListener('submit', (e) => {
         e.preventDefault();
         const card = lock?.querySelector('.lock-card');
         const btn = e.target.querySelector('button[type="submit"]');
         if (document.getElementById('adminPin').value === ADMIN_PIN) {
-          try { sessionStorage.setItem('kainara_admin_ok', '1'); } catch (err) {}
           // Animasi unlock: tombol loading → centang pop → overlay memudar
           document.getElementById('adminPinError').style.display = 'none';
           if (btn) {
