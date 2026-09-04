@@ -235,6 +235,31 @@ body.admin-body {
 .lock-card input:focus { outline: none; border-color: var(--ad-accent); box-shadow: 0 0 0 3px rgba(194,94,0,.12); }
 .lock-err { display: none; color: var(--ad-red); font-size: .8rem; margin-top: .4rem; font-weight: 700; }
 
+/* ── Layar transisi pindah halaman ── */
+#goLoader {
+    position: fixed; inset: 0; z-index: 6000;
+    display: none; align-items: center; justify-content: center; flex-direction: column; gap: .9rem;
+    background: radial-gradient(120% 120% at 50% 20%, #FBF9F5 0%, #F4EFE6 55%, #EADFCB 100%);
+    text-align: center; padding: 1.5rem;
+}
+#goLoader.show { display: flex; animation: ad-rise .3s var(--ad-ease); }
+.go-ring {
+    width: 76px; height: 76px; border-radius: 50%;
+    border: 3px solid rgba(194, 94, 0, .2); border-top-color: var(--ad-accent);
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Playfair Display', serif; font-weight: 700; font-size: 1.7rem;
+    animation: go-spin 1s linear infinite; background: #fff;
+    box-shadow: 0 12px 30px rgba(194, 94, 0, .18);
+}
+.go-ring em { font-style: normal; color: var(--ad-accent); }
+@keyframes go-spin { to { transform: rotate(360deg); } }
+.go-brand { font-family: 'Playfair Display', serif; font-weight: 700; font-size: 1.2rem; }
+.go-brand span { color: var(--ad-accent); }
+.go-sub { font-size: .84rem; color: var(--ad-muted); font-weight: 600; }
+.go-bar { width: min(280px, 70vw); height: 6px; border-radius: 999px; background: rgba(25,25,24,.1); overflow: hidden; }
+.go-bar span { display: block; height: 100%; width: 0; border-radius: inherit; background: linear-gradient(90deg, var(--ad-accent), var(--ad-accent-2)); }
+.go-pct { font-size: .78rem; font-weight: 800; color: var(--ad-accent-2); font-variant-numeric: tabular-nums; }
+
 /* ── Responsif ── */
 @media (max-width: 820px) {
     .stat-grid { grid-template-columns: 1fr 1fr; gap: .8rem; }

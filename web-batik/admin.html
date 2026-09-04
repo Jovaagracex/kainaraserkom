@@ -180,6 +180,15 @@
     </div>
   </div>
 
+  <!-- LAYAR TRANSISI PINDAH HALAMAN -->
+  <div id="goLoader" aria-hidden="true">
+    <div class="go-ring">K<em>.</em></div>
+    <div class="go-brand">Kainara<span>Studio</span></div>
+    <div class="go-sub" id="goSub">Membuka…</div>
+    <div class="go-bar"><span id="goFill"></span></div>
+    <div class="go-pct" id="goPct">0%</div>
+  </div>
+
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -201,12 +210,6 @@
         } else {
           document.getElementById('adminPinError').style.display = 'block';
         }
-      });
-      // Tombol "Kunci" — keluar sesi tab ini
-      document.getElementById('btnLogout')?.addEventListener('click', (e) => {
-        e.preventDefault();
-        try { sessionStorage.removeItem('kainara_admin_ok'); } catch (err) {}
-        location.reload();
       });
     })();
   </script>

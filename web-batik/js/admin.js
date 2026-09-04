@@ -535,6 +535,49 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('productImage')?.addEventListener('input', window.previewFromUrl);
     document.getElementById('btnClearImg')?.addEventListener('click', window.clearImageInput);
 
+    // Transisi animasi sebelum pindah (Toko / Portofolio / Kunci)
+    const goLoader = document.getElementById('goLoader');
+    const goSub = document.getElementById('goSub');
+    const goFill = document.getElementById('goFill');
+    const goPct = document.getElementById('goPct');
+    const goCalm = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    function playTransition(label, done) {
+        if (goCalm || !goLoader) { done(); return; }
+        if (goSub) goSub.textContent = label;
+        goLoader.classList.add('show');
+        const DUR = 750;
+        let start = null;
+        const step = (ts) => {
+            if (!start) start = ts;
+            const p = Math.min((ts - start) / DUR, 1);
+            const eased = 1 - Math.pow(1 - p, 2);
+            if (goFill) goFill.style.width = (eased * 100).toFixed(0) + '%';
+            if (goPct) goPct.textContent = (eased * 100).toFixed(0) + '%';
+            if (p < 1) requestAnimationFrame(step);
+            else done();
+        };
+        requestAnimationFrame(step);
+    }
+
+    document.querySelectorAll('.top-link').forEach(a => {
+        a.addEventListener('click', e => {
+            e.preventDefault();
+            if (a.id === 'btnLogout') {
+                playTransition('Mengunci dashboard…', () => {
+                    try { sessionStorage.removeItem('kainara_admin_ok'); } catch (err) {}
+                    location.reload();
+                });
+                return;
+            }
+            const href = a.getAttribute('href');
+            if (!href || href === '#') return;
+            const label = a.id === 'btnLogout' ? '' :
+                /portofolio/i.test(href) ? 'Membuka portofolio…' : 'Membuka toko…';
+            playTransition(label, () => { window.location.href = href; });
+        });
+    });
+
     // Delegasi global: aksi baris + tombol tambah/bersihkan di empty-state
     document.addEventListener('click', e => {
         const act = e.target.closest('[data-action]');
