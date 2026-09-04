@@ -59,14 +59,12 @@ async function loadProducts() {
 }
 
 function renderSkeleton() {
-    const tbody = document.getElementById('productTableBody');
-    if (tbody) {
-        tbody.innerHTML = Array.from({ length: 4 })
-            .map(() => '<tr class="skel"><td colspan="6"><div class="skel-bar"></div></td></tr>')
+    const grid = document.getElementById('productGrid');
+    if (grid) {
+        grid.innerHTML = Array.from({ length: 8 })
+            .map(() => '<div class="skel-card"><div class="skel-img"></div><div class="skel-line"></div><div class="skel-line" style="width:60%"></div></div>')
             .join('');
     }
-    const cards = document.getElementById('productCards');
-    if (cards) cards.innerHTML = '';
     const info = document.getElementById('pagerInfo');
     if (info) info.textContent = 'Memuat…';
 }
@@ -101,15 +99,19 @@ function setText(id, val) {
     if (el) el.textContent = val;
 }
 
-// ── Opsi kategori dinamis ──────────────────────────────────────
+// ── Pil kategori dinamis ───────────────────────────────────────
 function renderKategoriOptions() {
-    const sel = document.getElementById('filterKategori');
-    if (!sel) return;
+    const wrap = document.getElementById('catPills');
+    if (!wrap) return;
     const cats = [...new Set(state.products.map(p => (p.kategori || '').trim()).filter(Boolean))].sort();
-    const cur = state.kategori;
-    sel.innerHTML = '<option value="">Semua Kategori</option>' +
-        cats.map(c => `<option value="${escHtml(c)}">${escHtml(c)}</option>`).join('');
-    if (cats.includes(cur)) sel.value = cur;
+    const pills = [{ v: '', t: `Semua (${state.products.length})` }]
+        .concat(cats.map(c => {
+            const n = state.products.filter(p => (p.kategori || '') === c).length;
+            return { v: c, t: `${c} (${n})` };
+        }));
+    wrap.innerHTML = pills.map(p =>
+        `<button class="cat-pill${state.kategori === p.v ? ' on' : ''}" data-cat="${escHtml(p.v)}">${escHtml(p.t)}</button>`
+    ).join('');
 }
 
 // ── Filter + sort + paginate ───────────────────────────────────
@@ -145,10 +147,9 @@ function applyFilters() {
     renderTable();
 }
 
-// ── Render tabel + kartu mobile + pager ────────────────────────
+// ── Render grid kartu + pager ──────────────────────────────────
 function renderTable() {
-    const tbody = document.getElementById('productTableBody');
-    const cards = document.getElementById('productCards');
+    const grid = document.getElementById('productGrid');
     const info = document.getElementById('pagerInfo');
     const prev = document.getElementById('btnPrev');
     const next = document.getElementById('btnNext');
@@ -167,12 +168,13 @@ function renderTable() {
     if (next) next.disabled = state.page >= maxPage;
     [prev, next].forEach(b => { if (b) b.style.opacity = b.disabled ? '.45' : '1'; });
 
+    if (!grid) return;
     if (total === 0) {
         const isFiltered = state.query || state.kategori || state.lowOnly;
-        const empty = `
+        grid.innerHTML = `
             <div class="empty-state">
                 <i class="bi ${isFiltered ? 'bi-search' : 'bi-inbox'}"></i>
-                <h3>${isFiltered ? 'Tidak ketemu' : 'Belum ada produk'}</h3>
+                <h3>${isFiltered ? 'Tidak ketemu' : 'Etalase masih kosong'}</h3>
                 <p>${isFiltered
                     ? 'Coba kata kunci lain, atau bersihkan filter di bawah.'
                     : 'Tambahkan produk pertamamu — langsung tampil di katalog toko.'}</p>
@@ -180,66 +182,37 @@ function renderTable() {
                     ? '<button class="tool-btn" data-action="clear-filter"><i class="bi bi-x-circle"></i> Bersihkan Filter</button>'
                     : '<button class="btn-terra-ad" data-action="add"><i class="bi bi-plus-lg"></i> Tambah Produk Pertama</button>'}
             </div>`;
-        if (tbody) tbody.innerHTML = `<tr><td colspan="6" style="padding:0;border:none;">${empty}</td></tr>`;
-        if (cards) cards.innerHTML = empty;
         return;
     }
 
-    if (tbody) tbody.innerHTML = items.map(rowHtml).join('');
-    if (cards) cards.innerHTML = items.map(cardHtml).join('');
+    grid.innerHTML = items.map(gridCardHtml).join('');
 }
 
-function rowHtml(p) {
+function gridCardHtml(p) {
     const m = stockMeta(p.stok);
     return `
-        <tr>
-            <td>
-                <div class="cell-prod">
-                    <img src="${escHtml(p.image_url || PLACEHOLDER)}" alt="${escHtml(p.nama_produk || 'Produk')}" loading="lazy" onerror="this.src='${PLACEHOLDER}'">
-                    <div><strong>${escHtml(p.nama_produk || '—')}</strong><small>${escHtml(p.deskripsi || '—')}</small></div>
-                </div>
-            </td>
-            <td><span class="badge-cat">${escHtml(p.kategori || '—')}</span></td>
-            <td><span class="price">${window.formatRupiah(p.harga)}</span></td>
-            <td>
-                <span class="stock-pill ${m.cls}">${m.text}</span>
-                <span class="stepper" data-row="${escHtml(p.id)}">
-                    <button data-admin="minus" title="Kurangi 1" aria-label="Kurangi stok">−</button>
-                    <button data-admin="plus" title="Tambah 1" aria-label="Tambah stok">+</button>
-                </span>
-            </td>
-            <td><span class="row-date">${fmtDate(p.created_at)}</span></td>
-            <td>
-                <div class="row-actions" data-row="${escHtml(p.id)}">
-                    <button class="icon-btn edit" data-admin="edit" title="Edit"><i class="bi bi-pencil"></i></button>
-                    <button class="icon-btn del" data-admin="del" title="Hapus"><i class="bi bi-trash"></i></button>
-                </div>
-            </td>
-        </tr>`;
-}
-
-function cardHtml(p) {
-    const m = stockMeta(p.stok);
-    return `
-        <div class="m-card">
-            <div class="m-card-top">
+        <article class="p-card">
+            <div class="p-card-img">
                 <img src="${escHtml(p.image_url || PLACEHOLDER)}" alt="${escHtml(p.nama_produk || 'Produk')}" loading="lazy" onerror="this.src='${PLACEHOLDER}'">
-                <div>
-                    <strong>${escHtml(p.nama_produk || '—')}</strong>
-                    <span class="badge-cat mt-1">${escHtml(p.kategori || '—')}</span>
+                <span class="p-flag ${m.cls}">${m.cls === 'ok' ? 'Tersedia' : m.text}</span>
+            </div>
+            <div class="p-card-body">
+                <h3>${escHtml(p.nama_produk || '—')}</h3>
+                <div class="p-meta"><span>${escHtml(p.kategori || '—')}</span><span class="sep">${fmtDate(p.created_at)}</span></div>
+                <div class="p-price">${window.formatRupiah(p.harga)}</div>
+                <div class="p-stockline" data-row="${escHtml(p.id)}">
+                    <span class="p-stocktxt">Stok: ${Number(p.stok) || 0}</span>
+                    <span class="stepper">
+                        <button data-admin="minus" title="Kurangi 1" aria-label="Kurangi stok">−</button>
+                        <button data-admin="plus" title="Tambah 1" aria-label="Tambah stok">+</button>
+                    </span>
+                </div>
+                <div class="p-actions" data-row="${escHtml(p.id)}">
+                    <button class="p-edit" data-admin="edit"><i class="bi bi-pencil"></i> Edit</button>
+                    <button class="p-del" data-admin="del"><i class="bi bi-trash"></i> Hapus</button>
                 </div>
             </div>
-            <div class="m-card-mid">
-                <span class="price">${window.formatRupiah(p.harga)}</span>
-                <span class="stock-pill ${m.cls}">${m.text}</span>
-            </div>
-            <div class="d-flex gap-2" data-row="${escHtml(p.id)}">
-                <button class="tool-btn flex-fill justify-content-center" data-admin="minus">− Stok</button>
-                <button class="tool-btn flex-fill justify-content-center" data-admin="plus">+ Stok</button>
-                <button class="icon-btn edit" data-admin="edit" title="Edit"><i class="bi bi-pencil"></i></button>
-                <button class="icon-btn del" data-admin="del" title="Hapus"><i class="bi bi-trash"></i></button>
-            </div>
-        </div>`;
+        </article>`;
 }
 
 // ── Alert helper ───────────────────────────────────────────────
@@ -427,10 +400,8 @@ function clearAllFilters() {
     state.lowOnly = false;
     state.page = 1;
     const s = document.getElementById('searchInput');
-    const k = document.getElementById('filterKategori');
     const o = document.getElementById('sortProduk');
     if (s) s.value = '';
-    if (k) k.value = '';
     if (o) o.value = 'terbaru';
     document.getElementById('statMenipis')?.classList.remove('active');
     document.getElementById('statProduk')?.classList.add('active');
@@ -502,8 +473,10 @@ document.addEventListener('DOMContentLoaded', () => {
         state.page = 1;
         applyFilters();
     });
-    document.getElementById('filterKategori')?.addEventListener('change', e => {
-        state.kategori = e.target.value;
+    document.getElementById('catPills')?.addEventListener('click', e => {
+        const pill = e.target.closest('[data-cat]');
+        if (!pill) return;
+        state.kategori = pill.dataset.cat;
         state.page = 1;
         applyFilters();
     });
