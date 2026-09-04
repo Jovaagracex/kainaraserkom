@@ -160,6 +160,14 @@
         </div>
     </section>
 
+    <!-- Pita skill berjalan — pemisah hero & tentang -->
+    <div class="skill-marquee" aria-hidden="true">
+        <div class="skill-marquee-track">
+            <span>HTML <span class="o">✦</span> CSS <span class="o">✦</span> JavaScript <span class="o">✦</span> Supabase <span class="o">✦</span> Bootstrap <span class="o">✦</span> Git <span class="o">✦</span> Terbuka untuk proyek <span class="o">✦</span>&nbsp;</span>
+            <span>HTML <span class="o">✦</span> CSS <span class="o">✦</span> JavaScript <span class="o">✦</span> Supabase <span class="o">✦</span> Bootstrap <span class="o">✦</span> Git <span class="o">✦</span> Terbuka untuk proyek <span class="o">✦</span>&nbsp;</span>
+        </div>
+    </div>
+
     <!-- ══════════════════════════════════════
          ABOUT SECTION
     ══════════════════════════════════════ -->
@@ -817,6 +825,36 @@
         const paintNav = () => nav?.classList.toggle('scrolled', window.scrollY > 24);
         window.addEventListener('scroll', paintNav, { passive: true });
         paintNav();
+
+        // 4) Angka statistik menghitung naik saat terlihat
+        const counters = document.querySelectorAll('.stat-num');
+        const runCounter = (el) => {
+            const raw = el.textContent.trim();
+            const target = parseInt(raw, 10);
+            const suffix = raw.replace(/[0-9]/g, '');
+            if (isNaN(target)) return;
+            const DUR = target > 100 ? 1400 : 1100; // tahun butuh napas lebih panjang
+            const t0 = performance.now();
+            const tick = (now) => {
+                const p = Math.min((now - t0) / DUR, 1);
+                const eased = 1 - Math.pow(1 - p, 3);
+                el.textContent = Math.round(target * eased) + suffix;
+                if (p < 1) requestAnimationFrame(tick);
+            };
+            requestAnimationFrame(tick);
+        };
+        if (calmMotion || !('IntersectionObserver' in window)) {
+            // Gerak dimatikan: biarkan angka final apa adanya
+        } else {
+            const cObserver = new IntersectionObserver((entries) => {
+                entries.forEach((entry) => {
+                    if (!entry.isIntersecting) return;
+                    runCounter(entry.target);
+                    cObserver.unobserve(entry.target);
+                });
+            }, { threshold: 0.6 });
+            counters.forEach((el) => cObserver.observe(el));
+        }
     </script>
 </body>
 </html>

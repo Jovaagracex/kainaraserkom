@@ -814,6 +814,64 @@ body.page-enter { animation: page-in .45s ease both; }
     .rv { opacity: 1; transform: none; transition: none; }
 }
 
+/* ══════════════════════════════════════════
+   ANIMASI TAMBAHAN — angka menghitung, kilau
+   tombol, pita skill. Tetap pelan & sopan.
+   ══════════════════════════════════════════ */
+
+/* 5) Angka statistik tidak bergeser saat menghitung */
+.stat-num { font-variant-numeric: tabular-nums; }
+
+/* 6) Kilau menyapu tombol hero saat hover */
+#hero .btn, #hero .btn-outline {
+    position: relative;
+    overflow: hidden;
+    isolation: isolate;
+}
+#hero .btn::after, #hero .btn-outline::after {
+    content: '';
+    position: absolute;
+    top: -20%; bottom: -20%; left: -30%;
+    width: 36px;
+    background: linear-gradient(100deg, transparent, rgba(255,255,255,.45), transparent);
+    transform: skewX(-18deg) translateX(-60px);
+    transition: transform .7s ease;
+    z-index: 1;
+    pointer-events: none;
+}
+#hero .btn:hover::after, #hero .btn-outline:hover::after {
+    transform: skewX(-18deg) translateX(320px);
+}
+
+/* 7) Pita skill berjalan */
+.skill-marquee {
+    overflow: hidden;
+    border-top: 1px solid var(--sand-border);
+    border-bottom: 1px solid var(--sand-border);
+    background: var(--white);
+    padding: .85rem 0;
+}
+.skill-marquee-track {
+    display: flex;
+    gap: 2.75rem;
+    width: max-content;
+    white-space: nowrap;
+    animation: marquee-slide 26s linear infinite;
+    font-size: .82rem;
+    font-weight: 600;
+    letter-spacing: .18em;
+    text-transform: uppercase;
+    color: var(--charcoal-3);
+}
+.skill-marquee:hover .skill-marquee-track { animation-play-state: paused; }
+.skill-marquee-track .o { color: var(--terracotta); }
+@keyframes marquee-slide { to { transform: translateX(-50%); } }
+
+@media (prefers-reduced-motion: reduce) {
+    .skill-marquee-track { animation: none; }
+    #hero .btn::after, #hero .btn-outline::after { display: none; }
+}
+
 /* ── Kartu layanan ── */
 .service-card {
     background: var(--white); border: 1px solid var(--sand-border);
