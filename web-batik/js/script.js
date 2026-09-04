@@ -18,7 +18,7 @@ window.showToast = showToast;
 
 document.addEventListener('DOMContentLoaded', () => {
     const navPill = document.querySelector('.nav-active-pill');
-    const navLinks = document.querySelectorAll('.navbar-nav .nav-link');
+    const navLinks = document.querySelectorAll('.nav-pills .nav-link');
 
     if (!navPill || navLinks.length === 0) return;
 
@@ -43,7 +43,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function setActiveByHref(href) {
-        const link = document.querySelector(`.navbar-nav .nav-link[href="${href}"]`);
+        const link = document.querySelector(`.nav-pills .nav-link[href="${href}"]`);
         if (link) {
             clearActive();
             link.classList.add('active');
@@ -62,7 +62,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // ── RESIZE → reposition tanpa animasi ──
     window.addEventListener('resize', () => {
-        const active = document.querySelector('.navbar-nav .nav-link.active');
+        const active = document.querySelector('.nav-pills .nav-link.active');
         if (active) {
             navPill.style.transition = 'none';
             moveNavPill(active);
