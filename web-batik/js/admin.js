@@ -63,9 +63,9 @@ function renderTable() {
                 <td class="td-kategori"><span class="badge bg-light border text-dark">${escHtml(p.kategori || '—')}</span></td>
                 <td class="td-harga"><span class="fw-bold" style="color:#D97706;">${window.formatRupiah(p.harga)}</span></td>
                 <td class="td-stok"><span class="badge ${stockBadge}">${stockText}</span></td>
-                <td class="td-aksi text-end">
-                    <button class="btn btn-sm btn-outline-secondary rounded-pill" onclick="editProduct('${p.id}')" title="Edit"><i class="bi bi-pencil"></i></button>
-                    <button class="btn btn-sm btn-outline-danger rounded-pill" onclick="deleteProduct('${p.id}', '${escHtml(p.nama_produk)}')" title="Hapus"><i class="bi bi-trash"></i></button>
+                <td class="td-aksi text-end" data-row="${escHtml(p.id)}">
+                    <button class="btn btn-sm btn-outline-secondary rounded-pill" data-admin="edit" title="Edit"><i class="bi bi-pencil"></i></button>
+                    <button class="btn btn-sm btn-outline-danger rounded-pill" data-admin="del" title="Hapus"><i class="bi bi-trash"></i></button>
                 </td>
             </tr>
             <!-- Mobile View -->
@@ -88,9 +88,9 @@ function renderTable() {
                             <span class="badge ${stockBadge}">${stockText}</span>
                         </div>
                         <!-- Baris 4: Tombol Action (Edit & Hapus) berjajar rapi -->
-                        <div class="d-flex gap-2 mt-auto w-100">
-                            <button class="btn btn-sm btn-outline-secondary rounded-pill flex-fill" onclick="editProduct('${p.id}')"><i class="bi bi-pencil"></i> Edit</button>
-                            <button class="btn btn-sm btn-outline-danger rounded-pill flex-fill" onclick="deleteProduct('${p.id}', '${escHtml(p.nama_produk)}')"><i class="bi bi-trash"></i> Hapus</button>
+                        <div class="d-flex gap-2 mt-auto w-100" data-row="${escHtml(p.id)}">
+                            <button class="btn btn-sm btn-outline-secondary rounded-pill flex-fill" data-admin="edit"><i class="bi bi-pencil"></i> Edit</button>
+                            <button class="btn btn-sm btn-outline-danger rounded-pill flex-fill" data-admin="del"><i class="bi bi-trash"></i> Hapus</button>
                         </div>
                     </div>
                 </td>
@@ -140,7 +140,7 @@ window.resetForm = function() {
 
 // ── Edit Produk: Isi form & buka modal ───────────────────────
 window.editProduct = function(id) {
-    const p = state.products.find(p => p.id === id);
+    const p = state.products.find(p => String(p.id) === String(id));
     if (!p) return;
 
     state.editingId = id;
@@ -169,8 +169,10 @@ window.editProduct = function(id) {
     modal.show();
 };
 
-// ── Hapus Produk ──────────────────────────────────────────────
-window.deleteProduct = async function(id, name) {
+// ── Hapus Produk (id saja; nama diambil dari state agar aman XSS) ─
+window.deleteProduct = async function(id) {
+    const found = state.products.find(p => String(p.id) === String(id));
+    const name = found?.nama_produk || 'produk ini';
     const result = await Swal.fire({
         title: 'Apakah kamu yakin?',
         text: "Produk yang dihapus tidak bisa dikembalikan!",
@@ -272,8 +274,19 @@ window.handleFormSubmit = async function(e) {
     }
 };
 
-// ── Init ──────────────────────────────────────────────────────
-document.addEventListener('DOMContentLoaded', loadProducts);
+// ── Init + delegasi tombol (anti-XSS) ──────────────────────────
+document.addEventListener('DOMContentLoaded', () => {
+    loadProducts();
+    document.getElementById('productTableBody')?.addEventListener('click', e => {
+        const btn = e.target.closest('[data-admin]');
+        if (!btn) return;
+        const row = e.target.closest('[data-row]');
+        const id = row?.dataset.row;
+        if (!id) return;
+        if (btn.dataset.admin === 'edit') window.editProduct(id);
+        else if (btn.dataset.admin === 'del') window.deleteProduct(id);
+    });
+});
 
 // ════════════════════════════════════════════════════════════
 // FITUR UPLOAD GAMBAR LOKAL — Baca File → Base64 → Simpan ke DB

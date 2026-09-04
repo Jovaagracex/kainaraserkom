@@ -4,7 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Kainara Studio — Toko Batik Premium. Koleksi batik tulis, cap, dan printing berkualitas dari pengrajin terpilih Nusantara.">
+    <meta property="og:title" content="Kainara Studio | Toko Batik Premium">
+    <meta property="og:description" content="Koleksi batik tulis, cap, dan printing berkualitas dari pengrajin terpilih Nusantara.">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="img/logo-k.svg">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="theme-color" content="#C25E00">
     <title>Kainara Studio | Toko Batik Premium</title>
+    <script type="application/ld+json">{"@context":"https://schema.org","@type":"Store","name":"Kainara Studio","description":"Toko Batik Premium Nusantara","telephone":"+62-812-3456-7890"}</script>
     <link rel="icon" type="image/svg+xml" href="img/logo-k.svg">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -164,6 +171,10 @@
                         <option value="nama-asc">Nama: A-Z</option>
                         <option value="nama-desc">Nama: Z-A</option>
                     </select>
+                    <input type="number" id="priceMin" class="filter-select" style="max-width:130px;" placeholder="Min Rp" min="0" aria-label="Harga minimum">
+                    <input type="number" id="priceMax" class="filter-select" style="max-width:130px;" placeholder="Max Rp" min="0" aria-label="Harga maksimum">
+                    <button id="wishToggle" class="filter-select" aria-label="Hanya favorit">♥ Favorit (<span id="wishCount">0</span>)</button>
+                    <button id="bestToggle" class="filter-select" aria-label="Hanya terlaris">🔥 Terlaris</button>
                     <span class="filter-count" id="filterCount"></span>
                 </div>
 
@@ -187,6 +198,7 @@
 
                 <!-- Product Grid -->
                 <div class="row row-cols-2 row-cols-md-3 row-cols-lg-4 g-3" id="productGrid"></div>
+                <div id="paginationWrap"></div>
             </div>
         </section>
 
@@ -336,6 +348,16 @@
                         </a>
                     </div>
                 </div>
+                <!-- Form kontak cepat → WhatsApp -->
+                <div class="card border-0 shadow-sm rounded-4 p-4 mt-4 mx-auto" style="max-width:640px;">
+                    <h6 class="fw-bold mb-3 text-center">Kirim Pesan Cepat</h6>
+                    <form id="contactForm" class="row g-2">
+                        <div class="col-md-6"><input id="contactName" class="form-control" placeholder="Nama Anda" required maxlength="80"></div>
+                        <div class="col-md-6"><input id="contactPhone" class="form-control" placeholder="No. WhatsApp (opsional)" maxlength="20"></div>
+                        <div class="col-12"><textarea id="contactMsg" class="form-control" rows="3" placeholder="Tulis pesan..." required maxlength="1000"></textarea></div>
+                        <div class="col-12 text-center"><button class="btn btn-dark rounded-pill px-4" type="submit" style="background:#2D251E;"><i class="bi bi-send me-1"></i> Kirim via WhatsApp</button></div>
+                    </form>
+                </div>
             </div>
         </section>
     </main>
@@ -376,10 +398,10 @@
                 <div class="footer-col">
                     <h6>Informasi</h6>
                     <ul>
-                        <li><a href="#">Cara Pemesanan</a></li>
-                        <li><a href="#">Kebijakan Privasi</a></li>
-                        <li><a href="#">Syarat & Ketentuan</a></li>
-                        <li><a href="#">FAQ</a></li>
+                        <li><a href="#katalog">Cara Pemesanan</a></li>
+                        <li><a href="#tentang">Tentang Kami</a></li>
+                        <li><a href="#kontak">Kontak & Bantuan</a></li>
+                        <li><a href="#beranda">Kembali ke Atas</a></li>
                     </ul>
                 </div>
             </div>
@@ -410,6 +432,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                   </div>
                   <h4 id="modalProductTitle" class="fw-bold mb-1">Nama Produk</h4>
+                  <div id="modalRating" class="testimoni-stars mb-1"></div>
                   <p id="modalProductPrice" class="fs-4 fw-bold mb-2" style="color: #d97706;">Rp 0</p>
                   <p id="modalProductDesc" class="text-muted small mb-3">Deskripsi produk lengkap...</p>
                   <div class="small text-secondary mb-3">Stok Tersedia: <strong id="modalProductStock" class="text-dark">0</strong> pcs</div>
@@ -418,13 +441,37 @@
                 <div>
                   <label class="form-label small fw-bold text-muted mb-2">Pilih Cara Pembelian:</label>
                   <div class="d-grid gap-2">
-                    <button onclick="if(currentProduct) Cart.addItem(currentProduct); bootstrap.Modal.getInstance(document.getElementById('productDetailModal')).hide();" class="btn btn-dark rounded-pill py-2 fw-semibold d-flex align-items-center justify-content-center gap-2" style="background-color: #2D251E;">
+                    <button id="modalAddCart" class="btn btn-dark rounded-pill py-2 fw-semibold d-flex align-items-center justify-content-center gap-2" style="background-color: #2D251E;">
                       <i class="bi bi-bag-plus"></i> Tambah ke Keranjang
                     </button>
                     <a id="modalBuyWA" href="#" target="_blank" rel="noopener" class="btn btn-outline-success rounded-pill py-2 btn-sm fw-medium d-flex align-items-center justify-content-center gap-2">
                       <i class="bi bi-whatsapp"></i> Order via WhatsApp
                     </a>
+                    <div class="d-flex gap-2 justify-content-center mt-1">
+                      <a id="shareWA" href="#" target="_blank" rel="noopener" class="btn btn-sm btn-outline-secondary rounded-circle" aria-label="Bagikan WA"><i class="bi bi-whatsapp"></i></a>
+                      <a id="shareFB" href="#" target="_blank" rel="noopener" class="btn btn-sm btn-outline-secondary rounded-circle" aria-label="Bagikan Facebook"><i class="bi bi-facebook"></i></a>
+                      <a id="shareX" href="#" target="_blank" rel="noopener" class="btn btn-sm btn-outline-secondary rounded-circle" aria-label="Bagikan X"><i class="bi bi-twitter-x"></i></a>
+                      <button id="shareCopy" class="btn btn-sm btn-outline-secondary rounded-circle" aria-label="Salin link"><i class="bi bi-link-45deg"></i></button>
+                    </div>
                   </div>
+                </div>
+                <hr>
+                <div>
+                  <h6 class="fw-bold small">Produk Terkait</h6>
+                  <div id="relatedGrid" class="related-grid"></div>
+                </div>
+                <hr>
+                <div>
+                  <h6 class="fw-bold small">Ulasan Pembeli</h6>
+                  <div id="reviewList"></div>
+                  <form id="reviewForm" class="mt-2">
+                    <div class="row g-2">
+                      <div class="col-6"><input id="reviewName" class="form-control form-control-sm" placeholder="Nama" required maxlength="50"></div>
+                      <div class="col-6"><select id="reviewRating" class="form-select form-select-sm"><option value="5">★★★★★</option><option value="4">★★★★</option><option value="3">★★★</option><option value="2">★★</option><option value="1">★</option></select></div>
+                      <div class="col-12"><textarea id="reviewText" class="form-control form-control-sm" rows="2" placeholder="Tulis ulasan..." required maxlength="500"></textarea></div>
+                      <div class="col-12"><button class="btn btn-sm btn-dark rounded-pill px-3" type="submit">Kirim Ulasan</button></div>
+                    </div>
+                  </form>
                 </div>
               </div>
             </div>
@@ -512,25 +559,50 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="js/supabaseClient.js"></script>
+    <!-- Back to top + Cookie -->
+    <button id="backToTop" aria-label="Kembali ke atas">↑</button>
+    <div id="cookieBanner" class="cookie-banner" role="dialog" aria-label="Persetujuan cookie">
+        <span>Kami memakai penyimpanan lokal untuk keranjang & favorit. Lanjut berarti setuju.</span>
+        <button id="cookieOk" class="btn btn-sm btn-dark rounded-pill px-3">OK</button>
+    </div>
+
     <script src="js/script.js"></script>
     <script src="js/cart.js"></script>
     <script src="js/checkout.js"></script>
     <script src="js/catalog.js"></script>
-    <!-- Promo Countdown Timer -->
+    <!-- Promo Countdown Timer (persist) -->
     <script>
     (function() {
         var el = document.getElementById('promoCountdown');
-        if (!el) return;
-        var total = 2 * 3600 + 14 * 60 + 37;
-        function update() {
-            var h = String(Math.floor(total / 3600)).padStart(2, '0');
-            var m = String(Math.floor((total % 3600) / 60)).padStart(2, '0');
-            var s = String(total % 60).padStart(2, '0');
-            el.textContent = h + ' : ' + m + ' : ' + s;
-            if (total > 0) total--;
+        if (el) {
+            var KEY = 'kainara_promo_end';
+            var end = parseInt(localStorage.getItem(KEY) || '0', 10);
+            if (!end || end < Date.now()) {
+                end = Date.now() + ((2 * 3600 + 14 * 60 + 37) * 1000);
+                localStorage.setItem(KEY, String(end));
+            }
+            function update() {
+                var total = Math.max(0, Math.floor((end - Date.now()) / 1000));
+                var h = String(Math.floor(total / 3600)).padStart(2, '0');
+                var m = String(Math.floor((total % 3600) / 60)).padStart(2, '0');
+                var s = String(total % 60).padStart(2, '0');
+                el.textContent = h + ' : ' + m + ' : ' + s;
+            }
+            update();
+            setInterval(update, 1000);
         }
-        update();
-        setInterval(update, 1000);
+        // Contact form → WhatsApp
+        document.getElementById('contactForm')?.addEventListener('submit', function(e) {
+            e.preventDefault();
+            var n = document.getElementById('contactName')?.value.trim();
+            var p = document.getElementById('contactPhone')?.value.trim();
+            var m = document.getElementById('contactMsg')?.value.trim();
+            if (!n || !m) { if (window.showToast) showToast('warning', 'Isi nama dan pesan!'); return; }
+            var msg = 'Halo Kainara Studio! Saya ' + n + (p ? ' (' + p + ')' : '') + '. ' + m;
+            window.open('https://wa.me/6281234567890?text=' + encodeURIComponent(msg), '_blank');
+            if (window.showToast) showToast('success', 'Membuka WhatsApp...');
+            this.reset();
+        });
     })();
     </script>
 </body>

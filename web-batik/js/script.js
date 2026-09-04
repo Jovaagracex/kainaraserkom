@@ -118,3 +118,24 @@ document.addEventListener('DOMContentLoaded', () => {
     // Trigger sekali saat load
     onScroll();
 });
+
+// ── Back to top + Cookie consent ───────────────────────────────
+document.addEventListener('DOMContentLoaded', () => {
+    const btt = document.getElementById('backToTop');
+    const onScrollBtt = () => { if (btt) btt.classList.toggle('show', window.scrollY > 600); };
+    window.addEventListener('scroll', onScrollBtt, { passive: true });
+    onScrollBtt();
+    btt?.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+
+    try {
+        if (!localStorage.getItem('kainara_cookie_ok')) {
+            const banner = document.getElementById('cookieBanner');
+            if (banner) banner.style.display = 'flex';
+        }
+    } catch {}
+    document.getElementById('cookieOk')?.addEventListener('click', () => {
+        try { localStorage.setItem('kainara_cookie_ok', '1'); } catch {}
+        const banner = document.getElementById('cookieBanner');
+        if (banner) banner.style.display = 'none';
+    });
+});

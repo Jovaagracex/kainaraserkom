@@ -34,9 +34,22 @@ const Checkout = {
             if (window.showToast) showToast('warning', 'Harap isi nama, telepon, dan alamat!');
             return;
         }
+        if (!/^[0-9+\-\s]{9,16}$/.test(phone)) {
+            if (window.showToast) showToast('warning', 'Nomor telepon tidak valid!');
+            return;
+        }
 
         const items = Cart.getItems();
         if (items.length === 0) return;
+        // Validasi stok akhir sebelum kirim
+        for (const it of items) {
+            const p = window.catalog?.getById?.(it.id);
+            const max = p ? parseInt(p.stok, 10) : Infinity;
+            if (!isNaN(max) && it.qty > max) {
+                if (window.showToast) showToast('warning', `"${it.nama_produk}" melebihi stok (${max})!`);
+                return;
+            }
+        }
 
         const WA_NUMBER = '6281234567890';
         let msg = `*Pesanan Baru — Kainara Studio*\n\n`;
@@ -56,7 +69,8 @@ const Checkout = {
         const bsModal = bootstrap.Modal.getInstance(document.getElementById('checkoutModal'));
         if (bsModal) bsModal.hide();
 
-        // Clear cart
+        // Simpan riwayat lalu kosongkan cart
+        try { Cart.saveOrder(name); } catch {}
         Cart.clear();
 
         // Buka WhatsApp
