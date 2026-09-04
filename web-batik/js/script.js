@@ -237,16 +237,18 @@ document.addEventListener('DOMContentLoaded', () => {
         window.addEventListener('scroll', onScrollProgress, { passive: true });
         onScrollProgress();
 
-        // Loading transisi ke web portofolio: tampilkan loader + persen, baru pindah
+        // Loading transisi: ke portofolio & ke panel admin (tampil loader + persen, baru pindah)
         const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
         document.addEventListener('click', (e) => {
-            const a = e.target.closest ? e.target.closest('a[href*="web-portofolio"]') : null;
+            const a = e.target.closest ? e.target.closest('a[href*="web-portofolio"], a[href*="admin.html"]') : null;
             if (!a || a.target === '_blank' || e.metaKey || e.ctrlKey || e.shiftKey) return;
             const href = a.getAttribute('href');
-            if (!href || reducedMotion) return;
+            if (!href || reducedMotion) return; // biarkan pindah biasa
             e.preventDefault();
             const loader = document.getElementById('pageLoader');
             if (!loader) { window.location.href = href; return; }
+            const sub = loader.querySelector('.loader-sub');
+            if (sub) sub.textContent = /admin/i.test(href) ? 'Membuka panel admin...' : 'Membuka portofolio...';
             const fill = loader.querySelector('.loader-bar span');
             const pct = loader.querySelector('.loader-pct');
             loader.classList.add('show');
