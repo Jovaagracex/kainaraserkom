@@ -139,3 +139,127 @@ document.addEventListener('DOMContentLoaded', () => {
         if (banner) banner.style.display = 'none';
     });
 });
+
+// ── WOW PACK: preloader, progress, cursor, magnetic, typing, dark, tilt ──
+(function () {
+    'use strict';
+    const fine = window.matchMedia('(pointer: fine)').matches;
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const root = document.documentElement;
+
+    function paintToggle() {
+        const b = document.getElementById('themeToggle');
+        if (!b) return;
+        b.innerHTML = root.getAttribute('data-theme') === 'dark'
+            ? '<i class="bi bi-sun"></i>'
+            : '<i class="bi bi-moon"></i>';
+    }
+
+    let preHidden = false;
+    function hidePreloader() {
+        if (preHidden) return;
+        preHidden = true;
+        const pre = document.getElementById('preloader');
+        if (!pre) return;
+        pre.classList.add('done');
+        setTimeout(() => pre.remove(), 650);
+    }
+    window.addEventListener('load', hidePreloader);
+    setTimeout(hidePreloader, 2500);
+
+    document.addEventListener('DOMContentLoaded', () => {
+        paintToggle();
+        document.getElementById('themeToggle')?.addEventListener('click', () => {
+            const next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+            root.setAttribute('data-theme', next);
+            try { localStorage.setItem('site-theme', next); } catch {}
+            paintToggle();
+        });
+
+        // Scroll progress
+        const bar = document.getElementById('scrollProgress');
+        const onScrollProgress = () => {
+            if (!bar) return;
+            const max = document.body.scrollHeight - window.innerHeight;
+            bar.style.width = (max > 0 ? (window.scrollY / max) * 100 : 0) + '%';
+        };
+        window.addEventListener('scroll', onScrollProgress, { passive: true });
+        onScrollProgress();
+
+        // Typing
+        const words = ['Batik Tulis Asli.', 'Batik Cap Pilihan.', 'Kemeja & Gaun Premium.'];
+        const tEl = document.getElementById('typingTextBatik');
+        if (tEl) {
+            if (reduced) { tEl.textContent = words[0]; }
+            else {
+                let wi = 0, ci = 0, del = false;
+                (function tick() {
+                    const w = words[wi];
+                    tEl.textContent = w.slice(0, ci);
+                    let speed = del ? 32 : 68;
+                    if (!del && ci === w.length) { speed = 1600; del = true; }
+                    else if (del && ci === 0) { del = false; wi = (wi + 1) % words.length; speed = 350; }
+                    else { ci += del ? -1 : 1; }
+                    setTimeout(tick, speed);
+                })();
+            }
+        }
+
+        // Custom cursor
+        if (fine && !reduced) {
+            const dot = document.querySelector('.cursor-dot');
+            const ring = document.querySelector('.cursor-ring');
+            let mx = -100, my = -100, rx = -100, ry = -100;
+            document.addEventListener('mousemove', e => {
+                mx = e.clientX; my = e.clientY;
+                if (dot) dot.style.transform = `translate(${mx - 3.5}px,${my - 3.5}px)`;
+            });
+            (function loop() {
+                rx += (mx - rx) * 0.16;
+                ry += (my - ry) * 0.16;
+                if (ring) {
+                    const half = ring.classList.contains('grow') ? 27 : 17;
+                    ring.style.transform = `translate(${rx - half}px,${ry - half}px)`;
+                }
+                requestAnimationFrame(loop);
+            })();
+            const sel = 'a, button, [data-tilt], input, select, textarea';
+            document.addEventListener('mouseover', e => { if (e.target.closest(sel)) ring?.classList.add('grow'); });
+            document.addEventListener('mouseout', e => { if (e.target.closest(sel)) ring?.classList.remove('grow'); });
+        }
+
+        // Magnetic
+        if (fine && !reduced) {
+            document.querySelectorAll('.magnetic').forEach(btn => {
+                btn.addEventListener('mousemove', e => {
+                    const r = btn.getBoundingClientRect();
+                    const x = (e.clientX - r.left - r.width / 2) * 0.18;
+                    const y = (e.clientY - r.top - r.height / 2) * 0.28;
+                    btn.style.transform = `translate(${x.toFixed(1)}px,${y.toFixed(1)}px)`;
+                });
+                btn.addEventListener('mouseleave', () => { btn.style.transform = ''; });
+            });
+        }
+
+        // 3D tilt (delegasi: kartu produk dirender dinamis)
+        if (fine && !reduced) {
+            let tiltEl = null;
+            document.addEventListener('mousemove', e => {
+                const t = e.target.closest ? e.target.closest('[data-tilt]') : null;
+                if (t !== tiltEl) {
+                    if (tiltEl) tiltEl.style.transform = '';
+                    tiltEl = t;
+                }
+                if (!tiltEl) return;
+                const r = tiltEl.getBoundingClientRect();
+                const x = (e.clientX - r.left) / r.width - 0.5;
+                const y = (e.clientY - r.top) / r.height - 0.5;
+                tiltEl.style.transition = 'transform .12s ease-out';
+                tiltEl.style.transform = `perspective(900px) rotateX(${(-y * 7).toFixed(2)}deg) rotateY(${(x * 7).toFixed(2)}deg) translateY(-3px)`;
+            });
+            document.addEventListener('mouseleave', () => {
+                if (tiltEl) { tiltEl.style.transform = ''; tiltEl = null; }
+            }, true);
+        }
+    });
+})();
