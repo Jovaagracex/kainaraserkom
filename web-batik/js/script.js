@@ -171,7 +171,7 @@ document.addEventListener('DOMContentLoaded', () => {
         window.addEventListener('scroll', onScrollProgress, { passive: true });
         onScrollProgress();
 
-        // Transisi keluar ke web portofolio: tahan klik, naikkan wipe, baru pindah
+        // Loading transisi ke web portofolio: tampilkan loader + persen, baru pindah
         const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
         document.addEventListener('click', (e) => {
             const a = e.target.closest ? e.target.closest('a[href*="web-portofolio"]') : null;
@@ -179,10 +179,23 @@ document.addEventListener('DOMContentLoaded', () => {
             const href = a.getAttribute('href');
             if (!href || reducedMotion) return;
             e.preventDefault();
-            const wipe = document.getElementById('pageWipe');
-            if (!wipe) { window.location.href = href; return; }
-            wipe.classList.add('show');
-            setTimeout(() => { window.location.href = href; }, 620);
+            const loader = document.getElementById('pageLoader');
+            if (!loader) { window.location.href = href; return; }
+            const fill = loader.querySelector('.loader-bar span');
+            const pct = loader.querySelector('.loader-pct');
+            loader.classList.add('show');
+            const DUR = 800;
+            let start = null;
+            const step = (ts) => {
+                if (!start) start = ts;
+                const p = Math.min((ts - start) / DUR, 1);
+                const eased = 1 - Math.pow(1 - p, 2);
+                if (fill) fill.style.width = (eased * 100).toFixed(0) + '%';
+                if (pct) pct.textContent = (eased * 100).toFixed(0) + '%';
+                if (p < 1) requestAnimationFrame(step);
+                else window.location.href = href;
+            };
+            requestAnimationFrame(step);
         });
     });
 })();

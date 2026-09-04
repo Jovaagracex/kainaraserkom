@@ -38,7 +38,7 @@
         window.addEventListener('scroll', updateBar, { passive: true });
         updateBar();
 
-        // Transisi keluar ke web toko: tahan klik, naikkan wipe, baru pindah
+        // Loading transisi ke web toko: tampilkan loader + persen, baru pindah
         var reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
         document.addEventListener('click', function (e) {
             var a = e.target.closest ? e.target.closest('a[href*="web-batik"]') : null;
@@ -46,10 +46,22 @@
             var href = a.getAttribute('href');
             if (!href || reducedMotion) return; // biarkan pindah biasa
             e.preventDefault();
-            var wipe = document.getElementById('pageWipe');
-            if (!wipe) { window.location.href = href; return; }
-            wipe.classList.add('show');
-            setTimeout(function () { window.location.href = href; }, 620);
+            var loader = document.getElementById('pageLoader');
+            if (!loader) { window.location.href = href; return; }
+            var fill = loader.querySelector('.loader-bar span');
+            var pct = loader.querySelector('.loader-pct');
+            loader.classList.add('show');
+            var start = null, DUR = 800;
+            function step(ts) {
+                if (!start) start = ts;
+                var p = Math.min((ts - start) / DUR, 1);
+                var eased = 1 - Math.pow(1 - p, 2); // cepat di awal, melambat di akhir
+                if (fill) fill.style.width = (eased * 100).toFixed(0) + '%';
+                if (pct) pct.textContent = (eased * 100).toFixed(0) + '%';
+                if (p < 1) requestAnimationFrame(step);
+                else window.location.href = href;
+            }
+            requestAnimationFrame(step);
         });
     });
 })();
