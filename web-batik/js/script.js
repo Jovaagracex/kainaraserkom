@@ -159,6 +159,53 @@ document.addEventListener('DOMContentLoaded', () => {
     syncOffline();
 });
 
+// ── Entrance hero + reveal scroll + badge pop ──
+document.addEventListener('DOMContentLoaded', () => {
+    const calmMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    // 1) Hero toko muncul berurutan saat halaman dimuat
+    document.querySelectorAll('.hero-content > *, .hero-img-col').forEach((el, i) => {
+        if (calmMotion) return;
+        el.classList.add('hero-enter');
+        el.style.setProperty('--rd', (0.08 + i * 0.1).toFixed(2) + 's');
+    });
+
+    // 2) Elemen section muncul lembut saat di-scroll
+    // (kartu produk TIDAK di sini — ia punya animasi sendiri tiap render)
+    const rvSel = '.section-head, .step-card, .about-img-col, .about-text, ' +
+        '.promo-banner-section .container, #kontak .section-head';
+    const rvEls = document.querySelectorAll(rvSel);
+
+    if (calmMotion || !('IntersectionObserver' in window)) {
+        rvEls.forEach((el) => el.classList.add('in'));
+    } else {
+        const rvObserver = new IntersectionObserver((entries) => {
+            entries.forEach((entry) => {
+                if (!entry.isIntersecting) return;
+                entry.target.classList.add('in');
+                rvObserver.unobserve(entry.target);
+            });
+        }, { threshold: 0.1, rootMargin: '0px 0px -6% 0px' });
+
+        rvEls.forEach((el) => {
+            const sibs = Array.from(el.parentElement.children);
+            el.style.transitionDelay = (Math.min(sibs.indexOf(el), 3) * 0.08) + 's';
+            el.classList.add('rv');
+            rvObserver.observe(el);
+        });
+    }
+
+    // 3) Badge keranjang memantul tiap jumlahnya berubah
+    const badge = document.getElementById('cartBadge');
+    if (badge && !calmMotion && 'MutationObserver' in window) {
+        new MutationObserver(() => {
+            badge.classList.remove('pop');
+            void badge.offsetWidth; // paksa reflow agar animasi mengulang
+            badge.classList.add('pop');
+        }).observe(badge, { childList: true, characterData: true, subtree: true });
+    }
+});
+
 // ── Dark mode + scroll progress ──
 (function () {
     'use strict';

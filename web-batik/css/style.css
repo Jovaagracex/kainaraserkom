@@ -1107,7 +1107,101 @@ input.filter-select { cursor: text; }
 /* ── Aksesibilitas gerak ── */
 @media (prefers-reduced-motion: reduce) {
     .promo-glow, .promo-float, .skeleton { animation: none !important; }
+    .hero-enter { opacity: 1 !important; animation: none !important; }
+    .rv { opacity: 1 !important; transform: none !important; transition: none !important; }
+    .kainara-marquee-track { animation: none !important; }
+    #productGrid .product-card { opacity: 1 !important; animation: none !important; }
+    .btn-terra::after { display: none; }
 }
+
+/* ══════════════════════════════════════════
+   ANIMASI TOKO — entrance, reveal, marquee,
+   kartu produk, kilau tombol. Pelan & sopan.
+   ══════════════════════════════════════════ */
+
+/* 1) Anchor tidak ketutup navbar fixed */
+html { scroll-padding-top: 96px; }
+
+/* 2) Entrance hero saat halaman dimuat */
+@keyframes kainara-rise {
+    from { opacity: 0; transform: translateY(28px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+.hero-enter {
+    opacity: 0;
+    animation: kainara-rise .85s cubic-bezier(.22, 1, .36, 1) forwards;
+    animation-delay: var(--rd, 0s);
+}
+
+/* 3) Reveal saat scroll (class dipasang via JS) */
+.rv {
+    opacity: 0;
+    transform: translateY(26px);
+    transition: opacity .7s ease, transform .7s cubic-bezier(.22, 1, .36, 1);
+}
+.rv.in { opacity: 1; transform: none; }
+
+/* 4) Kartu produk: muncul berjenjang tiap render (CSS murni,
+   jadi ikut jalan tiap ganti halaman/filter) */
+@keyframes card-in {
+    from { opacity: 0; transform: translateY(18px) scale(.98); }
+    to   { opacity: 1; transform: none; }
+}
+#productGrid .product-card { animation: card-in .5s cubic-bezier(.22, 1, .36, 1) backwards; }
+#productGrid .product-card:nth-child(2) { animation-delay: .06s; }
+#productGrid .product-card:nth-child(3) { animation-delay: .12s; }
+#productGrid .product-card:nth-child(4) { animation-delay: .18s; }
+#productGrid .product-card:nth-child(5) { animation-delay: .24s; }
+#productGrid .product-card:nth-child(6) { animation-delay: .3s; }
+#productGrid .product-card:nth-child(7) { animation-delay: .36s; }
+#productGrid .product-card:nth-child(8) { animation-delay: .42s; }
+
+/* 5) Kilau menyapu tombol utama saat hover */
+.btn-terra { position: relative; overflow: hidden; isolation: isolate; }
+.btn-terra::after {
+    content: '';
+    position: absolute;
+    top: -20%; bottom: -20%; left: -30%;
+    width: 36px;
+    background: linear-gradient(100deg, transparent, rgba(255,255,255,.5), transparent);
+    transform: skewX(-18deg) translateX(-60px);
+    transition: transform .7s ease;
+    z-index: 1;
+    pointer-events: none;
+}
+.btn-terra:hover::after { transform: skewX(-18deg) translateX(340px); }
+
+/* 6) Pita berjalan: motif • pengrajin • etc */
+.kainara-marquee {
+    overflow: hidden;
+    border-top: 1px solid var(--sand-border);
+    border-bottom: 1px solid var(--sand-border);
+    background: var(--white);
+    padding: .8rem 0;
+}
+.kainara-marquee-track {
+    display: flex;
+    gap: 2.5rem;
+    width: max-content;
+    white-space: nowrap;
+    animation: kainara-slide 28s linear infinite;
+    font-size: .8rem;
+    font-weight: 600;
+    letter-spacing: .18em;
+    text-transform: uppercase;
+    color: var(--charcoal-3);
+}
+.kainara-marquee:hover .kainara-marquee-track { animation-play-state: paused; }
+.kainara-marquee-track .o { color: var(--terracotta); }
+@keyframes kainara-slide { to { transform: translateX(-50%); } }
+
+/* 7) Badge keranjang memantul tiap jumlah berubah */
+@keyframes badge-pop {
+    0% { transform: scale(.4); }
+    60% { transform: scale(1.25); }
+    100% { transform: scale(1); }
+}
+#cartBadge.pop { animation: badge-pop .35s cubic-bezier(.22, 1, .36, 1); }
 
 /* ── Hero mobile: tampilkan gambar kecil, bukan hilang ── */
 @media (max-width: 991px) {
