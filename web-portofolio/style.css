@@ -777,6 +777,43 @@ body.page-enter { animation: page-in .45s ease both; }
 .skill-card:hover h5 { color: var(--terracotta); }
 .skill-card h5 { transition: color var(--t-fast); }
 
+/* ══════════════════════════════════════════
+   ANIMASI — formal tapi santai: pelan, lembut,
+   muncul berurutan (stagger), tanpa efek kaku.
+   ══════════════════════════════════════════ */
+
+/* 1) Entrance hero saat halaman dimuat */
+@keyframes hero-rise {
+    from { opacity: 0; transform: translateY(30px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+.hero-enter {
+    opacity: 0;
+    animation: hero-rise .85s cubic-bezier(.22, 1, .36, 1) forwards;
+    animation-delay: var(--rd, 0s);
+}
+
+/* 2) Reveal saat scroll (class dipasang via JS) */
+.rv {
+    opacity: 0;
+    transform: translateY(26px);
+    transition: opacity .7s ease, transform .7s cubic-bezier(.22, 1, .36, 1);
+}
+.rv.in { opacity: 1; transform: none; }
+
+/* 3) Sentuhan hidup yang kalem */
+.photo-polaroid { transition: transform var(--t-base), box-shadow var(--t-base); }
+.photo-polaroid:hover { transform: rotate(0deg) translateY(-4px); box-shadow: var(--sh-lg); }
+.nav-links a { transition: color var(--t-fast); }
+#mainNav { transition: box-shadow var(--t-base), background-color var(--t-base); }
+#mainNav.scrolled { box-shadow: var(--sh-sm); }
+
+/* 4) Hormati pengguna yang mematikan animasi */
+@media (prefers-reduced-motion: reduce) {
+    .hero-enter { opacity: 1; animation: none; }
+    .rv { opacity: 1; transform: none; transition: none; }
+}
+
 /* ── Kartu layanan ── */
 .service-card {
     background: var(--white); border: 1px solid var(--sand-border);

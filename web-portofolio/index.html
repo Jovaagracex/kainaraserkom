@@ -771,22 +771,52 @@
             });
         });
 
-        // ── Scroll reveal ─────────────────────────────────────────
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(el => {
-                if (el.isIntersecting) {
-                    el.target.style.opacity = '1';
-                    el.target.style.transform = 'translateY(0)';
-                }
-            });
-        }, { threshold: 0.08 });
+        // ── Animasi: entrance hero + reveal scroll (stagger) ────
+        const calmMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-        document.querySelectorAll('.skill-card, .project-card, .featured-card, .service-card').forEach(el => {
-            el.style.opacity = '0';
-            el.style.transform = 'translateY(24px)';
-            el.style.transition = 'opacity 0.55s ease, transform 0.55s ease';
-            observer.observe(el);
+        // 1) Hero muncul berurutan saat halaman dimuat
+        const heroBits = document.querySelectorAll(
+            '#hero .col-lg-7 > *, #hero .photo-wrap, #hero .photo-note'
+        );
+        heroBits.forEach((el, i) => {
+            if (calmMotion) return; // langsung tampil apa adanya
+            el.classList.add('hero-enter');
+            el.style.setProperty('--rd', (0.08 + i * 0.1).toFixed(2) + 's');
         });
+
+        // 2) Elemen section muncul lembut saat di-scroll
+        const rvSel = '.section-header, .sticky-title, .service-card, .skill-card, ' +
+            '.featured-card, .project-card, .journey-item, ' +
+            '.contact-form-box, .contact-link-item';
+        const rvEls = document.querySelectorAll(rvSel);
+
+        if (calmMotion || !('IntersectionObserver' in window)) {
+            // Tanpa animasi: pastikan semua langsung terlihat
+            rvEls.forEach((el) => el.classList.add('in'));
+        } else {
+            const rvObserver = new IntersectionObserver((entries) => {
+                entries.forEach((entry) => {
+                    if (!entry.isIntersecting) return;
+                    entry.target.classList.add('in');
+                    rvObserver.unobserve(entry.target);
+                });
+            }, { threshold: 0.1, rootMargin: '0px 0px -6% 0px' });
+
+            rvEls.forEach((el) => {
+                // Stagger: jeda berdasar urutan di dalam induknya (maks 4 tingkat)
+                const sibs = Array.from(el.parentElement.children);
+                const step = Math.min(sibs.indexOf(el), 3);
+                el.style.transitionDelay = (step * 0.08) + 's';
+                el.classList.add('rv');
+                rvObserver.observe(el);
+            });
+        }
+
+        // 3) Navbar dapat bayangan halus setelah di-scroll
+        const nav = document.getElementById('mainNav');
+        const paintNav = () => nav?.classList.toggle('scrolled', window.scrollY > 24);
+        window.addEventListener('scroll', paintNav, { passive: true });
+        paintNav();
     </script>
 </body>
 </html>
