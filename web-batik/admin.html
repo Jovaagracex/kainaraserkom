@@ -3,135 +3,157 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Panel Admin - Kainara Studio</title>
-  <!-- Favicon -->
+  <title>Dashboard Admin — Kainara Studio</title>
   <link rel="icon" type="image/svg+xml" href="img/logo-k.svg">
-  <!-- Bootstrap Icons (MUST load before Bootstrap CSS) -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css?v=1.11.3">
-  <!-- Bootstrap 5 CSS -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-  <!-- Google Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/admin.css">
 </head>
-<body class="bg-light d-flex flex-column min-vh-100" style="background-color: #FBF9F5 !important;">
+<body class="admin-body">
 
-  <!-- KUNCI ADMIN (demo) — cegah pengunjung iseng buka panel -->
-  <div id="adminLock" style="position:fixed;inset:0;z-index:5000;display:flex;align-items:center;justify-content:center;background:#F4EFE6;padding:1rem;">
-    <div class="card border-0 shadow rounded-4 p-4" style="max-width:360px;width:100%;">
-      <div class="text-center mb-3">
-        <img src="img/logo-k.svg" alt="Kainara" style="height:48px;width:auto;" class="rounded mb-2">
-        <h5 class="fw-bold mb-1">Panel Admin Terkunci</h5>
-        <p class="text-muted small mb-0">Halaman ini khusus pemilik toko. Masukkan PIN admin.</p>
-      </div>
+  <!-- KUNCI ADMIN (demo) -->
+  <div id="adminLock">
+    <div class="lock-card">
+      <img src="img/logo-k.svg" alt="Kainara">
+      <h5>Dashboard Terkunci</h5>
+      <p>Halaman ini khusus pemilik toko. Masukkan PIN admin.</p>
       <form id="adminLockForm">
-        <input type="password" id="adminPin" class="form-control text-center" placeholder="PIN admin" autocomplete="off" maxlength="20">
-        <div class="text-danger small mt-1" id="adminPinError" style="display:none;">PIN salah, coba lagi.</div>
-        <button type="submit" class="btn rounded-pill w-100 mt-3 text-white fw-semibold" style="background-color:#D97706;border:none;">Buka Panel</button>
+        <input type="password" id="adminPin" placeholder="PIN admin" autocomplete="off" maxlength="20" aria-label="PIN admin">
+        <div class="lock-err" id="adminPinError">PIN salah, coba lagi.</div>
+        <button type="submit" class="btn-terra-ad w-100 justify-content-center mt-3">Buka Dashboard</button>
       </form>
-      <p class="text-muted text-center mt-3 mb-0" style="font-size:.75rem;">PIN demo untuk asesor: <strong>kainara26</strong></p>
+      <p class="mt-3 mb-0" style="font-size:.74rem;">PIN demo untuk asesor: <strong>kainara26</strong></p>
     </div>
   </div>
 
-  <!-- NAVBAR BERSIH & RESPONSIF -->
-  <nav class="navbar navbar-expand-lg navbar-light bg-white border-bottom sticky-top py-3">
-    <div class="container">
-      <a class="navbar-brand d-flex align-items-center gap-2 fw-bold fs-4" href="index.html" style="color: #8B4513;">
-        <img src="img/logo-k.svg" alt="Kainara Logo" style="height: 36px; width: auto;" class="rounded"> Kainara<span style="color: #d97706;">Studio</span>
+  <div class="admin-shell">
+    <!-- SIDEBAR -->
+    <aside class="admin-side">
+      <a class="admin-brand" href="index.html">
+        <img src="img/logo-k.svg" alt="Kainara">
+        <span><strong>Kainara</strong><small>Admin Panel</small></span>
       </a>
-      <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#adminNav">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="adminNav">
-        <ul class="navbar-nav me-auto mb-2 mb-lg-0 d-flex gap-2">
-          <li class="nav-item"><a class="nav-link fw-medium" href="index.html">Beranda</a></li>
-          <li class="nav-item"><a class="nav-link fw-medium" href="index.html#katalog">Katalog</a></li>
-        </ul>
-        <div class="d-flex flex-column flex-md-row align-items-md-center gap-2 mt-3 mt-lg-0">
-          <a class="nav-link fw-medium" href="index.html#tentang">Tentang</a>
-          <a class="nav-link fw-medium" href="index.html#kontak">Kontak</a>
-          <a class="btn btn-outline-dark rounded-pill px-3 py-1 btn-sm" href="../web-portofolio/index.html">
-            <i class="bi bi-arrow-left me-1"></i> Portofolio
-          </a>
+      <nav class="admin-nav" aria-label="Navigasi admin">
+        <a href="#" class="on"><i class="bi bi-grid-1x2-fill"></i> Ringkasan</a>
+        <a href="#panel-produk"><i class="bi bi-box-seam"></i> Produk</a>
+        <a href="index.html"><i class="bi bi-shop"></i> Lihat Toko</a>
+        <a href="../web-portofolio/index.html"><i class="bi bi-person-badge"></i> Portofolio</a>
+      </nav>
+      <div class="admin-side-foot">
+        <div class="admin-pin-note">Sesi admin tersimpan di tab ini saja. Tutup tab = terkunci lagi.</div>
+        <button class="btn-lock" id="btnLogout"><i class="bi bi-box-arrow-right"></i> Kunci Lagi</button>
+      </div>
+    </aside>
+
+    <!-- KONTEN -->
+    <main class="admin-main">
+      <div class="admin-topbar">
+        <div>
+          <h1 class="admin-title">Halo, Bos. 👋</h1>
+          <p class="admin-sub">Ini kondisi tokomu hari ini — <span id="todayLine">memuat…</span></p>
+        </div>
+        <button class="btn-terra-ad" id="btnTambahTop"><i class="bi bi-plus-lg"></i> Tambah Produk</button>
+      </div>
+
+      <!-- STATISTIK (klik = filter) -->
+      <div class="stat-grid" role="group" aria-label="Statistik toko">
+        <div class="stat-card" id="statProduk" role="button" tabindex="0" title="Tampilkan semua produk">
+          <div class="stat-ico c1"><i class="bi bi-box-seam"></i></div>
+          <div><strong id="statProdukNum">–</strong><span>Total Produk</span><small>Klik: tampilkan semua</small></div>
+        </div>
+        <div class="stat-card" id="statStok" role="button" tabindex="0" title="Total unit di gudang">
+          <div class="stat-ico c2"><i class="bi bi-stack"></i></div>
+          <div><strong id="statStokNum">–</strong><span>Total Stok</span><small>Unit di gudang</small></div>
+        </div>
+        <div class="stat-card" id="statNilai" role="button" tabindex="0" title="Perkiraan nilai inventaris">
+          <div class="stat-ico c3"><i class="bi bi-cash-stack"></i></div>
+          <div><strong id="statNilaiNum">–</strong><span>Nilai Inventaris</span><small>Harga × stok</small></div>
+        </div>
+        <div class="stat-card" id="statMenipis" role="button" tabindex="0" title="Tampilkan stok ≤ 5">
+          <div class="stat-ico c4"><i class="bi bi-exclamation-triangle"></i></div>
+          <div><strong id="statMenipisNum">–</strong><span>Stok Menipis</span><small>Klik: filter ≤ 5</small></div>
         </div>
       </div>
-    </div>
-  </nav>
 
-  <!-- MAIN CONTENT CONTAINER -->
-  <main class="container py-5 my-2 flex-grow-1" id="adminMain">
-    <!-- Header Section -->
-    <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center mb-4 gap-3">
-      <div>
-        <h1 class="fw-bold mb-1" style="font-family: 'Playfair Display', serif;">Manajemen Produk</h1>
-        <p class="text-muted mb-0">Kelola katalog batik Kainara Studio — Create, Read, Update, Delete produk secara real-time.</p>
+      <!-- BANNER STOK MENIPIS -->
+      <div class="low-banner" id="lowBanner" role="alert">
+        <i class="bi bi-exclamation-triangle-fill"></i>
+        <span id="lowBannerText">Ada produk yang stoknya menipis.</span>
+        <button id="btnLowShow">Tampilkan</button>
       </div>
-      <button class="btn btn-warning text-white rounded-pill px-4 py-2 fw-semibold d-inline-flex align-items-center gap-2 align-self-start align-self-md-center btn-add-product-mobile" data-bs-toggle="modal" data-bs-target="#productModal" onclick="resetForm()" style="background-color: #D97706; border: none;">
-        <i class="bi bi-plus-lg"></i> Tambah Produk Baru
-      </button>
-    </div>
 
-    <!-- Card Wrapper Tabel Produk -->
-    <div class="card border-0 shadow-sm rounded-4 overflow-hidden bg-white">
-      <div class="card-body p-4">
-        <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center mb-4 gap-3">
-          <h5 class="fw-bold mb-0">Daftar Produk (<span id="totalProducts">0</span>)</h5>
-          <div class="input-group style-search" style="max-width: 320px;">
-            <span class="input-group-text bg-light border-end-0"><i class="bi bi-search text-muted"></i></span>
-            <input type="text" id="searchInput" class="form-control bg-light border-start-0" placeholder="Cari produk..." onkeyup="filterProducts()">
+      <!-- PANEL PRODUK -->
+      <section class="panel" id="panel-produk" aria-label="Daftar produk">
+        <div class="toolbar">
+          <div class="search-wrap">
+            <i class="bi bi-search"></i>
+            <input type="text" id="searchInput" placeholder="Cari nama, kategori, deskripsi…" autocomplete="off">
           </div>
+          <select id="filterKategori" aria-label="Filter kategori">
+            <option value="">Semua Kategori</option>
+          </select>
+          <select id="sortProduk" aria-label="Urutkan">
+            <option value="terbaru">Terbaru dulu</option>
+            <option value="harga_asc">Harga: termurah</option>
+            <option value="harga_desc">Harga: termahal</option>
+            <option value="stok_asc">Stok: tersedikit</option>
+            <option value="nama_asc">Nama: A–Z</option>
+          </select>
+          <span class="chip-low" id="chipLow">Stok ≤ 5 <button id="chipLowX" aria-label="Hapus filter">✕</button></span>
+          <button class="tool-btn" id="btnExport"><i class="bi bi-download"></i> CSV</button>
+          <button class="tool-btn" id="btnRefresh"><i class="bi bi-arrow-clockwise"></i> Muat Ulang</button>
         </div>
 
-        <!-- Tabel Responsif -->
-        <div class="table-responsive">
-          <table class="table table-hover align-middle mb-0 responsive-card-table">
-            <thead class="table-light text-uppercase fs-7 text-muted">
+        <div class="table-wrap">
+          <table class="ad-table">
+            <thead>
               <tr>
-                <th scope="col" style="width: 80px;">Gambar</th>
-                <th scope="col">Nama Produk</th>
-                <th scope="col">Kategori</th>
-                <th scope="col">Harga</th>
-                <th scope="col">Stok</th>
-                <th scope="col" class="text-end" style="width: 120px;">Aksi</th>
+                <th>Produk</th>
+                <th>Kategori</th>
+                <th>Harga</th>
+                <th>Stok</th>
+                <th>Ditambahkan</th>
+                <th class="text-end">Aksi</th>
               </tr>
             </thead>
-            <tbody id="productTableBody">
-              <!-- Data dari Supabase JS -->
-            </tbody>
+            <tbody id="productTableBody"></tbody>
           </table>
         </div>
-      </div>
-    </div>
-  </main>
+        <div class="m-cards" id="productCards"></div>
 
-  <!-- FOOTER TERLETAK DI BAWAH (MT-AUTO) -->
-  <footer class="bg-white border-top py-4 mt-auto">
-    <div class="container d-flex flex-column flex-md-row justify-content-between align-items-center gap-2 text-muted fs-7">
-      <div>© 2026 Kainara Studio</div>
-      <a href="index.html#katalog" class="btn btn-outline-dark rounded-pill px-3 py-1 btn-sm shadow-sm d-inline-flex align-items-center gap-2 btn-back-katalog">
-        <span>←</span> Kembali ke Katalog
-      </a>
-    </div>
-  </footer>
+        <div class="pager">
+          <span class="pager-info" id="pagerInfo">–</span>
+          <div class="pager-btns">
+            <button class="tool-btn" id="btnPrev"><i class="bi bi-chevron-left"></i> Sebelumnya</button>
+            <button class="tool-btn" id="btnNext">Berikutnya <i class="bi bi-chevron-right"></i></button>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
 
-  <!-- Modal Form Tambah/Edit Produk -->
+  <!-- MODAL TAMBAH/EDIT -->
   <div class="modal fade" id="productModal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-lg modal-fullscreen-sm-down">
       <div class="modal-content rounded-4 border-0">
-        <div class="modal-header border-bottom-0 p-4">
-          <h5 class="modal-title fw-bold" id="modalTitle">Tambah Produk Baru</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        <div class="modal-header border-bottom-0 p-4 pb-0">
+          <div>
+            <h5 class="modal-title fw-bold" id="modalTitle">Tambah Produk Baru</h5>
+            <p class="text-muted small mb-0">Semua kolom bertanda <span class="text-danger">*</span> wajib diisi.</p>
+          </div>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Tutup"></button>
         </div>
-        <div class="modal-body p-4 pt-0">
-          <form id="productForm" onsubmit="handleFormSubmit(event)">
+        <div class="modal-body p-4">
+          <form id="productForm" novalidate>
             <input type="hidden" id="productId">
             <div class="row g-3">
               <div class="col-12">
-                <label class="form-label fw-semibold">Nama Produk <span class="text-danger">*</span></label>
+                <label class="form-label fw-semibold" for="productName">Nama Produk <span class="text-danger">*</span></label>
                 <input type="text" id="productName" class="form-control" required placeholder="Contoh: Kemeja Batik Parang">
               </div>
               <div class="col-md-6">
-                <label class="form-label fw-semibold">Kategori <span class="text-danger">*</span></label>
+                <label class="form-label fw-semibold" for="productCategory">Kategori <span class="text-danger">*</span></label>
                 <select id="productCategory" class="form-select" required>
                   <option value="" selected disabled>Pilih Kategori...</option>
                   <option value="Kemeja">Kemeja</option>
@@ -141,47 +163,39 @@
                 </select>
               </div>
               <div class="col-md-3">
-                <label class="form-label fw-semibold">Harga (Rp) <span class="text-danger">*</span></label>
-                <input type="number" id="productPrice" class="form-control" min="0" required placeholder="250000">
+                <label class="form-label fw-semibold" for="productPrice">Harga (Rp) <span class="text-danger">*</span></label>
+                <input type="number" id="productPrice" class="form-control" min="0" step="500" required placeholder="250000">
               </div>
               <div class="col-md-3">
-                <label class="form-label fw-semibold">Stok <span class="text-danger">*</span></label>
+                <label class="form-label fw-semibold" for="productStock">Stok <span class="text-danger">*</span></label>
                 <input type="number" id="productStock" class="form-control" min="0" required placeholder="10">
               </div>
               <div class="col-12">
                 <label class="form-label fw-semibold">Gambar Produk <span class="text-danger">*</span></label>
-
-                <!-- Opsi 1: Upload dari Komputer -->
                 <div class="mb-2">
-                  <label class="form-label fw-normal text-muted small mb-1"><i class="bi bi-upload me-1"></i>Upload dari Komputer</label>
-                  <input type="file" id="productFileInput" class="form-control form-control-sm" accept="image/*" onchange="convertFileToBase64()">
+                  <label class="form-label text-muted small mb-1" for="productFileInput"><i class="bi bi-upload me-1"></i>Upload dari Komputer (maks 2MB)</label>
+                  <input type="file" id="productFileInput" class="form-control form-control-sm" accept="image/*">
                 </div>
-
-                <!-- Preview Gambar -->
-                <div id="imgPreviewWrap" class="mb-2" style="display:none;">
-                  <img id="imgPreview" src="" alt="Preview" class="rounded border" style="max-height:140px;max-width:100%;object-fit:cover;">
-                  <button type="button" class="btn btn-sm btn-outline-danger ms-2 mt-1" onclick="clearImageInput()">
+                <div id="imgPreviewWrap" class="mb-2 align-items-center gap-2" style="display:none;">
+                  <img id="imgPreview" src="" alt="Preview" class="ad-modal-img">
+                  <button type="button" class="btn btn-sm btn-outline-danger" id="btnClearImg">
                     <i class="bi bi-x-circle"></i> Hapus
                   </button>
                 </div>
-
-                <!-- Opsi 2: URL Manual sebagai alternatif -->
                 <div>
-                  <label class="form-label fw-normal text-muted small mb-1"><i class="bi bi-link-45deg me-1"></i>Atau masukkan URL Gambar</label>
-                  <input type="url" id="productImage" class="form-control form-control-sm" placeholder="https://images.unsplash.com/..." oninput="previewFromUrl()">
+                  <label class="form-label text-muted small mb-1" for="productImage"><i class="bi bi-link-45deg me-1"></i>Atau masukkan URL Gambar</label>
+                  <input type="url" id="productImage" class="form-control form-control-sm" placeholder="https://images.unsplash.com/...">
                 </div>
-
-                <!-- Hidden: menyimpan nilai akhir (Base64 atau URL) -->
                 <input type="hidden" id="productImageFinal">
               </div>
               <div class="col-12">
-                <label class="form-label fw-semibold">Deskripsi <span class="text-danger">*</span></label>
-                <textarea id="productDescription" class="form-control" rows="3" required placeholder="Deskripsi singkat produk..."></textarea>
+                <label class="form-label fw-semibold" for="productDescription">Deskripsi <span class="text-danger">*</span></label>
+                <textarea id="productDescription" class="form-control" rows="3" required placeholder="Motif apa, bahan apa, cocok untuk acara apa…"></textarea>
               </div>
             </div>
-            <div class="mt-4 text-end gap-2">
+            <div class="mt-4 text-end">
               <button type="button" class="btn btn-light rounded-pill px-4" data-bs-dismiss="modal">Batal</button>
-              <button type="submit" class="btn btn-warning text-white rounded-pill px-4" style="background-color: #D97706; border: none;">Simpan Produk</button>
+              <button type="submit" class="btn-terra-ad"><i class="bi bi-check-lg"></i> Simpan Produk</button>
             </div>
           </form>
         </div>
@@ -189,34 +203,32 @@
     </div>
   </div>
 
-  <!-- Bootstrap 5 Bundle JS -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-  <!-- SweetAlert2 -->
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-  <!-- Supabase UMD (global window.supabase tersedia setelah baris ini) -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <!-- Inisialisasi window.supabaseClient -->
   <script src="js/supabaseClient.js"></script>
-  <!-- Logika Admin CRUD -->
   <script src="js/admin.js"></script>
   <script>
     // Kunci PIN sederhana (level demo — di produksi pakai Supabase Auth).
-    // PIN diganti lewat konstanta ADMIN_PIN di bawah.
     (function () {
       const ADMIN_PIN = 'kainara26';
       const lock = document.getElementById('adminLock');
       try {
         if (sessionStorage.getItem('kainara_admin_ok') === '1' && lock) lock.remove();
-      } catch (e) { /* storage mati = tetap terkunci, aman */ }
+      } catch (e) {}
       document.getElementById('adminLockForm')?.addEventListener('submit', (e) => {
         e.preventDefault();
-        const val = document.getElementById('adminPin').value;
-        if (val === ADMIN_PIN) {
+        if (document.getElementById('adminPin').value === ADMIN_PIN) {
           try { sessionStorage.setItem('kainara_admin_ok', '1'); } catch (err) {}
           lock?.remove();
         } else {
           document.getElementById('adminPinError').style.display = 'block';
         }
+      });
+      // Tombol "Kunci Lagi" — keluar sesi tab ini
+      document.getElementById('btnLogout')?.addEventListener('click', () => {
+        try { sessionStorage.removeItem('kainara_admin_ok'); } catch (e) {}
+        location.reload();
       });
     })();
   </script>
