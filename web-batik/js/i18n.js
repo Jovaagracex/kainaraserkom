@@ -34,7 +34,7 @@
                 promo_badge: 'FLASH SALE — TERBATAS!',
                 promo_title: 'Diskon Hingga <span class="promo-glow" style="color: #D97706;">50%</span>',
                 promo_sub: 'Koleksi batik pilihan dengan harga spesial. Berlaku hingga stok habis — jangan lewatkan!',
-                promo_limited: 'Stok terbatas!', promo_cta: 'Klaim Diskon Sekarang',
+                promo_limited: 'Stok terbatas!', promo_cta: 'Klaim Diskon Sekarang', promo_ended: 'Promo berakhir',
                 promo_img_alt: 'Promo Batik',
                 cat_eyebrow: 'Katalog Produk', cat_title: 'Koleksi Batik Terpilih',
                 cat_sub: 'Setiap kain dibuat dengan penuh ketelitian — dari pilihan bahan hingga ketajaman motif.',
@@ -123,7 +123,7 @@
                 promo_badge: 'FLASH SALE — LIMITED!',
                 promo_title: 'Up to <span class="promo-glow" style="color: #D97706;">50%</span> Off',
                 promo_sub: 'Selected batik pieces at special prices. Valid while stock lasts — don’t miss out!',
-                promo_limited: 'Limited stock!', promo_cta: 'Claim Discount Now',
+                promo_limited: 'Limited stock!', promo_cta: 'Claim Discount Now', promo_ended: 'Promo ended',
                 promo_img_alt: 'Batik Promo',
                 cat_eyebrow: 'Product Catalog', cat_title: 'Selected Batik Collection',
                 cat_sub: 'Every cloth is made with great care — from fabric choice to motif sharpness.',
@@ -212,7 +212,7 @@
                 promo_badge: 'フラッシュセール — 期間限定！',
                 promo_title: '最大<span class="promo-glow" style="color: #D97706;">50%</span>オフ',
                 promo_sub: '厳選バティックが特別価格。在庫がなくなり次第終了 — お見逃しなく！',
-                promo_limited: '在庫わずか！', promo_cta: '今すぐ割引を使う',
+                promo_limited: '在庫わずか！', promo_cta: '今すぐ割引を使う', promo_ended: '終了しました',
                 promo_img_alt: 'バティックのプロモーション',
                 cat_eyebrow: '商品カタログ', cat_title: '厳選バティックコレクション',
                 cat_sub: '生地選びから柄の鮮明さまで、一枚一枚丁寧に作られています。',
@@ -301,7 +301,7 @@
                 promo_badge: 'تخفيضات فلاش — لفترة محدودة!',
                 promo_title: 'خصم حتى <span class="promo-glow" style="color: #D97706;">50%</span>',
                 promo_sub: 'قطع باتيك مختارة بأسعار خاصة. سارٍ حتى نفاد المخزون — لا تفوّت الفرصة!',
-                promo_limited: 'المخزون محدود!', promo_cta: 'احصل على الخصم الآن',
+                promo_limited: 'المخزون محدود!', promo_cta: 'احصل على الخصم الآن', promo_ended: 'انتهى العرض',
                 promo_img_alt: 'عرض الباتيك',
                 cat_eyebrow: 'كتالوج المنتجات', cat_title: 'مجموعة باتيك مختارة',
                 cat_sub: 'كل قطعة قماش تُصنع بعناية فائقة — من اختيار الخامة إلى حدة النقش.',
@@ -592,7 +592,12 @@
         }
         (root || document).querySelectorAll('[data-i18n]').forEach(function (el) {
             var v = pick(el.getAttribute('data-i18n'));
-            if (v != null) el.innerHTML = v;
+            if (v != null) {
+                // innerHTML hanya bila nilainya memang mengandung tag/entitas
+                // (mis. <br>, <em>, &copy;); sisanya pakai textContent.
+                if (/<[a-zA-Z][^>]*>|&[a-zA-Z]+;|&#\d+;/.test(v)) el.innerHTML = v;
+                else el.textContent = v;
+            }
         });
         (root || document).querySelectorAll('[data-i18n-ph]').forEach(function (el) {
             var v = pick(el.getAttribute('data-i18n-ph'));
@@ -712,5 +717,9 @@
         get: function () { return current; },
         apply: applyTo,
         langs: LANGS
+    };
+    // Helper global T() — satu definisi untuk semua modul (cart/catalog/checkout/admin).
+    window.T = function (key, vars) {
+        try { return t(key, vars); } catch (e) { return key; }
     };
 })();

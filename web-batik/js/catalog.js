@@ -12,10 +12,7 @@ function debounce(fn, ms) {
     return (...args) => { clearTimeout(t); t = setTimeout(() => fn(...args), ms); };
 }
 
-function T(key, vars) {
-    try { if (window.I18n) return window.I18n.t(key, vars); } catch (e) {}
-    return key;
-}
+/* T() global dari i18n.js — tidak didefinisikan ulang di sini. */
 
 // ── Wishlist (localStorage) ────────────────────────────────────
 const WISH_KEY = 'kainara_wishlist';

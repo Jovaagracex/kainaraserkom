@@ -13,7 +13,7 @@
   <link rel="preconnect" href="https://images.unsplash.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Playfair+Display:wght@600;700&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/admin.css">
-  <script>try{var _l=localStorage.getItem('site-lang')||'id';document.documentElement.lang=_l==='ar'?'ar':_l;if(_l==='ar')document.documentElement.dir='rtl';}catch(e){}</script>
+  <script>try{if(localStorage.getItem('site-theme')==='dark')document.documentElement.setAttribute('data-theme','dark');var _l=localStorage.getItem('site-lang')||'id';document.documentElement.lang=_l==='ar'?'ar':_l;if(_l==='ar')document.documentElement.dir='rtl';}catch(e){}</script>
 </head>
 <body class="admin-body">
 
@@ -41,6 +41,7 @@
         <span><strong>Kainara<em>.</em></strong><small data-i18n="brand_s">Admin Panel</small></span>
       </a>
       <span id="adminLangSlot"></span>
+      <button class="theme-toggle" id="themeToggle" aria-label="Mode gelap / terang"><i class="bi bi-moon"></i></button>
       <a class="top-link" href="index.html"><i class="bi bi-shop"></i> <span class="lbl" data-i18n="top_shop">Lihat Toko</span></a>
       <a class="top-link" href="../web-portofolio/index.html"><i class="bi bi-person-badge"></i> <span class="lbl" data-i18n="top_port">Portofolio</span></a>
       <a class="top-link lock" href="#" id="btnLogout"><i class="bi bi-box-arrow-right"></i> <span class="lbl" data-i18n="top_lock">Kunci</span></a>

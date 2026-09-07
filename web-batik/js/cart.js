@@ -7,11 +7,7 @@
 const CART_KEY = 'kainara_cart';
 const ORDER_KEY = 'kainara_orders';
 
-// Helper terjemahan (aman bila i18n.js belum dimuat)
-function T(key, vars) {
-    try { if (window.I18n) return window.I18n.t(key, vars); } catch (e) {}
-    return key;
-}
+// T() global dari i18n.js — tidak didefinisikan ulang di sini.
 
 function cartStockOf(id) {
     const p = window.catalog?.getById?.(id);

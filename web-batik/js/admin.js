@@ -23,10 +23,7 @@ const state = {
 const PLACEHOLDER = 'https://images.unsplash.com/photo-1583391733956-6c78276477e2?w=120&h=120&fit=crop';
 const LOW_STOCK = 5;
 
-function T(key, vars) {
-    try { if (window.I18n) return window.I18n.t(key, vars); } catch (e) {}
-    return key;
-}
+/* T() global dari i18n.js — tidak didefinisikan ulang di sini. */
 function dateLocale() {
     try {
         const l = window.I18n ? window.I18n.get() : 'id';
@@ -477,6 +474,22 @@ window.clearImageInput = function() {
 document.addEventListener('DOMContentLoaded', () => {
     // Sapaan tanggal (mengikuti bahasa aktif)
     paintDate();
+
+    // Toggle tema gelap/terang (kunci: site-theme, dibagi dengan toko)
+    const root = document.documentElement;
+    const paintTheme = () => {
+        const b = document.getElementById('themeToggle');
+        if (!b) return;
+        b.innerHTML = root.getAttribute('data-theme') === 'dark'
+            ? '<i class="bi bi-sun"></i>' : '<i class="bi bi-moon"></i>';
+    };
+    paintTheme();
+    document.getElementById('themeToggle')?.addEventListener('click', () => {
+        const next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+        root.setAttribute('data-theme', next);
+        try { localStorage.setItem('site-theme', next); } catch (e) {}
+        paintTheme();
+    });
 
     loadProducts();
 

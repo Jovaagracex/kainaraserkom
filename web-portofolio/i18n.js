@@ -318,7 +318,10 @@
         }
         (root || document).querySelectorAll('[data-i18n]').forEach(function (el) {
             var v = pick(el.getAttribute('data-i18n'));
-            if (v != null) el.innerHTML = v;
+            if (v != null) {
+                if (/<[a-zA-Z][^>]*>|&[a-zA-Z]+;|&#\d+;/.test(v)) el.innerHTML = v;
+                else el.textContent = v;
+            }
         });
         (root || document).querySelectorAll('[data-i18n-ph]').forEach(function (el) {
             var v = pick(el.getAttribute('data-i18n-ph'));
@@ -435,5 +438,8 @@
         get: function () { return current; },
         apply: applyTo,
         langs: LANGS
+    };
+    window.T = function (key, vars) {
+        try { return t(key, vars); } catch (e) { return key; }
     };
 })();

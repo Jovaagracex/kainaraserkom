@@ -5,10 +5,7 @@
  * ============================================================
  */
 
-function T(key, vars) {
-    try { if (window.I18n) return window.I18n.t(key, vars); } catch (e) {}
-    return key;
-}
+/* T() global dari i18n.js — tidak didefinisikan ulang di sini. */
 
 const Checkout = {
     renderSummary() {        const container = document.getElementById('checkoutSummary');

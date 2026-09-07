@@ -753,11 +753,15 @@
             if (message.length < 10) ok = setErr('contactMessage', T('err_msg')) && ok;
             if (!ok) return;
 
-            // Simulasi kirim (front-end only — backend email belum dipasang)
+            // Kirim beneran via WhatsApp (tanpa backend — pesan dirakit lalu dibuka di WA)
             const btn = e.target.querySelector('button[type="submit"]');
             const orig = btn.innerHTML;
             btn.disabled = true;
             btn.innerHTML = '<span class="spinner-border spinner-border-sm me-2" role="status"></span>' + T('sending');
+            const text = 'Halo Erlangga! Saya ' + name + ' (' + email + ').'
+                + (subject ? ' Perihal: ' + subject + '.' : '')
+                + ' ' + message;
+            window.open('https://wa.me/6281234567890?text=' + encodeURIComponent(text), '_blank');
             setTimeout(() => {
                 btn.disabled = false;
                 btn.innerHTML = orig;
@@ -767,7 +771,7 @@
                     box.style.display = 'flex';
                     box.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
                 }
-            }, 1200);
+            }, 600);
         });
 
         // ── Smooth scroll for anchor links ────────────────────────

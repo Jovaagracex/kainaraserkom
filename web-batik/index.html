@@ -637,26 +637,34 @@
     <script src="js/cart.js"></script>
     <script src="js/checkout.js"></script>
     <script src="js/catalog.js"></script>
-    <!-- Promo Countdown Timer (persist) -->
+    <!-- Promo Countdown Timer (persist; berhenti beneran saat habis) -->
     <script>
     (function() {
         var el = document.getElementById('promoCountdown');
         if (el) {
             var KEY = 'kainara_promo_end';
             var end = parseInt(localStorage.getItem(KEY) || '0', 10);
-            if (!end || end < Date.now()) {
+            if (!end) {
                 end = Date.now() + ((2 * 3600 + 14 * 60 + 37) * 1000);
-                localStorage.setItem(KEY, String(end));
+                try { localStorage.setItem(KEY, String(end)); } catch (e) {}
             }
+            var done = false, timer = null;
+            function endedText() { return window.I18n ? window.I18n.t('promo_ended') : 'Promo berakhir'; }
             function update() {
-                var total = Math.max(0, Math.floor((end - Date.now()) / 1000));
+                var total = Math.floor((end - Date.now()) / 1000);
+                if (total <= 0) {
+                    el.textContent = endedText();
+                    if (!done && timer) { done = true; clearInterval(timer); }
+                    return;
+                }
                 var h = String(Math.floor(total / 3600)).padStart(2, '0');
                 var m = String(Math.floor((total % 3600) / 60)).padStart(2, '0');
                 var s = String(total % 60).padStart(2, '0');
                 el.textContent = h + ' : ' + m + ' : ' + s;
             }
             update();
-            setInterval(update, 1000);
+            timer = setInterval(update, 1000);
+            document.addEventListener('langchange', function () { if (done) el.textContent = endedText(); });
         }
         // Contact form → WhatsApp
         document.getElementById('contactForm')?.addEventListener('submit', function(e) {
