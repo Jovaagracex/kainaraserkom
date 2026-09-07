@@ -52,7 +52,7 @@ const Checkout = {
             }
         }
 
-        const WA_NUMBER = '6281234567890';
+        const WA_NUMBER = '6285175208067';
         let msg = `*Pesanan Baru — Kainara Studio*\n\n`;
         msg += `*Pembeli:* ${name}\n`;
         msg += `*Telepon:* ${phone}\n`;

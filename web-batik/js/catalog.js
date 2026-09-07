@@ -400,7 +400,7 @@ function openProductDetail(id) {
     if (!product) return;
 
     currentProduct = product;
-    const WA_NUMBER = '6281234567890';
+    const WA_NUMBER = '6285175208067';
     const name  = product.nama_produk || '';
     const price = product.harga || 0;
 
