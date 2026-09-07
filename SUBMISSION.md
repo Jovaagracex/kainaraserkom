@@ -38,9 +38,10 @@ KainraSerkom/
 
 ## 3. Fitur Utama
 
-**Web Portofolio:** hero asimetris, tentang, timeline perjalanan 2024–2026, layanan (3 jasa),
-8 skill cards, featured project + modal cuplikan, 2 kartu proyek, form kontak bervalidasi,
-dark mode, scroll progress bar, 404 personal.
+**Web Portofolio:** hero formal (foto/monogram + caption peran ganda Web & Flutter),
+tentang, timeline perjalanan 2024–2026, layanan (4 jasa, termasuk aplikasi mobile Flutter),
+8 skill cards (termasuk Flutter & Dart), featured project + modal cuplikan, 2 kartu proyek,
+form kontak bervalidasi (kirim via WhatsApp), dark mode, scroll progress bar, 404 personal.
 
 **Web Toko (Kainara Studio):** katalog dinamis dari Supabase (cari, kategori, rentang harga,
 sorting, pagination), favorit/wishlist, rating & ulasan, produk terkait, tombol share,
@@ -52,6 +53,7 @@ halaman admin CRUD terkunci PIN.
 
 Bootstrap 5.3.3, Bootstrap Icons 1.11.3, SweetAlert2, Supabase JS v2 (PostgreSQL + Storage),
 Google Fonts (Playfair Display, Inter, Caveat).
+Bahasa: Indonesia, Inggris, Jepang, Arab (RTL) via sistem i18n sendiri.
 
 ## 5. Cara Menjalankan & Demo ke Asesor
 

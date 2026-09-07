@@ -88,7 +88,7 @@
                 <div class="col-lg-7 col-12 order-2 order-lg-1">
                     <div class="hero-tag mb-4">
                         <i class="bi bi-circle-fill me-1" style="font-size:0.4rem;vertical-align:middle;"></i>
-                        <span data-i18n="hero_tag">Junior Web Developer — Serkom 2026</span>
+                        <span data-i18n="hero_tag">Web & Flutter Mobile Developer</span>
                     </div>
 
                     <h1 class="hero-title" data-i18n="hero_title">
@@ -97,10 +97,9 @@
                     </h1>
 
                     <p class="hero-sub mt-3" data-i18n="hero_sub">
-                        Saya ngoprek web sejak 2024, mulai dari HTML polos sampai
-                        akhirnya bisa bikin toko online beneran pakai Supabase.
-                        Masih junior dan masih banyak belajar — tapi setiap proyek
-                        di bawah ini saya kerjakan sendiri sampai jalan.
+                        Saya membangun website dan aplikasi mobile (Flutter) sejak 2024 —
+                        dari halaman statis hingga toko online yang terhubung ke basis data.
+                        Setiap proyek di bawah ini saya kerjakan sendiri sampai berjalan.
                     </p>
 
                     <!-- CTA Buttons -->
@@ -121,7 +120,7 @@
                         </div>
                         <div class="stat-sep"></div>
                         <div class="stat">
-                            <div class="stat-num">3+</div>
+                            <div class="stat-num">8+</div>
                             <div class="stat-lbl" data-i18n="stat2">Teknologi</div>
                         </div>
                         <div class="stat-sep"></div>
@@ -132,32 +131,18 @@
                     </div>
                 </div>
 
-                <!-- KOLOM KANAN — Foto Profil (polaroid miring + coretan) -->
+                <!-- KOLOM KANAN — Foto formal (monogram sementara; ganti foto asli nanti) -->
                 <div class="col-lg-5 col-12 order-1 order-lg-2 d-flex justify-content-center">
-                    <p class="photo-note d-none d-lg-block" data-i18n="photo_note">ini saya, waktu begadang ngerjain katalog -></p>
-                    <div class="photo-wrap photo-polaroid">
-                        <!-- Foto Profil — Aspect ratio 4:5 via Bootstrap -->
-                        <div class="ratio photo-ratio">
-                            <img
-                                src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=600&h=750&fit=crop&crop=face"
-                                alt="Foto Profil Erlangga"
-                                data-i18n-alt="photo_alt"
-                                class="photo-img"
-                                fetchpriority="high" decoding="async"
-                            >
-                        </div>
-
-                        <!-- Badge floating — di DALAM .photo-wrap, tidak absolute keluar -->
-                        <div class="photo-badge mt-3 mx-auto" style="max-width:fit-content;">
-                            <div class="badge-dot">
-                                <i class="bi bi-code-slash"></i>
-                            </div>
-                            <div class="badge-text">
-                                <p data-i18n="badge_t">Web Developer</p>
-                                <span data-i18n="badge_s">Junior Level</span>
-                            </div>
-                        </div>
-                    </div>
+                    <figure class="photo-formal">
+                        <!-- FOTO-ASLI: simpan file di web-portofolio/img/foto.jpg, lalu ganti
+                             div.photo-monogram di bawah dengan:
+                             <img src="img/foto.jpg" alt="Foto Erlangga" class="photo-img" fetchpriority="high" decoding="async"> -->
+                        <div class="photo-monogram" role="img" aria-label="Foto Erlangga" data-i18n-aria="photo_alt">E</div>
+                        <figcaption>
+                            <strong>Erlangga</strong>
+                            <span data-i18n="photo_role">Web & Flutter Mobile Developer</span>
+                        </figcaption>
+                    </figure>
                 </div>
 
             </div>
@@ -174,9 +159,8 @@
                     <div class="sticky-title">
                         <span class="eyebrow" data-i18n="ab_eyebrow">Tentang Saya</span>
                         <h2 class="section-title mt-2" data-i18n="ab_title">
-                            Sedikit cerita,<br>bukan sekadar CV.
+                            Profil singkat
                         </h2>
-                        <p class="photo-note mt-3" data-i18n="ab_note">saya nulis bagian ini sendiri, janji.</p>
                         <a href="#contact" class="btn-terra mt-3 d-inline-flex">
                             <span data-i18n="ab_cta">Hubungi Saya</span> <i class="bi bi-arrow-right ms-2"></i>
                         </a>
@@ -192,9 +176,10 @@
                         data beneran lewat <strong>Supabase</strong>.
                     </p>
                     <p class="text-muted-warm" style="line-height:1.8;" data-i18n="ab_p2">
-                        Saya paling nyaman di <em>frontend</em>, tapi nggak alergi backend.
-                        Kalau ada error, saya baca dokumentasinya dulu sebelum nanya —
-                        kebiasaan yang (katanya) bagus buat developer.
+                        Fokus utama saya ada di <em>frontend</em> web dan pengembangan
+                        aplikasi mobile dengan <strong>Flutter</strong>. Ketika menemukan
+                        error, saya membaca dokumentasi terlebih dahulu sebelum bertanya —
+                        kebiasaan yang sangat membantu seorang developer.
                     </p>
 
                     <h6 class="fw-bold mt-4 mb-2" data-i18n="ab_mastered">Yang sudah saya kuasai</h6>
@@ -204,6 +189,8 @@
                         <span class="chip"><i class="bi bi-filetype-js me-1" style="color:#c49d0a;"></i>JavaScript</span>
                         <span class="chip"><i class="bi bi-bootstrap-fill me-1" style="color:#7952b3;"></i>Bootstrap 5</span>
                         <span class="chip"><i class="bi bi-database-fill me-1" style="color:#3ecf8e;"></i>Supabase</span>
+                        <span class="chip"><i class="bi bi-phone-fill me-1" style="color:#02569B;"></i>Flutter</span>
+                        <span class="chip"><i class="bi bi-filetype-java me-1" style="color:#0175C2;"></i>Dart</span>
                         <span class="chip"><i class="bi bi-git me-1" style="color:#f05032;"></i>Git</span>
                     </div>
 
@@ -225,21 +212,21 @@
     <section id="perjalanan" class="section">
         <div class="container journey-narrow">
             <span class="eyebrow" data-i18n="jr_eyebrow">Perjalanan</span>
-            <h2 class="section-title mt-2 mb-4" data-i18n="jr_title">Gimana saya sampai sini</h2>
+                    <h2 class="section-title mt-2 mb-4" data-i18n="jr_title">Perjalanan saya sampai sini</h2>
 
             <div class="journey">
                 <div class="journey-item">
                     <span class="journey-year">2024</span>
                     <div>
                         <h6 class="fw-bold mb-1" data-i18n="y1t">Mulai dari nol — HTML &amp; CSS</h6>
-                        <p data-i18n="y1d">Belajar otodidak dari dokumentasi dan video gratis. Proyek pertama: web profil statis buat tugas, jelek tapi jalan. Dari situ ketagihan.</p>
+                            <p data-i18n="y1d">Belajar mandiri dari dokumentasi dan video gratis. Proyek pertama: web profil statis untuk tugas. Dari situ saya ketagihan.</p>
                     </div>
                 </div>
                 <div class="journey-item">
                     <span class="journey-year">2025</span>
                     <div>
                         <h6 class="fw-bold mb-1" data-i18n="y2t">JavaScript &amp; Bootstrap</h6>
-                        <p data-i18n="y2d">Mulai paham DOM, fetch API, dan bikin layout responsif tanpa pusing. Sempat stuck 2 minggu cuma gara-gara async/await — wajar, katanya.</p>
+                            <p data-i18n="y2d">Mulai memahami DOM, fetch API, dan layout responsif. Sempat terhambat dua minggu pada materi async/await.</p>
                     </div>
                 </div>
                 <div class="journey-item">
@@ -261,11 +248,11 @@
 
             <div class="section-header mb-5" style="max-width:640px;">
                 <span class="eyebrow" data-i18n="ly_eyebrow">Layanan</span>
-                <h2 class="section-title mt-2" data-i18n="ly_title">Kalau mau dibikinin web, saya bisa yang ini</h2>
-                <p class="section-desc mt-2" data-i18n="ly_sub">Skala kecil-menengah. Saya kerjakan sendiri, jadi komunikasinya langsung — nggak lewat admin.</p>
+                <h2 class="section-title mt-2" data-i18n="ly_title">Layanan yang saya tawarkan</h2>
+                <p class="section-desc mt-2" data-i18n="ly_sub">Skala kecil hingga menengah, dikerjakan langsung oleh saya tanpa perantara.</p>
             </div>
 
-            <div class="row row-cols-1 row-cols-md-3 g-4">
+            <div class="row row-cols-1 row-cols-md-2 g-4">
 
                 <div class="col">
                     <div class="service-card h-100">
@@ -302,6 +289,19 @@
                             <li data-i18n="s3l1">PostgreSQL + REST API</li>
                             <li data-i18n="s3l2">Validasi &amp; sanitasi input</li>
                             <li data-i18n="s3l3">Laporan sederhana per tabel</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="col">
+                    <div class="service-card h-100">
+                        <div class="service-num">04</div>
+                        <h5 data-i18n="s4t">Aplikasi Mobile Flutter</h5>
+                        <p data-i18n="s4d">Satu basis kode untuk Android dan iOS. Cocok untuk company profile, katalog, atau pendamping toko online Anda.</p>
+                        <ul>
+                            <li data-i18n="s4l1">UI widget + navigasi</li>
+                            <li data-i18n="s4l2">State management &amp; API</li>
+                            <li data-i18n="s4l3">Build APK siap instal</li>
                         </ul>
                     </div>
                 </div>
@@ -376,9 +376,9 @@
 
                 <div class="col">
                     <div class="skill-card h-100">
-                        <div class="skill-icon-wrap" style="background:#F0FDF4;"><i class="bi bi-layout-text-window-reverse" style="color:#16a34a;"></i></div>
-                        <h5>Responsive Design</h5>
-                        <p data-i18n="sk7d">Mobile-first,<br>Multi-device</p>
+                        <div class="skill-icon-wrap" style="background:#E8F4FD;"><i class="bi bi-phone" style="color:#02569B;"></i></div>
+                        <h5>Flutter</h5>
+                        <p data-i18n="sk7d">Dart, Widget,<br>State Management</p>
                     </div>
                 </div>
 
@@ -790,7 +790,7 @@
 
         // 1) Hero muncul berurutan saat halaman dimuat
         const heroBits = document.querySelectorAll(
-            '#hero .col-lg-7 > *, #hero .photo-wrap, #hero .photo-note'
+            '#hero .col-lg-7 > *, #hero .photo-formal'
         );
         heroBits.forEach((el, i) => {
             if (calmMotion) return; // langsung tampil apa adanya

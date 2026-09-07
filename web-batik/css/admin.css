@@ -10,7 +10,7 @@
     --ad-accent-2:#9C4B00;
     --ad-green:   #16A34A;
     --ad-red:     #DC2626;
-    --ad-r: 18px;
+    --ad-r: 12px;
     --ad-ease: cubic-bezier(.22, 1, .36, 1);
     --ad-shadow: 0 10px 30px rgba(25, 25, 24, .07);
 }

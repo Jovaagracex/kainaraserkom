@@ -25,20 +25,20 @@
     --font-serif:  'Playfair Display', Georgia, serif;
     --font-sans:   'Inter', system-ui, sans-serif;
 
-    /* ── Radius ── */
+    /* ── Radius: formal, kecil dan seragam ── */
     --r-sm:   0.375rem;
-    --r-md:   0.625rem;
-    --r-lg:   0.875rem;
-    --r-xl:   1.25rem;
-    --r-2xl:  1.75rem;
+    --r-md:   0.5rem;
+    --r-lg:   0.625rem;
+    --r-xl:   0.75rem;
+    --r-2xl:  1rem;
     --r-full: 9999px;
 
-    /* ── Shadows (warm-toned) ── */
-    --sh-sm:    0 1px 3px rgba(25,25,24,.06), 0 1px 2px rgba(25,25,24,.04);
-    --sh-md:    0 4px 12px rgba(25,25,24,.08), 0 2px 4px rgba(25,25,24,.04);
-    --sh-lg:    0 12px 32px rgba(25,25,24,.10), 0 4px 8px rgba(25,25,24,.04);
-    --sh-xl:    0 24px 48px rgba(25,25,24,.12);
-    --sh-terra: 0 8px 24px rgba(194,94,0,.28);
+    /* ── Shadows: nyaris flat, tanpa glow ── */
+    --sh-sm:    0 1px 2px rgba(25,25,24,.06);
+    --sh-md:    0 2px 6px rgba(25,25,24,.06);
+    --sh-lg:    0 6px 16px rgba(25,25,24,.07);
+    --sh-xl:    0 12px 28px rgba(25,25,24,.08);
+    --sh-terra: 0 1px 2px rgba(25,25,24,.14);
 
     /* ── Transitions ── */
     --t-fast: 140ms ease;
@@ -297,51 +297,26 @@ h5, h6 { font-family: var(--font-sans); font-weight: 600; }
     flex-shrink: 0;
 }
 
-/* Photo wrap — pure flow, NO position:absolute */
-.photo-wrap {
-    width: 100%;
-    max-width: 420px;
-}
-
-/* Photo frame — Bootstrap ratio-like, but using aspect-ratio */
-.photo-ratio {
-    --bs-aspect-ratio: 80%;   /* 4:5 ≈ 80% */
-}
-
-.photo-img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    border-radius: var(--r-2xl);
-    box-shadow: var(--sh-xl);
-    display: block;
-}
-
-/* Photo badge — BELOW the photo, NOT absolute */
-.photo-badge {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.75rem;
-    background: var(--white);
-    border: 1px solid var(--sand-border);
-    border-radius: var(--r-xl);
-    padding: 0.875rem 1.25rem;
-    box-shadow: var(--sh-lg);
-}
-.badge-dot {
-    width: 38px;
-    height: 38px;
-    border-radius: var(--r-md);
-    background: var(--terracotta-light);
-    display: flex;
-    align-items: center;
-    justify-content: center;
+/* Foto formal — bingkai tegak hairline + monogram sementara.
+   Saat foto asli ada, ganti .photo-monogram dengan <img class="photo-img">. */
+.photo-formal { width: 100%; max-width: 380px; margin: 0; }
+.photo-monogram {
+    aspect-ratio: 4 / 5; display: flex; align-items: center; justify-content: center;
+    background: var(--white); border: 1px solid var(--sand-border);
+    border-radius: var(--r-lg);
+    font-family: var(--font-serif); font-size: 6rem; font-weight: 700;
     color: var(--terracotta);
-    font-size: 1.125rem;
-    flex-shrink: 0;
 }
-.badge-text p  { font-size: 0.8rem; font-weight: 600; color: var(--charcoal); margin: 0; line-height: 1.2; }
-.badge-text span { font-size: 0.7rem; color: var(--muted); }
+.photo-formal .photo-img {
+    width: 100%; aspect-ratio: 4 / 5; object-fit: cover; display: block;
+    border: 1px solid var(--sand-border); border-radius: var(--r-lg);
+}
+.photo-formal figcaption {
+    margin-top: .9rem; text-align: center;
+    border-top: 1px solid var(--sand-border); padding-top: .9rem;
+}
+.photo-formal figcaption strong { display: block; font-size: 1.05rem; }
+.photo-formal figcaption span { font-size: .83rem; color: var(--muted); }
 
 /* ─────────────────────────────────────────────────
    SECTION COMMONS
@@ -611,8 +586,8 @@ footer a:hover { color: var(--terracotta); }
 .btn-back-to-top:hover {
     background-color: var(--terracotta) !important;
     border-color: var(--terracotta) !important;
-    transform: translateY(-4px);
-    box-shadow: 0 4px 12px rgba(217, 119, 6, 0.4);
+    transform: translateY(-1px);
+    box-shadow: none;
 }
 .btn-back-to-top:active {
     transform: translateY(-1px);
@@ -633,10 +608,7 @@ footer a:hover { color: var(--terracotta); }
     #hero .col-12.order-2 .hero-stats { justify-content: center; }
 
     /* Photo smaller on mobile */
-    .photo-wrap { max-width: 280px; margin: 0 auto; }
-
-    /* Hide photo badge on mobile to save space */
-    .photo-badge { display: none; }
+    .photo-formal { max-width: 260px; margin: 0 auto; }
 
     .section { padding: 3.5rem 0; }
 
@@ -705,20 +677,6 @@ footer a:hover { color: var(--terracotta); }
 }
 .theme-toggle:hover { border-color: var(--terracotta); color: var(--terracotta); transform: rotate(15deg); }
 
-/* ── Coretan tangan + polaroid ── */
-.photo-note {
-    font-family: 'Caveat', cursive; font-size: 1.35rem; font-weight: 600;
-    color: var(--terracotta); transform: rotate(-3deg); margin-bottom: .5rem;
-}
-.photo-polaroid .photo-ratio {
-    background: var(--white); padding: 10px 10px 34px;
-    border: 1px solid var(--sand-border); border-radius: 6px;
-    box-shadow: var(--sh-lg); transform: rotate(2deg);
-    transition: transform var(--t-base);
-}
-.photo-polaroid .photo-ratio:hover { transform: rotate(0deg); }
-.photo-polaroid .photo-img { border-radius: 2px; box-shadow: none; }
-
 /* ── About: judul sticky ── */
 .sticky-title { position: sticky; top: 110px; }
 @media (max-width: 991.98px) { .sticky-title { position: static; } }
@@ -765,7 +723,7 @@ footer a:hover { color: var(--terracotta); }
 [data-theme="dark"] img { filter: saturate(.94); }
 
 @media (prefers-reduced-motion: reduce) {
-    .photo-polaroid .photo-ratio, .photo-note { transform: none !important; }
+    .photo-formal { transform: none !important; }
 }
 
 /* ── Micro-interaksi skill cards ── */
@@ -797,8 +755,8 @@ footer a:hover { color: var(--terracotta); }
 .rv.in { opacity: 1; transform: none; }
 
 /* 3) Sentuhan hidup yang kalem */
-.photo-polaroid { transition: transform var(--t-base), box-shadow var(--t-base); }
-.photo-polaroid:hover { transform: rotate(0deg) translateY(-4px); box-shadow: var(--sh-lg); }
+.photo-formal .photo-monogram, .photo-formal .photo-img { transition: border-color var(--t-base); }
+.photo-formal:hover .photo-monogram, .photo-formal:hover .photo-img { border-color: var(--terracotta); }
 .nav-links a { transition: color var(--t-fast); }
 #mainNav { transition: box-shadow var(--t-base), background-color var(--t-base); }
 #mainNav.scrolled { box-shadow: var(--sh-sm); }
@@ -847,8 +805,8 @@ footer a:hover { color: var(--terracotta); }
     height: 100%;
 }
 .service-card:hover {
-    transform: translateY(-5px); box-shadow: var(--sh-lg);
-    border-color: rgba(194,94,0,.3);
+    transform: translateY(-2px); box-shadow: none;
+    border-color: rgba(194,94,0,.4);
 }
 .service-num {
     font-family: var(--font-serif); font-weight: 700; font-size: 2.1rem;
@@ -897,7 +855,6 @@ html[lang="ja"] body { font-family: 'Inter', 'Noto Sans JP', system-ui, sans-ser
 html[lang="ja"] h1, html[lang="ja"] h2, html[lang="ja"] h3 { font-family: 'Playfair Display', 'Noto Sans JP', serif; }
 
 /* ── Arab (RTL): penyesuaian kecil ── */
-html[dir="rtl"] .photo-note { text-align: left; }
 html[dir="rtl"] .service-card ul li { padding: .3rem 1.4rem .3rem 0; }
 html[dir="rtl"] .service-card ul li::before { left: auto; right: 0; }
 html[dir="rtl"] .journey { border-left: none; border-right: 2px solid var(--sand-border); margin-left: 0; margin-right: 8px; padding-left: 0; padding-right: 1.75rem; }
