@@ -1,0 +1,9 @@
+Taruk foto asli di folder ini dengan nama persis: foto.jpg
+Contoh: web-portofolio/img/foto.jpg
+
+Syarat:
+- Format JPG, rasio 4:5 (mis. 800x1000 px), ukuran < 500KB
+- Foto formal (kemeja/jas, background netral)
+
+Halaman otomatis memakai foto ini (menggantikan monogram "E")
+begitu file ada — tanpa perlu edit HTML lagi.

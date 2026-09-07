@@ -132,15 +132,32 @@
                 <!-- KOLOM KANAN — Foto formal (monogram sementara; ganti foto asli nanti) -->
                 <div class="col-lg-5 col-12 order-1 order-lg-2 d-flex justify-content-center">
                     <figure class="photo-formal">
-                        <!-- FOTO-ASLI: simpan file di web-portofolio/img/foto.jpg, lalu ganti
-                             div.photo-monogram di bawah dengan:
-                             <img src="img/foto.jpg" alt="Foto Erlangga" class="photo-img" fetchpriority="high" decoding="async"> -->
-                        <div class="photo-monogram" role="img" aria-label="Foto Erlangga" data-i18n-aria="photo_alt">E</div>
+                        <!-- FOTO-ASLI: simpan foto di web-portofolio/img/foto.jpg (JPG, rasio 4:5,
+                             mis. 800x1000px, <500KB). Script di bawah otomatis memakainya;
+                             selama file belum ada, monogram "E" yang tampil. -->
+                        <div class="photo-monogram" id="photoSlot" role="img" aria-label="Foto Erlangga" data-i18n-aria="photo_alt">E</div>
                         <figcaption>
                             <strong>Erlangga</strong>
                             <span data-i18n="photo_role">Web & Flutter Mobile Developer</span>
                         </figcaption>
                     </figure>
+                    <script>
+                    (function () {
+                        var slot = document.getElementById('photoSlot');
+                        if (!slot) return;
+                        var probe = new Image();
+                        probe.onload = function () {
+                            var el = document.createElement('img');
+                            el.src = 'img/foto.jpg';
+                            el.alt = window.I18n ? window.I18n.t('photo_alt') : 'Foto Erlangga';
+                            el.className = 'photo-img';
+                            el.setAttribute('fetchpriority', 'high');
+                            el.decoding = 'async';
+                            slot.replaceWith(el);
+                        };
+                        probe.src = 'img/foto.jpg';
+                    })();
+                    </script>
                 </div>
 
             </div>
