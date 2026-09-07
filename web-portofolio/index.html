@@ -58,7 +58,7 @@
     <nav id="mainNav">
         <div class="container">
             <div class="d-flex align-items-center justify-content-between py-3">
-                <a href="#" class="nav-logo">Erlangga<span>.</span></a>
+                <a href="#" class="nav-logo">Erlangga Satria Pratama<span>.</span></a>
 
                 <!-- Desktop Menu -->
                 <ul class="nav-links mb-0 d-none d-md-flex align-items-center gap-1 list-unstyled">
@@ -107,7 +107,7 @@
 
                     <h1 class="hero-title" data-i18n="hero_title">
                         Halo, saya<br>
-                        <em>Erlangga.</em>
+                        <span class="animated-name">Erlangga Satria Pratama<span class="dot">.</span></span>
                     </h1>
 
                     <p class="hero-sub mt-3" data-i18n="hero_sub">
@@ -143,18 +143,24 @@
                     </div>
                 </div>
 
-                <!-- KOLOM KANAN — Foto formal (monogram sementara; ganti foto asli nanti) -->
-                <div class="col-lg-5 col-12 order-1 order-lg-2 d-flex justify-content-center">
-                    <figure class="photo-formal">
-                        <!-- FOTO-ASLI: simpan foto di web-portofolio/img/foto.jpg (JPG, rasio 4:5,
-                             mis. 800x1000px, <500KB). Script di bawah otomatis memakainya;
-                             selama file belum ada, monogram "E" yang tampil. -->
-                        <div class="photo-monogram" id="photoSlot" role="img" aria-label="Foto Erlangga" data-i18n-aria="photo_alt">E</div>
-                        <figcaption>
-                            <strong>Erlangga</strong>
-                            <span data-i18n="photo_role">Web & Flutter Mobile Developer</span>
-                        </figcaption>
-                    </figure>
+                <!-- KOLOM KANAN — Foto Profil Erlangga dengan efek 3D Tilt & Glow -->
+                <div class="col-lg-5 col-12 order-1 order-lg-2 d-flex justify-content-center align-items-center">
+                    <div class="photo-wrapper" id="photoWrapper">
+                        <figure class="photo-formal" id="photoCard">
+                            <div class="photo-badge">
+                                <i class="bi bi-patch-check-fill text-warning me-1"></i>
+                                <span data-i18n="photo_badge">Junior Web &amp; Mobile</span>
+                            </div>
+                            <div class="photo-monogram" id="photoSlot" role="img" aria-label="Foto Erlangga Satria Pratama" data-i18n-aria="photo_alt">E</div>
+                            <figcaption>
+                                <strong class="d-flex align-items-center justify-content-center gap-1 text-center">
+                                    Erlangga Satria Pratama
+                                    <i class="bi bi-check-circle-fill text-primary" style="font-size:0.85rem;" title="Terverifikasi"></i>
+                                </strong>
+                                <span data-i18n="photo_role">Web &amp; Flutter Mobile Developer</span>
+                            </figcaption>
+                        </figure>
+                    </div>
                     <script>
                     (function () {
                         var slot = document.getElementById('photoSlot');
@@ -170,6 +176,23 @@
                             slot.replaceWith(el);
                         };
                         probe.src = 'img/foto.jpg';
+
+                        // 3D Interactive Tilt & Sheen Effect
+                        var wrap = document.getElementById('photoWrapper');
+                        var card = document.getElementById('photoCard');
+                        if (wrap && card && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                            wrap.addEventListener('mousemove', function (e) {
+                                var rect = wrap.getBoundingClientRect();
+                                var x = e.clientX - rect.left - rect.width / 2;
+                                var y = e.clientY - rect.top - rect.height / 2;
+                                var rx = (-y / rect.height) * 16;
+                                var ry = (x / rect.width) * 16;
+                                card.style.transform = 'perspective(800px) rotateX(' + rx.toFixed(2) + 'deg) rotateY(' + ry.toFixed(2) + 'deg) scale3d(1.02, 1.02, 1.02)';
+                            });
+                            wrap.addEventListener('mouseleave', function () {
+                                card.style.transform = 'perspective(800px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)';
+                            });
+                        }
                     })();
                     </script>
                 </div>
@@ -487,71 +510,6 @@
                     </div>
                 </div>
             </div>
-
-            <!-- Other Projects — Bootstrap row-cols -->
-            <div class="row row-cols-1 row-cols-md-2 g-4">
-
-                <div class="col">
-                    <article class="project-card h-100">
-                        <div class="project-img-wrap">
-                            <img
-                                src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=600&h=340&fit=crop"
-                                alt="Portofolio Web"
-                                data-i18n-alt="p1_alt"
-                                class="project-img"
-                                loading="lazy" decoding="async"
-                            >
-                            <span class="project-tag" data-i18n="p1_tag">HTML / CSS</span>
-                        </div>
-                        <div class="project-body d-flex flex-column">
-                            <h3 data-i18n="p1_t">Web Portofolio Pribadi</h3>
-                            <p class="text-muted-warm" data-i18n="p1_d">
-                                Website profil pribadi yang responsif dan estetis untuk
-                                memperkenalkan diri sebagai Junior Web Developer kepada dunia.
-                            </p>
-                            <div class="d-flex flex-wrap gap-2 mt-auto">
-                                <span class="tech-tag">HTML5</span>
-                                <span class="tech-tag">CSS3</span>
-                                <span class="tech-tag">Bootstrap 5</span>
-                            </div>
-                            <a href="#" class="project-link mt-3">
-                                <span data-i18n="p1_link">Lihat Detail</span> <i class="bi bi-arrow-right ms-1"></i>
-                            </a>
-                        </div>
-                    </article>
-                </div>
-
-                <div class="col">
-                    <article class="project-card h-100">
-                        <div class="project-img-wrap">
-                            <img
-                                src="https://images.unsplash.com/photo-1555949963-ff9fe0c870eb?w=600&h=340&fit=crop"
-                                alt="CRUD Admin Dashboard"
-                                data-i18n-alt="p2_alt"
-                                class="project-img"
-                                loading="lazy" decoding="async"
-                            >
-                            <span class="project-tag" data-i18n="p2_tag">JavaScript</span>
-                        </div>
-                        <div class="project-body d-flex flex-column">
-                            <h3 data-i18n="p2_t">Admin Dashboard CRUD</h3>
-                            <p class="text-muted-warm" data-i18n="p2_d">
-                                Panel manajemen produk dengan operasi Create, Read, Update, Delete
-                                terintegrasi dengan Supabase secara real-time.
-                            </p>
-                            <div class="d-flex flex-wrap gap-2 mt-auto">
-                                <span class="tech-tag">JavaScript</span>
-                                <span class="tech-tag">Supabase</span>
-                                <span class="tech-tag">Bootstrap</span>
-                            </div>
-                            <a href="../web-batik/admin.html" class="project-link mt-3">
-                                <span data-i18n="p2_link">Lihat Admin Panel</span> <i class="bi bi-arrow-right ms-1"></i>
-                            </a>
-                        </div>
-                    </article>
-                </div>
-
-            </div>
         </div>
     </section>
 
@@ -718,6 +676,8 @@
 
     <!-- Bootstrap 5 JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- EmailJS — kirim form ke Gmail + notifikasi WA/Telegram -->
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
     <script src="i18n.js"></script>
     <script src="script.js"></script>
 
@@ -776,6 +736,22 @@
             document.getElementById(id).addEventListener('input', () => setErr(id, ''));
         });
 
+        // ── EmailJS config ────────────────────────────────────────
+        // Ganti 3 nilai di bawah setelah daftar emailjs.com (gratis):
+        //   1. PUBLIC_KEY  → dashboard > Account > API Keys
+        //   2. SERVICE_ID  → dashboard > Email Services > pilih Gmail/Outlook
+        //   3. TEMPLATE_ID → dashboard > Email Templates > buat template baru
+        //    Isi variabel template: {{from_name}}, {{from_email}}, {{subject}}, {{message}}
+        const EMAILJS_PUBLIC_KEY = 'YOUR_PUBLIC_KEY';
+        const EMAILJS_SERVICE_ID = 'YOUR_SERVICE_ID';
+        const EMAILJS_TEMPLATE_ID = 'YOUR_TEMPLATE_ID';
+        const WA_NUMBER = '6285175208067';
+        const TG_USERNAME = 'givadaa';
+
+        if (typeof emailjs !== 'undefined' && EMAILJS_PUBLIC_KEY !== 'YOUR_PUBLIC_KEY') {
+            emailjs.init({ publicKey: EMAILJS_PUBLIC_KEY });
+        }
+
         document.getElementById('contactForm').addEventListener('submit', (e) => {
             e.preventDefault();
             const name = document.getElementById('contactName').value.trim();
@@ -790,16 +766,19 @@
             if (message.length < 10) ok = setErr('contactMessage', T('err_msg')) && ok;
             if (!ok) return;
 
-            // Kirim beneran via WhatsApp (tanpa backend — pesan dirakit lalu dibuka di WA)
             const btn = e.target.querySelector('button[type="submit"]');
             const orig = btn.innerHTML;
             btn.disabled = true;
             btn.innerHTML = '<span class="spinner-border spinner-border-sm me-2" role="status"></span>' + T('sending');
-            const text = 'Halo Erlangga! Saya ' + name + ' (' + email + ').'
+
+            const waText = 'Halo Erlangga! Saya ' + name + ' (' + email + ').'
                 + (subject ? ' Perihal: ' + subject + '.' : '')
                 + ' ' + message;
-            window.open('https://wa.me/6285175208067?text=' + encodeURIComponent(text), '_blank');
-            setTimeout(() => {
+            const tgText = 'Halo Erlangga! Saya ' + name + ' (' + email + ').'
+                + (subject ? ' Perihal: ' + subject + '.' : '')
+                + ' ' + message;
+
+            function showSuccess() {
                 btn.disabled = false;
                 btn.innerHTML = orig;
                 e.target.reset();
@@ -808,7 +787,30 @@
                     box.style.display = 'flex';
                     box.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
                 }
-            }, 600);
+            }
+
+            // Kirim via EmailJS (ke Gmail)
+            if (typeof emailjs !== 'undefined' && EMAILJS_PUBLIC_KEY !== 'YOUR_PUBLIC_KEY') {
+                emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, {
+                    from_name: name,
+                    from_email: email,
+                    subject: subject,
+                    message: message
+                }).then(() => {
+                    // Buka WhatsApp + Telegram sebagai notifikasi sekunder
+                    window.open('https://wa.me/' + WA_NUMBER + '?text=' + encodeURIComponent(waText), '_blank');
+                    window.open('https://t.me/' + TG_USERNAME + '?text=' + encodeURIComponent(tgText), '_blank');
+                    showSuccess();
+                }).catch(() => {
+                    // Fallback: kalau EmailJS gagal, tetap buka WA
+                    window.open('https://wa.me/' + WA_NUMBER + '?text=' + encodeURIComponent(waText), '_blank');
+                    showSuccess();
+                });
+            } else {
+                // Belum disetup: langsung buka WhatsApp
+                window.open('https://wa.me/' + WA_NUMBER + '?text=' + encodeURIComponent(waText), '_blank');
+                showSuccess();
+            }
         });
 
         // ── Smooth scroll for anchor links ────────────────────────
