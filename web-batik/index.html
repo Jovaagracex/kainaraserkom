@@ -155,7 +155,7 @@
 
     <!-- ── FULL CATALOG ── -->
     <main id="katalog">
-        <section class="section">
+        <section id="katalog" class="section">
             <div class="container">
                 <div class="section-head center">
                     <span class="eyebrow" data-i18n="cat_eyebrow">Katalog Produk</span>
@@ -163,8 +163,8 @@
                     <p class="section-desc" data-i18n="cat_sub">Setiap kain dibuat dengan penuh ketelitian — dari pilihan bahan hingga ketajaman motif.</p>
                 </div>
 
-                <!-- Filter Bar -->
-                <div class="filter-bar" style="margin-bottom:var(--sp-8);">
+                <!-- Filter Bar (Clean & To The Point) -->
+                <div class="filter-bar" style="margin-bottom:var(--sp-6);">
                     <div class="search-wrap">
                         <i class="bi bi-search"></i>
                         <input type="text" id="searchInput" class="search-input" placeholder="Cari nama produk, motif, deskripsi..." data-i18n-ph="search_ph" aria-label="Cari produk" data-i18n-aria="search_aria">
@@ -186,10 +186,9 @@
                         <option value="nama-asc" data-i18n="sort_az">Nama: A-Z</option>
                         <option value="nama-desc" data-i18n="sort_za">Nama: Z-A</option>
                     </select>
-                    <input type="number" id="priceMin" class="filter-select" style="max-width:130px;" placeholder="Min Rp" data-i18n-ph="min_ph" min="0" aria-label="Harga minimum" data-i18n-aria="min_aria">
-                    <input type="number" id="priceMax" class="filter-select" style="max-width:130px;" placeholder="Max Rp" data-i18n-ph="max_ph" min="0" aria-label="Harga maksimum" data-i18n-aria="max_aria">
-                    <button id="wishToggle" class="filter-select" aria-label="Hanya favorit" data-i18n-aria="fav_aria"><span data-i18n="fav">♥ Favorit</span> (<span id="wishCount">0</span>)</button>
-                    <button id="bestToggle" class="filter-select" aria-label="Hanya terlaris" data-i18n-aria="best_aria" data-i18n="best">🔥 Terlaris</button>
+                    <button id="wishToggle" class="filter-select text-nowrap" aria-label="Hanya favorit" data-i18n-aria="fav_aria" style="min-width:auto; padding-right:1rem;">
+                        <span data-i18n="fav">Favorit</span> (<span id="wishCount">0</span>)
+                    </button>
                     <span class="filter-count" id="filterCount"></span>
                 </div>
 
@@ -221,7 +220,7 @@
         <section id="cara-pesan" class="section section-alt">
             <div class="container">
                 <div class="section-head center">
-                    <span class="eyebrow" data-i18n="steps_eyebrow">Gampang, nggak ribet</span>
+                    <span class="eyebrow" data-i18n="steps_eyebrow">Mudah diikuti</span>
                     <h2 class="section-title" data-i18n="steps_title">Cara Pesan</h2>
                     <p class="section-desc" data-i18n="steps_sub">Nggak ada tombol bayar otomatis — semua lewat chat, biar bisa tanya-tanya dulu.</p>
                 </div>
@@ -242,7 +241,7 @@
                         <p data-i18n="s3d">Transfer setelah saya konfirmasi stok. Paket dibungkus rapi, dikirim maks 2x24 jam.</p>
                     </div>
                 </div>
-                <p class="steps-note" data-i18n="steps_note">Masih bingung? Chat saja dulu — nanya-nanya gratis, nggak wajib beli.</p>
+                <p class="steps-note" data-i18n="steps_note">Masih ragu? Silakan bertanya terlebih dahulu — tanpa kewajiban membeli.</p>
             </div>
         </section>
 
@@ -274,9 +273,9 @@
                             <cite data-i18n="cite">— Erlangga, pemilik Kainara Studio</cite>
                         </blockquote>
                         <p data-i18n="p1">
-                            Saya nggak punya toko fisik. Semua saya kerjakan sendiri: foto produk,
-                            upload ke katalog, bungkus paket, sampai balas chat. Makanya kalau
-                            chat dibalas agak lama, mohon maklum — kemungkinan saya lagi ke kantor pos.
+                            Saya tidak memiliki toko fisik. Seluruh proses saya kerjakan sendiri:
+                            foto produk, unggah katalog, kemas paket, hingga membalas pesan.
+                            Apabila balasan agak terlambat, kemungkinan saya sedang ke kantor pos.
                         </p>
                         <ol class="reason-list">
                             <li>
@@ -285,11 +284,11 @@
                             </li>
                             <li>
                                 <strong data-i18n="r2t">Harga wajar, bukan harga turis.</strong>
-                                <span data-i18n="r2d">Karena tanpa perantara, selisihnya saya kembalikan ke harga, bukan ke kantong sendiri semua.</span>
+                                <span data-i18n="r2d">Karena tanpa perantara, selisih biayanya saya kembalikan ke harga.</span>
                             </li>
                             <li>
                                 <strong data-i18n="r3t">Salah kirim? Tukar.</strong>
-                                <span data-i18n="r3d">Fotoin saja barangnya, saya kirim pengganti. Selama ini baru 2 kali kejadian.</span>
+                                <span data-i18n="r3d">Cukup kirimkan foto barangnya, saya akan mengirim pengganti. Sejauh ini baru 2 kali terjadi.</span>
                             </li>
                         </ol>
                     </div>
@@ -424,115 +423,212 @@
 
     <!-- ── FOOTER ── -->
     <footer class="site-footer">
-        <div class="container">
-            <div class="footer-grid">
-                <div class="footer-brand">
-                    <div class="nav-logo d-flex align-items-center gap-2 mb-3">
-                        <img src="img/logo-k.svg" alt="Kainara Logo" style="height: 36px; width: auto;" class="rounded">
-                        <span class="fw-bold fs-5" style="color: var(--white);">Kainara<span style="color: #d97706;">Studio</span></span>
+        <!-- Trust Badges Strip -->
+        <div class="footer-trust">
+            <div class="container">
+                <div class="footer-trust-row">
+                    <div class="footer-trust-item">
+                        <i class="bi bi-patch-check-fill"></i>
+                        <span data-i18n="ft_trust1">100% Batik Asli</span>
                     </div>
-                    <p data-i18n="ft_tag">Mewarisi warisan batik Indonesia dengan sentuhan modern. Setiap motif memiliki cerita, setiap kain memiliki jiwa.</p>
-                    <div class="d-flex gap-2 mt-3">
-                        <a href="https://instagram.com/kainarastudio" target="_blank" rel="noopener" class="btn btn-outline-light btn-sm rounded-circle" style="width:36px;height:36px;display:flex;align-items:center;justify-content:center;" aria-label="Instagram"><i class="bi bi-instagram"></i></a>
-                        <a href="https://tiktok.com/@kainarastudio" target="_blank" rel="noopener" class="btn btn-outline-light btn-sm rounded-circle" style="width:36px;height:36px;display:flex;align-items:center;justify-content:center;" aria-label="TikTok"><i class="bi bi-tiktok"></i></a>
+                    <div class="footer-trust-divider"></div>
+                    <div class="footer-trust-item">
+                        <i class="bi bi-people-fill"></i>
+                        <span data-i18n="ft_trust2">Kurasi Pengrajin Lokal</span>
+                    </div>
+                    <div class="footer-trust-divider"></div>
+                    <div class="footer-trust-item">
+                        <i class="bi bi-truck"></i>
+                        <span data-i18n="ft_trust3">Kirim Maks 2x24 Jam</span>
+                    </div>
+                    <div class="footer-trust-divider"></div>
+                    <div class="footer-trust-item">
+                        <i class="bi bi-arrow-counterclockwise"></i>
+                        <span data-i18n="ft_trust4">Garansi Retur 100%</span>
+                    </div>
+                    <div class="footer-trust-divider"></div>
+                    <div class="footer-trust-item">
+                        <i class="bi bi-whatsapp"></i>
+                        <span data-i18n="ft_trust5">Layanan WhatsApp 24/7</span>
                     </div>
                 </div>
+            </div>
+        </div>
+
+        <!-- Main Footer Body -->
+        <div class="container">
+            <div class="footer-grid">
+                <!-- Brand -->
+                <div class="footer-brand">
+                    <div class="d-flex align-items-center gap-2 mb-3">
+                        <img src="img/logo-k.svg" alt="Kainara Logo" style="height:38px;width:auto;" class="rounded footer-logo-img">
+                        <span class="fw-bold fs-5 footer-brand-name">Kainara<span class="footer-brand-accent">Studio</span></span>
+                    </div>
+                    <p class="footer-brand-desc" data-i18n="ft_tag">Mewarisi warisan batik Indonesia dengan sentuhan modern. Setiap motif memiliki cerita, setiap kain memiliki jiwa.</p>
+                    <div class="footer-socials mt-3">
+                        <a href="https://instagram.com/kainarastudio" target="_blank" rel="noopener" class="footer-social-btn" aria-label="Instagram">
+                            <i class="bi bi-instagram"></i>
+                        </a>
+                        <a href="https://tiktok.com/@kainarastudio" target="_blank" rel="noopener" class="footer-social-btn" aria-label="TikTok">
+                            <i class="bi bi-tiktok"></i>
+                        </a>
+                        <a href="https://wa.me/6285175208067" target="_blank" rel="noopener" class="footer-social-btn footer-social-wa" aria-label="WhatsApp">
+                            <i class="bi bi-whatsapp"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Koleksi -->
                 <div class="footer-col">
-                    <h6 data-i18n="ft_nav">Navigasi</h6>
+                    <h6 data-i18n="ft_cat">Koleksi</h6>
                     <ul>
-                        <li><a href="#katalog" data-i18n="nav_katalog">Katalog</a></li>
-                        <li><a href="#tentang" data-i18n="ft_about">Tentang Kami</a></li>
-                        <li><a href="#kontak" data-i18n="ft_contact">Kontak</a></li>
+                        <li><a href="#katalog" class="footer-cat-link" data-cat="Batik Tulis" data-i18n="cat_tulis">Batik Tulis</a></li>
+                        <li><a href="#katalog" class="footer-cat-link" data-cat="Batik Cap" data-i18n="cat_cap">Batik Cap</a></li>
+                        <li><a href="#katalog" class="footer-cat-link" data-cat="Batik Printing" data-i18n="cat_print">Batik Printing</a></li>
+                        <li><a href="#katalog" class="footer-cat-link" data-cat="" data-i18n="ft_all">Semua Koleksi</a></li>
+                    </ul>
+                </div>
+
+                <!-- Layanan -->
+                <div class="footer-col">
+                    <h6 data-i18n="ft_service">Layanan</h6>
+                    <ul>
+                        <li><a href="#cara-pesan" data-i18n="ft_how">Cara Pemesanan</a></li>
+                        <li><a href="#kontak" data-i18n="ft_help">Kontak &amp; Bantuan</a></li>
+                        <li><a href="https://wa.me/6285175208067" target="_blank" rel="noopener" data-i18n="ft_wa">Order via WhatsApp</a></li>
                         <li><a href="admin.html" data-i18n="ft_admin">Panel Admin</a></li>
                     </ul>
                 </div>
+
+                <!-- Studio -->
                 <div class="footer-col">
-                    <h6 data-i18n="ft_cat">Kategori</h6>
+                    <h6 data-i18n="ft_studio">Studio</h6>
                     <ul>
-                        <li><a href="#katalog" data-i18n="cat_tulis">Batik Tulis</a></li>
-                        <li><a href="#katalog" data-i18n="cat_cap">Batik Cap</a></li>
-                        <li><a href="#katalog" data-i18n="cat_print">Batik Printing</a></li>
-                        <li><a href="#katalog" data-i18n="ft_special">Koleksi Khusus</a></li>
-                    </ul>
-                </div>
-                <div class="footer-col">
-                    <h6 data-i18n="ft_info">Informasi</h6>
-                    <ul>
-                        <li><a href="#cara-pesan" data-i18n="ft_how">Cara Pemesanan</a></li>
                         <li><a href="#tentang" data-i18n="ft_about">Tentang Kami</a></li>
-                        <li><a href="#kontak" data-i18n="ft_help">Kontak & Bantuan</a></li>
+                        <li><a href="#katalog" data-i18n="nav_katalog">Katalog</a></li>
+                        <li><a href="../web-portofolio/index.html" data-i18n="ft_dev">Developer Portfolio</a></li>
                         <li><a href="#beranda" data-i18n="ft_top">Kembali ke Atas</a></li>
                     </ul>
                 </div>
             </div>
+
+            <!-- Footer Bar Bottom -->
             <div class="footer-bar">
                 <p data-i18n="ft_copy">&copy; 2026 Kainara Studio.</p>
-                <a href="../web-portofolio/index.html"><i class="bi bi-person-badge me-1"></i> <span data-i18n="ft_dev">Portofolio Developer</span></a>
+                <div class="footer-bar-right">
+                    <span class="footer-bar-badge">
+                        <i class="bi bi-shield-check me-1"></i>
+                        <span data-i18n="ft_secure">Transaksi Aman</span>
+                    </span>
+                    <a href="../web-portofolio/index.html" class="footer-dev-link">
+                        <i class="bi bi-code-slash me-1"></i>
+                        <span data-i18n="ft_dev">Portofolio Developer</span>
+                    </a>
+                </div>
             </div>
         </div>
     </footer>
 
     <style>@keyframes spin { to { transform: rotate(360deg); } }</style>
 
-    <!-- ── MODAL DETAIL PRODUK ── -->
+    <!-- ── MODAL DETAIL PRODUK (Gen Z & Modern Editorial UI) ── -->
     <div class="modal fade" id="productDetailModal" tabindex="-1" aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered modal-lg">
         <div class="modal-content rounded-4 border-0 overflow-hidden shadow-lg">
-          <div class="modal-body p-0">
+          <div class="modal-body p-0 position-relative">
+            <button type="button" class="btn-close position-absolute top-0 end-0 m-3 z-3 bg-white p-2 rounded-circle shadow-sm" data-bs-dismiss="modal" aria-label="Close"></button>
             <div class="row g-0">
-              <!-- Foto Produk -->
-              <div class="col-md-6 bg-light d-flex align-items-center justify-content-center p-3">
-                <img id="modalProductImage" src="" alt="" class="img-fluid rounded-3 object-fit-cover" style="max-height: 380px; width: 100%;">
+              <!-- Foto Produk (Full Height, Cover) -->
+              <div class="col-md-6 position-relative bg-light overflow-hidden d-flex align-items-center justify-content-center" style="min-height: 480px;">
+                <img id="modalProductImage" src="" alt="" class="w-100 h-100 position-absolute top-0 start-0 object-fit-cover">
               </div>
               <!-- Detail & Opsi Beli -->
-              <div class="col-md-6 p-4 d-flex flex-column justify-content-between">
+              <div class="col-md-6 p-4 d-flex flex-column justify-content-between bg-white">
                 <div>
-                  <div class="d-flex justify-content-between align-items-center mb-2">
-                    <span id="modalProductCategory" class="badge bg-warning-subtle text-warning-emphasis rounded-pill px-3 py-1 fw-semibold">Kategori</span>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  <div class="d-flex align-items-center gap-2 mb-2">
+                    <span id="modalProductCategory" class="badge rounded-pill px-3 py-1-5 fw-semibold" style="background-color: var(--terracotta-light, #f5ebe0); color: var(--terracotta, #c25e00); font-size: 0.8rem;">Kategori</span>
                   </div>
-                  <h4 id="modalProductTitle" class="fw-bold mb-1">Nama Produk</h4>
-                  <div id="modalRating" class="testimoni-stars mb-1"></div>
-                  <p id="modalProductPrice" class="fs-4 fw-bold mb-2" style="color: #d97706;">Rp 0</p>
-                  <p id="modalProductDesc" class="text-muted small mb-3">Deskripsi produk lengkap...</p>
-                  <div class="small text-secondary mb-3"><span data-i18n="m_stock">Stok Tersedia:</span> <strong id="modalProductStock" class="text-dark">0</strong> <span data-i18n="m_pcs">pcs</span></div>
+                  <h4 id="modalProductTitle" class="fw-bold text-dark mb-1 fs-4" style="letter-spacing: -0.01em;">Nama Produk</h4>
+                  <div id="modalRating" class="testimoni-stars mb-2" style="font-size: 0.9rem;"></div>
+                  <p id="modalProductPrice" class="fs-3 fw-bold mb-2" style="color: var(--terracotta, #c25e00);">Rp 0</p>
+                  <p id="modalProductDesc" class="text-muted small mb-3" style="line-height: 1.6;">Deskripsi produk lengkap...</p>
+                  
+                  <!-- E-Commerce Product Highlights -->
+                  <div class="product-specs bg-light rounded-3 p-3 mb-3" style="font-size: 0.82rem;">
+                    <div class="row g-2 text-dark">
+                      <div class="col-6 d-flex align-items-center gap-2">
+                        <i class="bi bi-patch-check text-warning fs-6"></i>
+                        <span>100% Katun Premium</span>
+                      </div>
+                      <div class="col-6 d-flex align-items-center gap-2">
+                        <i class="bi bi-scissors text-danger fs-6"></i>
+                        <span>Jahitan Rapi Kurasi</span>
+                      </div>
+                      <div class="col-6 d-flex align-items-center gap-2">
+                        <i class="bi bi-truck text-success fs-6"></i>
+                        <span>Kirim Maks 2x24 Jam</span>
+                      </div>
+                      <div class="col-6 d-flex align-items-center gap-2">
+                        <i class="bi bi-arrow-counterclockwise text-primary fs-6"></i>
+                        <span>Garansi Retur 100%</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="small text-secondary mb-3 d-flex align-items-center gap-1">
+                    <i class="bi bi-box-seam me-1 text-muted"></i>
+                    <span data-i18n="m_stock">Stok Tersedia:</span> <strong id="modalProductStock" class="text-dark">0</strong> <span data-i18n="m_pcs">pcs</span>
+                  </div>
                 </div>
+
                 <!-- TOMBOL OPSI PEMBELIAN -->
-                <div>
+                <div class="mb-3">
                   <label class="form-label small fw-bold text-muted mb-2" data-i18n="m_how">Pilih Cara Pembelian:</label>
                   <div class="d-grid gap-2">
-                    <button id="modalAddCart" class="btn btn-dark rounded-pill py-2 fw-semibold d-flex align-items-center justify-content-center gap-2" style="background-color: #2D251E;">
-                      <i class="bi bi-bag-plus"></i> <span data-i18n="m_add">Tambah ke Keranjang</span>
+                    <button id="modalAddCart" class="btn btn-terra rounded-pill py-2-5 fw-semibold d-flex align-items-center justify-content-center gap-2 shadow-sm">
+                      <i class="bi bi-bag-plus fs-6"></i> <span data-i18n="m_add">Tambah ke Keranjang</span>
                     </button>
-                    <a id="modalBuyWA" href="#" target="_blank" rel="noopener" class="btn btn-outline-success rounded-pill py-2 btn-sm fw-medium d-flex align-items-center justify-content-center gap-2">
-                      <i class="bi bi-whatsapp"></i> <span data-i18n="m_wa">Order via WhatsApp</span>
+                    <a id="modalBuyWA" href="#" target="_blank" rel="noopener" class="btn btn-outline-success rounded-pill py-2-5 fw-semibold d-flex align-items-center justify-content-center gap-2">
+                      <i class="bi bi-whatsapp fs-6"></i> <span data-i18n="m_wa">Order via WhatsApp</span>
                     </a>
-                    <div class="d-flex gap-2 justify-content-center mt-1">
-                      <a id="shareWA" href="#" target="_blank" rel="noopener" class="btn btn-sm btn-outline-secondary rounded-circle" aria-label="Bagikan WA"><i class="bi bi-whatsapp"></i></a>
-                      <a id="shareFB" href="#" target="_blank" rel="noopener" class="btn btn-sm btn-outline-secondary rounded-circle" aria-label="Bagikan Facebook"><i class="bi bi-facebook"></i></a>
-                      <a id="shareX" href="#" target="_blank" rel="noopener" class="btn btn-sm btn-outline-secondary rounded-circle" aria-label="Bagikan X"><i class="bi bi-twitter-x"></i></a>
-                      <button id="shareCopy" class="btn btn-sm btn-outline-secondary rounded-circle" aria-label="Salin link"><i class="bi bi-link-45deg"></i></button>
+                  </div>
+                  <div class="d-flex align-items-center justify-content-center gap-2 mt-3 pt-2 border-top">
+                    <span class="text-muted small me-1">Bagikan:</span>
+                    <a id="shareWA" href="#" target="_blank" rel="noopener" class="btn btn-sm btn-light rounded-circle p-2" style="width:34px;height:34px;display:inline-flex;align-items:center;justify-content:center;" aria-label="Bagikan WA"><i class="bi bi-whatsapp"></i></a>
+                    <a id="shareFB" href="#" target="_blank" rel="noopener" class="btn btn-sm btn-light rounded-circle p-2" style="width:34px;height:34px;display:inline-flex;align-items:center;justify-content:center;" aria-label="Bagikan Facebook"><i class="bi bi-facebook"></i></a>
+                    <a id="shareX" href="#" target="_blank" rel="noopener" class="btn btn-sm btn-light rounded-circle p-2" style="width:34px;height:34px;display:inline-flex;align-items:center;justify-content:center;" aria-label="Bagikan X"><i class="bi bi-twitter-x"></i></a>
+                    <button id="shareCopy" class="btn btn-sm btn-light rounded-circle p-2" style="width:34px;height:34px;display:inline-flex;align-items:center;justify-content:center;" aria-label="Salin link"><i class="bi bi-link-45deg"></i></button>
+                  </div>
+                </div>
+
+                <!-- TABS: PRODUK TERKAIT & ULASAN -->
+                <div class="border-top pt-3">
+                  <ul class="nav nav-pills nav-fill bg-light rounded-pill p-1 mb-3" id="modalDetailTabs" role="tablist" style="font-size: 0.85rem;">
+                    <li class="nav-item" role="presentation">
+                      <button class="nav-link active rounded-pill py-1 px-3 fw-medium" id="tab-rel-tab" data-bs-toggle="pill" data-bs-target="#tab-rel" type="button" role="tab" aria-selected="true" data-i18n="m_rel">Produk Terkait</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                      <button class="nav-link rounded-pill py-1 px-3 fw-medium" id="tab-rev-tab" data-bs-toggle="pill" data-bs-target="#tab-rev" type="button" role="tab" aria-selected="false" data-i18n="m_rev">Ulasan Pembeli</button>
+                    </li>
+                  </ul>
+                  <div class="tab-content" id="modalDetailTabContent">
+                    <div class="tab-pane fade show active" id="tab-rel" role="tabpanel" aria-labelledby="tab-rel-tab">
+                      <div id="relatedGrid" class="related-grid"></div>
+                    </div>
+                    <div class="tab-pane fade" id="tab-rev" role="tabpanel" aria-labelledby="tab-rev-tab">
+                      <div id="reviewList" class="mb-3" style="max-height: 180px; overflow-y: auto;"></div>
+                      <form id="reviewForm" class="mt-2 border-top pt-2">
+                        <div class="row g-2">
+                          <div class="col-6"><input id="reviewName" class="form-control form-control-sm rounded-3" placeholder="Nama" data-i18n-ph="rev_name_ph" required maxlength="50"></div>
+                          <div class="col-6"><select id="reviewRating" class="form-select form-select-sm rounded-3"><option value="5">★★★★★</option><option value="4">★★★★</option><option value="3">★★★</option><option value="2">★★</option><option value="1">★</option></select></div>
+                          <div class="col-12"><textarea id="reviewText" class="form-control form-control-sm rounded-3" rows="2" placeholder="Tulis ulasan..." data-i18n-ph="rev_text_ph" required maxlength="500"></textarea></div>
+                          <div class="col-12"><button class="btn btn-sm btn-dark rounded-pill px-3 py-1 fw-medium" type="submit" data-i18n="rev_send">Kirim Ulasan</button></div>
+                        </div>
+                      </form>
                     </div>
                   </div>
                 </div>
-                <hr>
-                <div>
-                  <h6 class="fw-bold small" data-i18n="m_rel">Produk Terkait</h6>
-                  <div id="relatedGrid" class="related-grid"></div>
-                </div>
-                <hr>
-                <div>
-                  <h6 class="fw-bold small" data-i18n="m_rev">Ulasan Pembeli</h6>
-                  <div id="reviewList"></div>
-                  <form id="reviewForm" class="mt-2">
-                    <div class="row g-2">
-                      <div class="col-6"><input id="reviewName" class="form-control form-control-sm" placeholder="Nama" data-i18n-ph="rev_name_ph" required maxlength="50"></div>
-                      <div class="col-6"><select id="reviewRating" class="form-select form-select-sm"><option value="5">★★★★★</option><option value="4">★★★★</option><option value="3">★★★</option><option value="2">★★</option><option value="1">★</option></select></div>
-                      <div class="col-12"><textarea id="reviewText" class="form-control form-control-sm" rows="2" placeholder="Tulis ulasan..." data-i18n-ph="rev_text_ph" required maxlength="500"></textarea></div>
-                      <div class="col-12"><button class="btn btn-sm btn-dark rounded-pill px-3" type="submit" data-i18n="rev_send">Kirim Ulasan</button></div>
-                    </div>
-                  </form>
-                </div>
+
               </div>
             </div>
           </div>
@@ -672,6 +768,30 @@
             window.open('https://wa.me/6285175208067?text=' + encodeURIComponent(msg), '_blank');
             if (window.showToast) showToast('success', window.I18n ? window.I18n.t('ts_cwa') : 'Membuka WhatsApp...');
             this.reset();
+        });
+
+        // Footer category links → auto-filter catalog
+        document.querySelectorAll('.footer-cat-link').forEach(function(link) {
+            link.addEventListener('click', function(e) {
+                var cat = this.dataset.cat;
+                // Set the category filter select
+                var catFilter = document.getElementById('categoryFilter');
+                if (catFilter) {
+                    catFilter.value = cat || '';
+                    catFilter.dispatchEvent(new Event('change', { bubbles: true }));
+                }
+                // Also reset search
+                var searchInput = document.getElementById('searchInput');
+                if (searchInput) {
+                    searchInput.value = '';
+                    searchInput.dispatchEvent(new Event('input', { bubbles: true }));
+                }
+                // Smooth scroll to catalog section
+                setTimeout(function() {
+                    var katalog = document.getElementById('katalog');
+                    if (katalog) katalog.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }, 80);
+            });
         });
     })();
     </script>

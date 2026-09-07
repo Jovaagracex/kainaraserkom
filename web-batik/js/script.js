@@ -25,7 +25,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let isClickNav = false;
     let clickNavTimer = null;
 
-    // Awalnya sembunyikan pill
+    // Awalnya sembunyikan pill sampai posisi awal siap
     navPill.style.opacity = '0';
     navPill.style.transition = 'transform 0.35s cubic-bezier(0.25, 1, 0.5, 1), width 0.35s cubic-bezier(0.25, 1, 0.5, 1), height 0.35s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.25s ease';
 
@@ -37,6 +37,8 @@ document.addEventListener('DOMContentLoaded', () => {
         const containerRect = container.getBoundingClientRect();
         const elRect = el.getBoundingClientRect();
 
+        if (elRect.width === 0 || elRect.height === 0) return;
+
         const left = elRect.left - containerRect.left;
         const top = elRect.top - containerRect.top;
 
@@ -44,10 +46,6 @@ document.addEventListener('DOMContentLoaded', () => {
         navPill.style.width  = `${elRect.width}px`;
         navPill.style.height = `${elRect.height}px`;
         navPill.style.transform = `translate3d(${left}px, ${top}px, 0)`;
-    }
-
-    function hidePill() {
-        navPill.style.opacity = '0';
     }
 
     function clearActive() {
@@ -58,6 +56,10 @@ document.addEventListener('DOMContentLoaded', () => {
         if (isClickNav && !force) return;
         const link = document.querySelector(`.nav-pills .nav-link[href="${href}"]`);
         if (link) {
+            if (link.classList.contains('active')) {
+                moveNavPill(link);
+                return;
+            }
             clearActive();
             link.classList.add('active');
             moveNavPill(link);
@@ -76,11 +78,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
             clickNavTimer = setTimeout(() => {
                 isClickNav = false;
+                onScroll();
             }, 850);
         });
     });
 
-    // ── RESIZE → reposition tanpa animasi ──
+    // ── RESIZE → reposition tanpa animasi lag ──
     window.addEventListener('resize', () => {
         const active = document.querySelector('.nav-pills .nav-link.active');
         if (active) {
@@ -92,51 +95,46 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // ── SCROLL SPY via IntersectionObserver ──
-    const heroEl = document.getElementById('beranda');
-    const sections = document.querySelectorAll('main > section[id]');
-    const allObserved = [heroEl, ...sections].filter(Boolean);
+    // Target section dari link navigasi
+    const targetIds = Array.from(navLinks).map(link => link.getAttribute('href')?.replace('#', '')).filter(Boolean);
+    const allObserved = Array.from(new Set(targetIds)).map(id => document.getElementById(id)).filter(Boolean);
 
-    const observer = new IntersectionObserver((entries) => {
-        if (isClickNav) return;
-        let best = null;
-        let bestRatio = 0;
-        entries.forEach(entry => {
-            if (entry.isIntersecting && entry.intersectionRatio > bestRatio) {
-                best = entry.target;
-                bestRatio = entry.intersectionRatio;
-            }
-        });
-        if (best) {
-            setActiveByHref(`#${best.id}`);
-        }
-    }, {
-        threshold: [0, 0.15, 0.3, 0.5, 0.7, 1],
-        rootMargin: '-5% 0px -60% 0px'
-    });
-
-    allObserved.forEach(s => observer.observe(s));
-
-    // ── SCROLL → cek posisi hero ──
+    // ── SCROLL SPY BERDASARKAN POSISI SCROLL SEBENARNYA ──
     function onScroll() {
         const nav = document.getElementById('mainNav');
         if (nav) nav.classList.toggle('scrolled', window.scrollY > 30);
 
         if (isClickNav) return;
 
-        if (heroEl) {
-            const heroBottom = heroEl.offsetTop + heroEl.offsetHeight;
-            if (window.scrollY + 120 < heroBottom) {
-                setActiveByHref('#beranda');
-                return;
+        const scrollPos = window.scrollY + 150;
+        let activeTarget = null;
+
+        for (let i = allObserved.length - 1; i >= 0; i--) {
+            const el = allObserved[i];
+            if (el && el.offsetTop <= scrollPos) {
+                activeTarget = el;
+                break;
             }
+        }
+
+        if (activeTarget) {
+            setActiveByHref(`#${activeTarget.id}`);
+        } else {
+            setActiveByHref('#beranda');
         }
     }
 
     window.addEventListener('scroll', onScroll, { passive: true });
 
-    // Trigger sekali saat load
-    onScroll();
+    // Inisialisasi awal saat pertama dimuat
+    setTimeout(() => {
+        const defaultActive = document.querySelector('.nav-pills .nav-link.active') || navLinks[0];
+        if (defaultActive) {
+            defaultActive.classList.add('active');
+            moveNavPill(defaultActive);
+        }
+        onScroll();
+    }, 50);
 });
 
 // ── Back to top + Cookie consent ───────────────────────────────
@@ -177,6 +175,24 @@ document.addEventListener('DOMContentLoaded', () => {
     window.addEventListener('online', syncOffline);
     window.addEventListener('offline', syncOffline);
     syncOffline();
+
+    // ── Fail-Safe Pembersihan Backdrop Modal & Offcanvas ──
+    document.addEventListener('hidden.bs.modal', () => {
+        if (!document.querySelector('.modal.show')) {
+            document.querySelectorAll('.modal-backdrop').forEach(el => el.remove());
+            document.body.classList.remove('modal-open');
+            document.body.style.overflow = '';
+            document.body.style.paddingRight = '';
+        }
+    });
+
+    document.addEventListener('hidden.bs.offcanvas', () => {
+        if (!document.querySelector('.offcanvas.show')) {
+            document.querySelectorAll('.offcanvas-backdrop').forEach(el => el.remove());
+            document.body.style.overflow = '';
+            document.body.style.paddingRight = '';
+        }
+    });
 });
 
 // ── Entrance hero + reveal scroll ──

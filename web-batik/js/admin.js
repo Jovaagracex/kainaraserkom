@@ -261,7 +261,7 @@ window.resetForm = function() {
 
 function openAddModal() {
     window.resetForm();
-    new bootstrap.Modal(document.getElementById('productModal')).show();
+    window.bootstrap?.Modal?.getOrCreateInstance(document.getElementById('productModal')).show();
 }
 
 // ── Edit ───────────────────────────────────────────────────────

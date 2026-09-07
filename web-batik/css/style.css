@@ -482,32 +482,189 @@ h5,h6 { font-family: var(--font-sans); font-weight: 600; }
     box-shadow: none !important;
 }
 
-/* ─── Footer (site-footer — katalog utama, tetap dark) ─── */
+/* ─── Footer (site-footer — modern warm editorial) ─── */
 footer.site-footer {
-    background: var(--charcoal);
+    background: linear-gradient(180deg, #1e1714 0%, #150f0c 100%);
     color: rgba(255,255,255,0.5);
-    padding: var(--sp-8) 0 var(--sp-6);
+    padding: 0 0 0;
     margin-top: auto;
 }
-.footer-grid {
-    display: grid; grid-template-columns: 1.5fr 1fr 1fr 1fr;
-    gap: var(--sp-8); margin-bottom: var(--sp-8);
+
+/* Trust Badges Strip */
+.footer-trust {
+    background: rgba(194, 94, 0, 0.12);
+    border-top: 1px solid rgba(194, 94, 0, 0.25);
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+    padding: 1rem 0;
 }
-.footer-brand .logo-name { color: var(--white); font-size: 1.15rem; }
-.footer-brand p { font-size: 0.825rem; color: rgba(255,255,255,0.45); line-height: 1.7; margin-top: var(--sp-3); }
-.footer-col h6 { font-family: var(--font-sans); font-size: 0.8rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: rgba(255,255,255,0.7); margin-bottom: var(--sp-4); }
-.footer-col ul { list-style: none; display: flex; flex-direction: column; gap: var(--sp-2); }
-.footer-col ul a { font-size: 0.85rem; color: rgba(255,255,255,0.45); transition: color var(--t-fast); }
-.footer-col ul a:hover { color: var(--terracotta); }
+.footer-trust-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 0.5rem 1rem;
+}
+.footer-trust-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: rgba(255,255,255,0.8);
+    letter-spacing: 0.01em;
+    white-space: nowrap;
+}
+.footer-trust-item i {
+    font-size: 1rem;
+    color: var(--terracotta, #c25e00);
+    flex-shrink: 0;
+}
+.footer-trust-divider {
+    width: 1px;
+    height: 16px;
+    background: rgba(255,255,255,0.12);
+    flex-shrink: 0;
+}
+@media (max-width: 767px) {
+    .footer-trust-divider { display: none; }
+    .footer-trust-row { gap: 0.5rem 1.5rem; }
+}
+
+/* Main footer body padding */
+footer.site-footer > .container {
+    padding-top: var(--sp-8);
+    padding-bottom: var(--sp-6);
+}
+
+/* Grid */
+.footer-grid {
+    display: grid;
+    grid-template-columns: 1.6fr 1fr 1fr 1fr;
+    gap: var(--sp-8);
+    margin-bottom: var(--sp-8);
+}
+@media (max-width: 991px) {
+    .footer-grid { grid-template-columns: 1fr 1fr; gap: var(--sp-6); }
+}
+@media (max-width: 575px) {
+    .footer-grid { grid-template-columns: 1fr; gap: var(--sp-5); }
+}
+
+/* Brand */
+.footer-brand-name { color: var(--white); font-size: 1.1rem; }
+.footer-brand-accent { color: #d97706; }
+.footer-brand-desc {
+    font-size: 0.825rem;
+    color: rgba(255,255,255,0.45);
+    line-height: 1.75;
+    margin-top: var(--sp-3);
+    max-width: 240px;
+}
+.footer-logo-img { filter: drop-shadow(0 0 6px rgba(194,94,0,0.25)); }
+
+/* Social buttons */
+.footer-socials { display: flex; gap: 0.5rem; }
+.footer-social-btn {
+    width: 38px; height: 38px;
+    border-radius: var(--r-lg);
+    background: rgba(255,255,255,0.07);
+    border: 1px solid rgba(255,255,255,0.1);
+    display: flex; align-items: center; justify-content: center;
+    color: rgba(255,255,255,0.55);
+    font-size: 1rem;
+    transition: all 0.25s ease;
+    text-decoration: none;
+}
+.footer-social-btn:hover {
+    background: var(--terracotta, #c25e00);
+    border-color: var(--terracotta, #c25e00);
+    color: #fff;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 14px rgba(194,94,0,0.4);
+}
+.footer-social-wa:hover {
+    background: #25D366;
+    border-color: #25D366;
+    box-shadow: 0 4px 14px rgba(37,211,102,0.35);
+}
+
+/* Footer columns */
+.footer-col h6 {
+    font-family: var(--font-sans);
+    font-size: 0.73rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.45);
+    margin-bottom: var(--sp-4);
+}
+.footer-col ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.55rem;
+    padding: 0; margin: 0;
+}
+.footer-col ul a {
+    font-size: 0.85rem;
+    color: rgba(255,255,255,0.6);
+    transition: color 0.2s ease, padding-left 0.2s ease;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+}
+.footer-col ul a:hover {
+    color: var(--terracotta, #c25e00);
+    padding-left: 4px;
+}
+.footer-cat-link::before {
+    content: '↗';
+    font-size: 0.65rem;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+}
+.footer-cat-link:hover::before { opacity: 1; }
+
+/* Footer Bar */
 .footer-bar {
-    border-top: 1px solid rgba(255,255,255,0.08);
-    padding-top: var(--sp-6);
-    display: flex; align-items: center; justify-content: space-between; gap: var(--sp-4);
+    border-top: 1px solid rgba(255,255,255,0.07);
+    padding-top: var(--sp-5);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--sp-4);
     flex-wrap: wrap;
 }
-.footer-bar p { font-size: 0.8rem; }
-.footer-bar a { font-size: 0.8rem; color: rgba(255,255,255,0.45); }
-.footer-bar a:hover { color: var(--terracotta); }
+.footer-bar p {
+    font-size: 0.8rem;
+    color: rgba(255,255,255,0.35);
+    margin: 0;
+}
+.footer-bar-right {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+.footer-bar-badge {
+    display: inline-flex;
+    align-items: center;
+    font-size: 0.75rem;
+    color: rgba(255,255,255,0.35);
+    gap: 0.25rem;
+}
+.footer-dev-link {
+    display: inline-flex;
+    align-items: center;
+    font-size: 0.8rem;
+    color: rgba(255,255,255,0.4);
+    text-decoration: none;
+    transition: color 0.2s;
+    gap: 0.2rem;
+}
+.footer-dev-link:hover { color: var(--terracotta, #c25e00); }
+
 
 /* ─── Admin Footer (Warm Sand — admin.html only) ─── */
 .admin-footer {
@@ -938,6 +1095,7 @@ footer.site-footer {
     left: 0;
     background-color: var(--terracotta-light, #f5ebe0);
     border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(217, 119, 6, 0.12);
     transition: transform 0.35s cubic-bezier(0.25, 1, 0.5, 1), width 0.35s cubic-bezier(0.25, 1, 0.5, 1), height 0.35s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.25s ease;
     z-index: 0;
     pointer-events: none;
@@ -960,6 +1118,38 @@ footer.site-footer {
 .nav-pills .nav-link:hover,
 .navbar-nav .nav-link:hover {
     color: var(--terracotta);
+}
+
+/* ── Sleek Modal Zoom & Glassmorphism Blur Entrance ── */
+#productDetailModal.fade .modal-dialog {
+    transform: scale(0.92) translateY(24px);
+    transition: transform 0.35s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.25s ease;
+    opacity: 0;
+}
+#productDetailModal.show .modal-dialog {
+    transform: scale(1) translateY(0);
+    opacity: 1;
+}
+.modal-backdrop.show {
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    background-color: rgba(26, 21, 17, 0.65) !important;
+}
+
+/* ── Card Hover Micro-Interactions ── */
+.product-card {
+    transition: transform 0.35s cubic-bezier(0.25, 1, 0.5, 1), box-shadow 0.35s cubic-bezier(0.25, 1, 0.5, 1);
+    cursor: pointer;
+}
+.product-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 16px 36px rgba(194, 94, 0, 0.12) !important;
+}
+.product-card-img {
+    transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1) !important;
+}
+.product-card:hover .product-card-img {
+    transform: scale(1.06) !important;
 }
 
 /* ── Custom Footer Button ── */
@@ -992,17 +1182,20 @@ footer.site-footer {
     color: var(--white);
     border: none;
     border-radius: var(--r-full);
-    font-size: 0.8rem;
+    font-size: 0.85rem;
+    font-weight: 600;
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    transition: all 0.2s;
-    padding: 0.35rem 0.65rem;
+    transition: all 0.25s cubic-bezier(0.25, 1, 0.5, 1);
+    padding: 0.5rem 1rem;
+    width: 100%;
 }
 .btn-add-cart:hover {
     background: var(--charcoal);
     color: var(--white);
-    transform: scale(1.08);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(0,0,0,0.15);
 }
 
 /* ── Testimoni ── */
@@ -1081,6 +1274,22 @@ input.filter-select { cursor: text; }
 .skeleton-line.short { width: 60%; }
 
 /* ── Related + reviews ── */
+#modalDetailTabs .nav-link.active {
+    background-color: var(--terracotta, #c25e00) !important;
+    color: var(--white, #ffffff) !important;
+    box-shadow: 0 2px 6px rgba(194, 94, 0, 0.2);
+}
+#modalDetailTabs .nav-link {
+    color: var(--charcoal-2, #444);
+    transition: all 0.2s ease;
+}
+.tab-content > .tab-pane {
+    display: none !important;
+}
+.tab-content > .tab-pane.active,
+.tab-content > .tab-pane.show.active {
+    display: block !important;
+}
 .related-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
 .related-item { border: 1px solid var(--sand-border); border-radius: 10px; background: #fff; padding: 6px; text-align: left; }
 .related-item img { width: 100%; height: 64px; object-fit: cover; border-radius: 8px; }

@@ -177,19 +177,24 @@ const catalog = {
         });
     },
 
-    // Delegasi klik kartu: aman dari XSS (tanpa inline onclick ber-data produk)
+    // Delegasi klik kartu: aman dari XSS + klik di kartu langsung buka detail modal
     bindGridDelegation() {
         el.grid?.addEventListener('click', e => {
             const btn = e.target.closest('[data-action]');
-            if (!btn) return;
-            const id = btn.dataset.id;
-            const action = btn.dataset.action;
-            if (action === 'detail') openProductDetail(id);
-            else if (action === 'cart') {
-                const p = this.getById(id);
-                if (p && window.Cart) Cart.addItem(p, 1);
+            const card = e.target.closest('.product-card');
+
+            if (btn) {
+                const id = btn.dataset.id;
+                const action = btn.dataset.action;
+                if (action === 'cart') {
+                    const p = this.getById(id);
+                    if (p && window.Cart) Cart.addItem(p, 1);
+                }
+                else if (action === 'wish') Wishlist.toggle(id);
+                else if (action === 'detail') openProductDetail(id);
+            } else if (card && card.dataset.id) {
+                openProductDetail(card.dataset.id);
             }
-            else if (action === 'wish') Wishlist.toggle(id);
         });
     },
 
@@ -341,7 +346,7 @@ const catalog = {
 
         return `
             <div class="col">
-                <article class="product-card h-100">
+                <article class="product-card h-100" data-id="${escHtml(p.id)}">
                     <div class="product-img-wrap">
                         <img src="${escHtml(img)}"
                              alt="${escHtml(p.nama_produk)}"
@@ -361,16 +366,11 @@ const catalog = {
                         <div class="product-rating">${starsHtml(avg)} <span class="rating-num">${avg ? avg.toFixed(1) : T('card_new')}</span></div>
                         <h3 class="product-name">${escHtml(p.nama_produk)}</h3>
                         <p class="product-desc">${escHtml(p.deskripsi || T('card_nodesc'))}</p>
-                        <div class="product-footer mt-auto d-flex flex-column gap-2">
+                        <div class="product-footer mt-auto d-flex flex-column gap-2 pt-2">
                             <span class="product-price">${window.formatRupiah(p.harga)}</span>
-                            <div class="d-flex gap-2">
-                                <button class="btn-detail flex-fill btn-sm justify-content-center" data-action="detail" data-id="${escHtml(p.id)}">
-                                    <i class="bi bi-eye"></i> ${T('card_detail')}
-                                </button>
-                                <button class="btn-add-cart btn-sm px-3 justify-content-center" data-action="cart" data-id="${escHtml(p.id)}" aria-label="${T('card_add_aria')}" ${p.stok <= 0 ? 'disabled style="opacity:.5"' : ''}>
-                                    <i class="bi bi-bag-plus"></i>
-                                </button>
-                            </div>
+                            <button class="btn-add-cart w-100 py-2 rounded-pill btn-sm d-flex align-items-center justify-content-center gap-2 fw-semibold" data-action="cart" data-id="${escHtml(p.id)}" ${p.stok <= 0 ? 'disabled style="opacity:.5"' : ''}>
+                                <i class="bi bi-bag-plus fs-6"></i> + Keranjang
+                            </button>
                         </div>
                     </div>
                 </article>
@@ -465,7 +465,16 @@ function openProductDetail(id) {
                 <span class="related-price">${window.formatRupiah(p.harga)}</span>
             </button>`).join('') || `<p class="text-muted small">${T('no_rel')}</p>`;
         relWrap.querySelectorAll('[data-rel]').forEach(b => {
-            b.onclick = () => openProductDetail(b.dataset.rel);
+            b.onclick = () => {
+                const modalEl = document.getElementById('productDetailModal');
+                const inst = window.bootstrap?.Modal?.getInstance(modalEl);
+                if (inst) {
+                    inst.hide();
+                    setTimeout(() => openProductDetail(b.dataset.rel), 200);
+                } else {
+                    openProductDetail(b.dataset.rel);
+                }
+            };
         });
     }
 
@@ -486,7 +495,35 @@ function openProductDetail(id) {
     const form = document.getElementById('reviewForm');
     if (form) form.dataset.pid = product.id;
 
-    new bootstrap.Modal(document.getElementById('productDetailModal')).show();
+    // Reset tab state (Produk Terkait = Active, Ulasan Pembeli = Inactive)
+    const relBtn = document.getElementById('tab-rel-tab');
+    const revBtn = document.getElementById('tab-rev-tab');
+    const relPane = document.getElementById('tab-rel');
+    const revPane = document.getElementById('tab-rev');
+    if (relBtn && revBtn && relPane && revPane) {
+        const showRel = () => {
+            relBtn.classList.add('active');
+            relBtn.setAttribute('aria-selected', 'true');
+            revBtn.classList.remove('active');
+            revBtn.setAttribute('aria-selected', 'false');
+            relPane.classList.add('show', 'active');
+            revPane.classList.remove('show', 'active');
+        };
+        const showRev = () => {
+            revBtn.classList.add('active');
+            revBtn.setAttribute('aria-selected', 'true');
+            relBtn.classList.remove('active');
+            relBtn.setAttribute('aria-selected', 'false');
+            revPane.classList.add('show', 'active');
+            relPane.classList.remove('show', 'active');
+        };
+
+        showRel(); // default initial state when modal opens
+        relBtn.onclick = (e) => { e.preventDefault(); showRel(); };
+        revBtn.onclick = (e) => { e.preventDefault(); showRev(); };
+    }
+
+    window.bootstrap?.Modal?.getOrCreateInstance(document.getElementById('productDetailModal')).show();
 }
 window.openProductDetail = openProductDetail;
 

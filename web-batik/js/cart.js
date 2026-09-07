@@ -192,7 +192,7 @@ const Cart = {
 
     openPanel() {
         this.updatePanel();
-        new bootstrap.Offcanvas(document.getElementById('cartOffcanvas')).show();
+        window.bootstrap?.Offcanvas?.getOrCreateInstance(document.getElementById('cartOffcanvas')).show();
     },
 
     checkout() {
@@ -209,10 +209,10 @@ const Cart = {
                 return;
             }
         }
-        bootstrap.Offcanvas.getInstance(document.getElementById('cartOffcanvas'))?.hide();
+        window.bootstrap?.Offcanvas?.getInstance(document.getElementById('cartOffcanvas'))?.hide();
         setTimeout(() => {
             window.Checkout?.renderSummary?.();
-            new bootstrap.Modal(document.getElementById('checkoutModal')).show();
+            window.bootstrap?.Modal?.getOrCreateInstance(document.getElementById('checkoutModal')).show();
         }, 300);
     }
 };
