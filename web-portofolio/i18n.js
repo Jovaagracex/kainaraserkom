@@ -84,7 +84,7 @@
             li2: 'Keranjang belanja + checkout via WhatsApp',
             li3: 'Panel admin CRUD terkunci PIN + dark mode',
             car1_alt: 'Halaman utama toko', car2_alt: 'Keranjang dan checkout', car3_alt: 'Panel admin',
-            ft_copy: '© 2026 Erlangga — dibangun manual pakai HTML, CSS, JS. Tanpa template.',
+            ft_copy: '© 2026 Erlangga — dikembangkan dengan HTML, CSS, dan JavaScript.',
             top_title: 'Kembali ke Atas'
         },
         en: {
@@ -153,7 +153,7 @@
             li2: 'Shopping cart + checkout via WhatsApp',
             li3: 'PIN-locked CRUD admin panel + dark mode',
             car1_alt: 'Store homepage', car2_alt: 'Cart and checkout', car3_alt: 'Admin panel',
-            ft_copy: '© 2026 Erlangga — hand-built with HTML, CSS, JS. No template.',
+            ft_copy: '© 2026 Erlangga — developed with HTML, CSS, and JavaScript.',
             top_title: 'Back to Top'
         },
         ja: {
@@ -222,7 +222,7 @@
             li2: 'ショッピングカート＋WhatsApp決済',
             li3: 'PINロック付きCRUD管理パネル＋ダークモード',
             car1_alt: '店舗のトップページ', car2_alt: 'カートと決済', car3_alt: '管理パネル',
-            ft_copy: '© 2026 エルランガ — HTML、CSS、JSで手作り。テンプレート不使用。',
+            ft_copy: '© 2026 エルランガ — HTML・CSS・JavaScriptで開発。',
             top_title: 'トップに戻る'
         },
         ar: {
@@ -291,7 +291,7 @@
             li2: 'سلة تسوق + دفع عبر واتساب',
             li3: 'لوحة إدارة CRUD مقفلة برمز + وضع ليلي',
             car1_alt: 'الصفحة الرئيسية للمتجر', car2_alt: 'السلة والدفع', car3_alt: 'لوحة الإدارة',
-            ft_copy: '© 2026 إرلانغا — بُني يدويًا بـ HTML وCSS وJS. بدون قالب.',
+            ft_copy: '© 2026 إرلانغا — طُوّر بـ HTML وCSS وJavaScript.',
             top_title: 'عودة للأعلى'
         }
     };
