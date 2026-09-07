@@ -22,16 +22,28 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (!navPill || navLinks.length === 0) return;
 
+    let isClickNav = false;
+    let clickNavTimer = null;
+
     // Awalnya sembunyikan pill
     navPill.style.opacity = '0';
-    navPill.style.transition = 'all 0.3s cubic-bezier(0.4,0,0.2,1)';
+    navPill.style.transition = 'transform 0.35s cubic-bezier(0.25, 1, 0.5, 1), width 0.35s cubic-bezier(0.25, 1, 0.5, 1), height 0.35s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.25s ease';
 
     function moveNavPill(el) {
-        if (!el) return;
+        if (!el || !navPill) return;
+        const container = navPill.parentElement;
+        if (!container) return;
+
+        const containerRect = container.getBoundingClientRect();
+        const elRect = el.getBoundingClientRect();
+
+        const left = elRect.left - containerRect.left;
+        const top = elRect.top - containerRect.top;
+
         navPill.style.opacity = '1';
-        navPill.style.width  = el.offsetWidth + 'px';
-        navPill.style.height = el.offsetHeight + 'px';
-        navPill.style.transform = `translate(${el.offsetLeft}px, ${el.offsetTop}px)`;
+        navPill.style.width  = `${elRect.width}px`;
+        navPill.style.height = `${elRect.height}px`;
+        navPill.style.transform = `translate3d(${left}px, ${top}px, 0)`;
     }
 
     function hidePill() {
@@ -42,7 +54,8 @@ document.addEventListener('DOMContentLoaded', () => {
         navLinks.forEach(l => l.classList.remove('active'));
     }
 
-    function setActiveByHref(href) {
+    function setActiveByHref(href, force = false) {
+        if (isClickNav && !force) return;
         const link = document.querySelector(`.nav-pills .nav-link[href="${href}"]`);
         if (link) {
             clearActive();
@@ -51,12 +64,19 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // ── KLIK MENU → tampilkan pill ──
+    // ── KLIK MENU → tampilkan pill langsung & kunci scrollspy sementara ──
     navLinks.forEach(link => {
         link.addEventListener('click', function () {
+            isClickNav = true;
+            if (clickNavTimer) clearTimeout(clickNavTimer);
+
             clearActive();
             this.classList.add('active');
             moveNavPill(this);
+
+            clickNavTimer = setTimeout(() => {
+                isClickNav = false;
+            }, 850);
         });
     });
 
@@ -67,18 +87,18 @@ document.addEventListener('DOMContentLoaded', () => {
             navPill.style.transition = 'none';
             moveNavPill(active);
             requestAnimationFrame(() => {
-                navPill.style.transition = 'all 0.3s cubic-bezier(0.4,0,0.2,1)';
+                navPill.style.transition = 'transform 0.35s cubic-bezier(0.25, 1, 0.5, 1), width 0.35s cubic-bezier(0.25, 1, 0.5, 1), height 0.35s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.25s ease';
             });
         }
     });
 
     // ── SCROLL SPY via IntersectionObserver ──
-    // Observasi #beranda + semua section[id]
     const heroEl = document.getElementById('beranda');
     const sections = document.querySelectorAll('main > section[id]');
     const allObserved = [heroEl, ...sections].filter(Boolean);
 
     const observer = new IntersectionObserver((entries) => {
+        if (isClickNav) return;
         let best = null;
         let bestRatio = 0;
         entries.forEach(entry => {
@@ -99,11 +119,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // ── SCROLL → cek posisi hero ──
     function onScroll() {
-        // navbar shadow
         const nav = document.getElementById('mainNav');
         if (nav) nav.classList.toggle('scrolled', window.scrollY > 30);
 
-        // Jika masih di atas hero → set Beranda aktif
+        if (isClickNav) return;
+
         if (heroEl) {
             const heroBottom = heroEl.offsetTop + heroEl.offsetHeight;
             if (window.scrollY + 120 < heroBottom) {
